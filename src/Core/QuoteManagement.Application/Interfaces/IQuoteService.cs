@@ -1,3 +1,5 @@
+using QuoteManagement.Application.DTOs;
+
 namespace QuoteManagement.Application.Interfaces
 {
     public interface IQuoteService
