@@ -1,0 +1,30 @@
+using QuoteManagement.Domain.Common;
+
+namespace QuoteManagement.Domain.Entities
+{
+    public class Book : BaseEntity
+    {
+        public string Title { get; private set; }
+        public ISBN ISBN { get; private set; }
+        
+        // Navigation property
+        public virtual ICollection<Quote> Quotes { get; private set; }
+        
+        protected Book() { } // For EF
+        
+        public Book(string title, string isbn = null)
+        {
+            SetTitle(title);
+            ISBN = !string.IsNullOrWhiteSpace(isbn) ? new ISBN(isbn) : null;
+            Quotes = new HashSet<Quote>();
+        }
+        
+        private void SetTitle(string title)
+        {
+            if (string.IsNullOrWhiteSpace(title))
+                throw new ArgumentException("Book title cannot be empty.");
+            
+            Title = title;
+        }
+    }
+}
