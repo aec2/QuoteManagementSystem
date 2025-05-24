@@ -44,7 +44,7 @@ namespace QuoteManagement.Application.Services
             return _mapper.Map<IEnumerable<BookDto>>(books);
         }
 
-        public async Task<BookDto> CreateBookAsync(string title, string isbn = null)
+        public async Task<BookDto> CreateBookAsync(string title, string isbn = "")
         {
             var book = new Book(title, isbn);
             await _bookRepository.AddAsync(book);
@@ -53,13 +53,22 @@ namespace QuoteManagement.Application.Services
             return _mapper.Map<BookDto>(book);
         }
 
-        public async Task<BookDto> UpdateBookAsync(Guid id, string title, string isbn = null)
+        public async Task<BookDto> UpdateBookAsync(Guid id, string title, string isbn = "")
         {
             var book = await _bookRepository.GetByIdAsync(id);
             if (book == null)
                 throw new NotFoundException(nameof(Book), id);
 
-            // Note: You'll need to add update methods to Book entity
+            book.UpdateTitle(title);
+            if (isbn != null) // Allow clearing ISBN by passing null or empty string
+            {
+                 book.UpdateISBN(isbn);
+            } else if (string.IsNullOrEmpty(isbn))
+            {
+                 book.UpdateISBN(null); // Explicitly set to null if empty string is passed
+            }
+
+
             await _bookRepository.UpdateAsync(book);
             await _unitOfWork.CommitAsync();
 

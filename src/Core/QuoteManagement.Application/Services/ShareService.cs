@@ -1,5 +1,4 @@
 using AutoMapper;
-using Microsoft.Extensions.Configuration;
 using QuoteManagement.Application.Common.Exceptions;
 using QuoteManagement.Application.DTOs;
 using QuoteManagement.Application.Interfaces;
@@ -10,14 +9,14 @@ namespace QuoteManagement.Application.Services
 {
     public class ShareService : IShareService
     {
-        private readonly IRepository<ShareableLink> _shareableLinkRepository;
+        private readonly IShareableLinkRepository _shareableLinkRepository;
         private readonly IQuoteRepository _quoteRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly IConfiguration _configuration;
 
         public ShareService(
-            IRepository<ShareableLink> shareableLinkRepository,
+            IShareableLinkRepository shareableLinkRepository,
             IQuoteRepository quoteRepository,
             IUnitOfWork unitOfWork,
             IMapper mapper,
@@ -84,8 +83,8 @@ namespace QuoteManagement.Application.Services
         private async Task<ShareableLink> GetShareableLinkByShortCodeAsync(string shortCode)
         {
             // This would need a custom repository method
-            var allLinks = await _shareableLinkRepository.GetAllAsync();
-            return allLinks.FirstOrDefault(l => l.ShortCode == shortCode);
+            var allLinks = await _shareableLinkRepository.GetByShortCodeAsync(shortCode);
+            return allLinks;
         }
 
         private string GenerateShortCode()

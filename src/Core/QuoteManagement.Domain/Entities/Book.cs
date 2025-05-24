@@ -1,4 +1,5 @@
 using QuoteManagement.Domain.Common;
+using QuoteManagement.Domain.ValueObjects;
 
 namespace QuoteManagement.Domain.Entities
 {

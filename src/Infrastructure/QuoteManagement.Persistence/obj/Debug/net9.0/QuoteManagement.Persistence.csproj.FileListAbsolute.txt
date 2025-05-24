@@ -1,0 +1,6 @@
+C:\Users\Enes\Desktop\QuoteManagementSystem\src\Infrastructure\QuoteManagement.Persistence\obj\Debug\net9.0\QuoteManagement.Persistence.csproj.AssemblyReference.cache
+C:\Users\Enes\Desktop\QuoteManagementSystem\src\Infrastructure\QuoteManagement.Persistence\obj\Debug\net9.0\QuoteManagement.Persistence.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Enes\Desktop\QuoteManagementSystem\src\Infrastructure\QuoteManagement.Persistence\obj\Debug\net9.0\QuoteManagement.Persistence.AssemblyInfoInputs.cache
+C:\Users\Enes\Desktop\QuoteManagementSystem\src\Infrastructure\QuoteManagement.Persistence\obj\Debug\net9.0\QuoteManagement.Persistence.AssemblyInfo.cs
+C:\Users\Enes\Desktop\QuoteManagementSystem\src\Infrastructure\QuoteManagement.Persistence\obj\Debug\net9.0\QuoteManagement.Persistence.csproj.CoreCompileInputs.cache
+C:\Users\Enes\Desktop\QuoteManagementSystem\src\Infrastructure\QuoteManagement.Persistence\obj\Debug\net9.0\QuoteManagement.Persistence.sourcelink.json

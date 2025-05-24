@@ -1,0 +1,6 @@
+C:\Users\Enes\Desktop\QuoteManagementSystem\src\Core\QuoteManagement.Application\obj\Debug\net9.0\QuoteManagement.Application.csproj.AssemblyReference.cache
+C:\Users\Enes\Desktop\QuoteManagementSystem\src\Core\QuoteManagement.Application\obj\Debug\net9.0\QuoteManagement.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Enes\Desktop\QuoteManagementSystem\src\Core\QuoteManagement.Application\obj\Debug\net9.0\QuoteManagement.Application.AssemblyInfoInputs.cache
+C:\Users\Enes\Desktop\QuoteManagementSystem\src\Core\QuoteManagement.Application\obj\Debug\net9.0\QuoteManagement.Application.AssemblyInfo.cs
+C:\Users\Enes\Desktop\QuoteManagementSystem\src\Core\QuoteManagement.Application\obj\Debug\net9.0\QuoteManagement.Application.csproj.CoreCompileInputs.cache
+C:\Users\Enes\Desktop\QuoteManagementSystem\src\Core\QuoteManagement.Application\obj\Debug\net9.0\QuoteManagement.Application.sourcelink.json

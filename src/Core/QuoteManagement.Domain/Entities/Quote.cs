@@ -1,4 +1,6 @@
 using QuoteManagement.Domain.Common;
+using QuoteManagement.Domain.ValueObjects; // Added
+using QuoteManagement.Domain.Exceptions; // Added
 
 namespace QuoteManagement.Domain.Entities
 {
@@ -22,7 +24,10 @@ namespace QuoteManagement.Domain.Entities
             SetText(text);
             AuthorId = authorId;
             BookId = bookId;
-            PageNumber = pageNumber.HasValue ? new PageNumber(pageNumber.Value) : null;
+            if (pageNumber.HasValue)
+            {
+                PageNumber = new PageNumber(pageNumber.Value);
+            }
             DateAdded = DateTime.UtcNow;
         }
         
@@ -38,6 +43,18 @@ namespace QuoteManagement.Domain.Entities
                 throw new InvalidQuoteException("Quote text cannot be empty.");
             
             Text = text;
+        }
+
+        public void UpdatePageNumber(int pageNumber)
+        {
+            PageNumber = new PageNumber(pageNumber);
+            DateModified = DateTime.UtcNow;
+        }
+
+        public void RemovePageNumber()
+        {
+            PageNumber = null;
+            DateModified = DateTime.UtcNow;
         }
     }
 }
