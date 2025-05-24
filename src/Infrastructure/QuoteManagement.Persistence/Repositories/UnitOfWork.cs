@@ -1,4 +1,5 @@
 // Ensure the correct namespace for IUnitOfWork; update if necessary
+using QuoteManagement.Application.Interfaces;
 using QuoteManagement.Persistence.Context; 
 using System.Threading.Tasks;
 

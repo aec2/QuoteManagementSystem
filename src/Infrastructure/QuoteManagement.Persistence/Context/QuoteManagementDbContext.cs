@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using QuoteManagement.Application.Common.Interfaces;
 using QuoteManagement.Domain.Entities;
 using QuoteManagement.Domain.Common; // Required for IAuditableEntity
 using System.Reflection; // Required for ApplyConfigurationsFromAssembly

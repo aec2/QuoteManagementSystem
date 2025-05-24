@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using QuoteManagement.Application.Interfaces;
 using QuoteManagement.Domain.Interfaces;    // Required for IRepository and specific repositories
 using QuoteManagement.Persistence.Context;
 using QuoteManagement.Persistence.Repositories; // Required for Repository implementations and UnitOfWork

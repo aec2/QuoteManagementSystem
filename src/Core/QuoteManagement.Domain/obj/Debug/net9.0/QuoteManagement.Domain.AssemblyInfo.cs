@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("QuoteManagement.Domain")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+64d46a3c2628a9ce2db403a4d3aacf44e085f6ab")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+778a963ec83155fbd20de8b378e6a93b1ac5a7b3")]
 [assembly: System.Reflection.AssemblyProductAttribute("QuoteManagement.Domain")]
 [assembly: System.Reflection.AssemblyTitleAttribute("QuoteManagement.Domain")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

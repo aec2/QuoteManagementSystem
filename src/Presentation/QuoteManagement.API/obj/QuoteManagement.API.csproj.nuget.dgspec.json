@@ -67,6 +67,10 @@
             "MediatR": {
               "target": "Package",
               "version": "[12.1.1, )"
+            },
+            "Microsoft.Extensions.Configuration.Abstractions": {
+              "target": "Package",
+              "version": "[9.0.0, )"
             }
           },
           "imports": [
@@ -269,6 +273,9 @@
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
+              "C:\\Users\\Enes\\Desktop\\QuoteManagementSystem\\src\\Core\\QuoteManagement.Application\\QuoteManagement.Application.csproj": {
+                "projectPath": "C:\\Users\\Enes\\Desktop\\QuoteManagementSystem\\src\\Core\\QuoteManagement.Application\\QuoteManagement.Application.csproj"
+              },
               "C:\\Users\\Enes\\Desktop\\QuoteManagementSystem\\src\\Core\\QuoteManagement.Domain\\QuoteManagement.Domain.csproj": {
                 "projectPath": "C:\\Users\\Enes\\Desktop\\QuoteManagementSystem\\src\\Core\\QuoteManagement.Domain\\QuoteManagement.Domain.csproj"
               }
@@ -291,6 +298,10 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "dependencies": {
+            "Microsoft.EntityFrameworkCore.InMemory": {
+              "target": "Package",
+              "version": "[9.0.5, )"
+            },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
               "version": "[9.0.0, )"

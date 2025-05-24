@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using QuoteManagement.Application.Interfaces;
+using QuoteManagement.Application.DTOs;
 
 [ApiController]
 [Route("api/[controller]")]

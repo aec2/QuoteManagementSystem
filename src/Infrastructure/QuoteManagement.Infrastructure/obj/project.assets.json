@@ -220,6 +220,7 @@
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "12.0.1",
           "FluentValidation.DependencyInjectionExtensions": "11.8.0",
           "MediatR": "12.1.1",
+          "Microsoft.Extensions.Configuration.Abstractions": "9.0.0",
           "QuoteManagement.Domain": "1.0.0"
         },
         "compile": {

@@ -2,7 +2,6 @@ using Microsoft.EntityFrameworkCore;
 using QuoteManagement.Domain.Entities;
 using QuoteManagement.Domain.Interfaces;
 using QuoteManagement.Persistence.Context;
-using QuoteManagement.Persistence.Data;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;

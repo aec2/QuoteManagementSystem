@@ -1,5 +1,8 @@
 using QuoteManagement.API.Extensions;
-
+using QuoteManagement.Application;
+using QuoteManagement.Infrastructure;
+using QuoteManagement.Persistence;
+using QuoteManagement.API.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 

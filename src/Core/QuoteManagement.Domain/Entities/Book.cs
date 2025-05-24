@@ -27,5 +27,15 @@ namespace QuoteManagement.Domain.Entities
             
             Title = title;
         }
+
+        public void UpdateTitle(string title)
+        {
+            SetTitle(title);
+        }
+
+        public void UpdateISBN(string isbn)
+        {
+            ISBN = !string.IsNullOrWhiteSpace(isbn) ? new ISBN(isbn) : null;
+        }
     }
 }

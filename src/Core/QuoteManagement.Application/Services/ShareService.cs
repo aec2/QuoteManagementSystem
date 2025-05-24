@@ -1,4 +1,5 @@
 using AutoMapper;
+using Microsoft.Extensions.Configuration;
 using QuoteManagement.Application.Common.Exceptions;
 using QuoteManagement.Application.DTOs;
 using QuoteManagement.Application.Interfaces;
