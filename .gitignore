@@ -1,0 +1,61 @@
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Build results
+bin/
+obj/
+[Bb]uild/
+[Ll]og/
+*.log
+
+# NuGet
+*.nupkg
+.nuget/
+packages/
+*.snupkg
+
+# VS Code
+.vscode/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Others
+*.dbmdl
+*.pdb
+*.cache
+*.sdf
+*.sqlite
+*.mdf
+*.ldf
+
+# Angular
+src/Presentation/QuoteManagement.Angular/node_modules/
+src/Presentation/QuoteManagement.Angular/dist/
+src/Presentation/QuoteManagement.Angular/.angular/
+src/Presentation/QuoteManagement.Angular/tmp/
+src/Presentation/QuoteManagement.Angular/out-tsc/
+src/Presentation/QuoteManagement.Angular/bazel-out/
+src/Presentation/QuoteManagement.Angular/coverage/
+src/Presentation/QuoteManagement.Angular/.sass-cache/
+src/Presentation/QuoteManagement.Angular/connect.lock
+src/Presentation/QuoteManagement.Angular/libpeerconnection.log
+src/Presentation/QuoteManagement.Angular/testem.log
+src/Presentation/QuoteManagement.Angular/typings/
+npm-debug.log
+yarn-error.log
+
+# IDE files
+.idea/
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+.history/
