@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using QuoteManagement.Application.Common.Models;
 using QuoteManagement.Application.DTOs; // Required for AuthorDto
 using QuoteManagement.Application.Interfaces; // Required for IAuthorService
 using System;
@@ -19,53 +20,97 @@ namespace QuoteManagement.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<AuthorDto>>> GetAllAuthors()
+        public async Task<ActionResult<ApiResponse<IEnumerable<AuthorDto>>>> GetAllAuthors()
         {
-            var authors = await _authorService.GetAllAuthorsAsync();
-            return Ok(authors);
+            try
+            {
+                var authors = await _authorService.GetAllAuthorsAsync();
+                return Ok(ApiResponse<IEnumerable<AuthorDto>>.Succeed(authors));
+            }
+            catch (Exception ex)
+            {
+                return Ok(ApiResponse<IEnumerable<AuthorDto>>.Fail("Failed to fetch authors", new List<string> { ex.Message }));
+            }
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<AuthorDto>> GetAuthor(Guid id)
+        public async Task<ActionResult<ApiResponse<AuthorDto>>> GetAuthor(Guid id)
         {
-            var author = await _authorService.GetAuthorByIdAsync(id);
-            return Ok(author); // NotFoundException will be handled by middleware
+            try
+            {
+                var author = await _authorService.GetAuthorByIdAsync(id);
+                return Ok(ApiResponse<AuthorDto>.Succeed(author));
+            }
+            catch (Exception ex)
+            {
+                return Ok(ApiResponse<AuthorDto>.Fail("Failed to fetch author", new List<string> { ex.Message }));
+            }
         }
 
         [HttpGet("search")]
-        public async Task<ActionResult<IEnumerable<AuthorDto>>> SearchAuthors([FromQuery] string term)
+        public async Task<ActionResult<ApiResponse<IEnumerable<AuthorDto>>>> SearchAuthors([FromQuery] string term)
         {
-            var authors = await _authorService.SearchAuthorsAsync(term);
-            return Ok(authors);
+            try
+            {
+                var authors = await _authorService.SearchAuthorsAsync(term);
+                return Ok(ApiResponse<IEnumerable<AuthorDto>>.Succeed(authors));
+            }
+            catch (Exception ex)
+            {
+                return Ok(ApiResponse<IEnumerable<AuthorDto>>.Fail("Failed to search authors", new List<string> { ex.Message }));
+            }
         }
 
         [HttpPost]
-        public async Task<ActionResult<AuthorDto>> CreateAuthor([FromBody] AuthorCreateDto authorCreateDto) // Assuming a simple DTO for creation
+        public async Task<ActionResult<ApiResponse<AuthorDto>>> CreateAuthor([FromBody] AuthorCreateDto authorCreateDto)
         {
             if (authorCreateDto == null || string.IsNullOrWhiteSpace(authorCreateDto.Name))
             {
-                return BadRequest("Author name is required.");
+                return Ok(ApiResponse<AuthorDto>.Fail("Author name is required."));
             }
-            var author = await _authorService.CreateAuthorAsync(authorCreateDto.Name);
-            return CreatedAtAction(nameof(GetAuthor), new { id = author.Id }, author);
+
+            try
+            {
+                var author = await _authorService.CreateAuthorAsync(authorCreateDto.Name);
+                return Ok(ApiResponse<AuthorDto>.Succeed(author, "Author created successfully"));
+            }
+            catch (Exception ex)
+            {
+                return Ok(ApiResponse<AuthorDto>.Fail("Failed to create author", new List<string> { ex.Message }));
+            }
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<AuthorDto>> UpdateAuthor(Guid id, [FromBody] AuthorUpdateDto authorUpdateDto) // Assuming a simple DTO for update
+        public async Task<ActionResult<ApiResponse<AuthorDto>>> UpdateAuthor(Guid id, [FromBody] AuthorUpdateDto authorUpdateDto)
         {
-             if (authorUpdateDto == null || string.IsNullOrWhiteSpace(authorUpdateDto.Name))
+            if (authorUpdateDto == null || string.IsNullOrWhiteSpace(authorUpdateDto.Name))
             {
-                return BadRequest("Author name is required for update.");
+                return Ok(ApiResponse<AuthorDto>.Fail("Author name is required for update."));
             }
-            var author = await _authorService.UpdateAuthorAsync(id, authorUpdateDto.Name);
-            return Ok(author);
+
+            try
+            {
+                var author = await _authorService.UpdateAuthorAsync(id, authorUpdateDto.Name);
+                return Ok(ApiResponse<AuthorDto>.Succeed(author, "Author updated successfully"));
+            }
+            catch (Exception ex)
+            {
+                return Ok(ApiResponse<AuthorDto>.Fail("Failed to update author", new List<string> { ex.Message }));
+            }
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAuthor(Guid id)
+        public async Task<ActionResult<ApiResponse<bool>>> DeleteAuthor(Guid id)
         {
-            await _authorService.DeleteAuthorAsync(id);
-            return NoContent();
+            try
+            {
+                await _authorService.DeleteAuthorAsync(id);
+                return Ok(ApiResponse<bool>.Succeed(true, "Author deleted successfully"));
+            }
+            catch (Exception ex)
+            {
+                return Ok(ApiResponse<bool>.Fail("Failed to delete author", new List<string> { ex.Message }));
+            }
         }
     }
 

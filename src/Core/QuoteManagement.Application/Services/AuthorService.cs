@@ -25,8 +25,13 @@ namespace QuoteManagement.Application.Services
 
         public async Task<IEnumerable<AuthorDto>> GetAllAuthorsAsync()
         {
-            var authors = await _authorRepository.GetAllAsync();
-            return _mapper.Map<IEnumerable<AuthorDto>>(authors);
+            return new List<AuthorDto>
+            {
+                new AuthorDto { Id = Guid.NewGuid(), Name = "Mock Author 1", QuoteCount = 2 },
+                new AuthorDto { Id = Guid.NewGuid(), Name = "Mock Author 2", QuoteCount = 5 }
+            };
+            //var authors = await _authorRepository.GetAllAsync();
+            //return _mapper.Map<IEnumerable<AuthorDto>>(authors);
         }
 
         public async Task<AuthorDto> GetAuthorByIdAsync(Guid id)

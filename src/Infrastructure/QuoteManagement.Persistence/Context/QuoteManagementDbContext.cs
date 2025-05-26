@@ -35,16 +35,35 @@ namespace QuoteManagement.Persistence.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // This line can be kept if you plan to add IEntityTypeConfiguration classes,
+            // or removed/commented out if you define all configurations here.
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
-            // Example of configuring Value Objects if not using .OwnsOne in entity configurations
-            // modelBuilder.Entity<Book>().OwnsOne(b => b.ISBN);
-            // modelBuilder.Entity<Quote>().OwnsOne(q => q.PageNumber);
+            // Configure ISBN as an owned type for Book
+            modelBuilder.Entity<Book>(b =>
+            {
+                b.OwnsOne(e => e.ISBN, isbnNavigationBuilder =>
+                {
+                    // This tells EF Core to map the 'Value' property of the ISBN object
+                    // to a column named "ISBN" in the "Books" table.
+                    isbnNavigationBuilder.Property(isbn => isbn.Value).HasColumnName("ISBN");
+                });
+            });
 
+            // Configure PageNumber as an owned type for Quote
+            modelBuilder.Entity<Quote>(q =>
+            {
+                q.OwnsOne(e => e.PageNumber, pageNumberNavigationBuilder =>
+                {
+                    // This tells EF Core to map the 'Value' property of the PageNumber object
+                    // to a column named "PageNumber" in the "Quotes" table.
+                    pageNumberNavigationBuilder.Property(pn => pn.Value).HasColumnName("PageNumber");
+                });
+            });
 
             base.OnModelCreating(modelBuilder);
         }
-        
+
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
             foreach (var entry in ChangeTracker.Entries<IAuditableEntity>())
