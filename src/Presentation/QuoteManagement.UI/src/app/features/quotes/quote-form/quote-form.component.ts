@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../../../core/services/api.service';
 import { Author } from '../../../core/models/author.model';
 import { Book } from '../../../core/models/book.model';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-quote-form',
@@ -23,7 +24,8 @@ export class QuoteFormComponent implements OnInit {
     private fb: FormBuilder,
     private apiService: ApiService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private messageService: MessageService
   ) {
     this.quoteForm = this.fb.group({
       text: ['', [Validators.required, Validators.maxLength(5000)]],
@@ -130,7 +132,10 @@ export class QuoteFormComponent implements OnInit {
       };
 
       this.apiService.updateQuote(this.quoteId, updateRequest).subscribe({
-        next: () => this.router.navigate(['/quotes']),
+        next: () => {
+          this.messageService.add({ severity: 'success', summary: 'Quote updated' });
+          this.router.navigate(['/quotes']);
+        },
         error: (error) => {
           console.error('Error updating quote:', error);
           this.error = 'Failed to update quote. Please try again.';
@@ -150,7 +155,10 @@ export class QuoteFormComponent implements OnInit {
       };
 
       this.apiService.createQuote(createRequest).subscribe({
-        next: () => this.router.navigate(['/quotes']),
+        next: () => {
+          this.messageService.add({ severity: 'success', summary: 'Quote created' });
+          this.router.navigate(['/quotes']);
+        },
         error: (error) => {
           console.error('Error creating quote:', error);
           this.error = 'Failed to create quote. Please try again.';

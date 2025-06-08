@@ -20,6 +20,9 @@ import { TabViewModule } from 'primeng/tabview';
 import { SpeedDialModule } from 'primeng/speeddial';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { MessageModule } from 'primeng/message';
+import { ToastModule } from 'primeng/toast';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 @NgModule({
   declarations: [
@@ -44,9 +47,11 @@ import { MessageModule } from 'primeng/message';
     TabViewModule,
     SpeedDialModule,
     ProgressSpinnerModule,
-    MessageModule
+    MessageModule,
+    ToastModule,
+    ConfirmDialogModule
   ],
-  providers: [],
+  providers: [MessageService, ConfirmationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from '../../../core/services/api.service';
 import { Quote } from '../../../core/models/quote.model';
-import { MenuItem } from 'primeng/api';
+import { MenuItem, ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-quotes-list',
@@ -20,7 +20,9 @@ export class QuotesListComponent implements OnInit {
 
   constructor(
     private apiService: ApiService,
-    private router: Router
+    private router: Router,
+    private confirmationService: ConfirmationService,
+    private messageService: MessageService
   ) {}
 
   ngOnInit(): void {
@@ -55,15 +57,19 @@ export class QuotesListComponent implements OnInit {
   }
 
   deleteQuote(id: string): void {
-    if (confirm('Are you sure you want to delete this quote?')) {
-      this.apiService.deleteQuote(id).subscribe({
-        next: () => {
-          this.quotes = this.quotes.filter(quote => quote.id !== id);
-        },
-        error: () => {
-          this.error = 'Failed to delete quote. Please try again later.';
-        }
-      });
-    }
+    this.confirmationService.confirm({
+      message: 'Are you sure you want to delete this quote?',
+      accept: () => {
+        this.apiService.deleteQuote(id).subscribe({
+          next: () => {
+            this.quotes = this.quotes.filter(quote => quote.id !== id);
+            this.messageService.add({ severity: 'success', summary: 'Quote deleted' });
+          },
+          error: () => {
+            this.error = 'Failed to delete quote. Please try again later.';
+          }
+        });
+      }
+    });
   }
 }
