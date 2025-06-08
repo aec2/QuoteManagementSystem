@@ -1,5 +1,9 @@
-<p-menubar [model]="items">
+<p-menubar [model]="items" [style]="{'background': 'var(--color-surface)'}">
   <ng-template pTemplate="start">
-    <a routerLink="/" class="p-text-secondary" style="font-weight:bold">Quote Management</a>
+    <a routerLink="/" class="p-text-secondary font-bold">Quote Management</a>
+  </ng-template>
+  <ng-template pTemplate="end">
+    <button type="button" pButton icon="pi pi-bars" class="p-menubar-button" (click)="mobileMenu.toggle($event)"></button>
+    <p-tieredMenu #mobileMenu [model]="items" popup></p-tieredMenu>
   </ng-template>
 </p-menubar>

@@ -118,6 +118,7 @@
         type="submit"
         class="btn btn-primary"
         [disabled]="isFormInvalid || loading"
+        aria-label="Save quote"
       >
         <span *ngIf="loading" class="spinner-border spinner-border-sm me-2" role="status"></span>
         {{ loading ? 'Saving...' : (isEditing ? 'Update Quote' : 'Create Quote') }}
@@ -127,6 +128,7 @@
         class="btn btn-secondary"
         routerLink="/quotes"
         [disabled]="loading"
+        aria-label="Cancel"
       >
         Cancel
       </button>
