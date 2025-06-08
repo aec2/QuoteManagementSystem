@@ -1,62 +1,79 @@
 <div class="quote-form">
   <h2>{{ isEditing ? 'Edit' : 'Add' }} Quote</h2>
 
-  <div *ngIf="error" class="alert alert-danger">
-    {{ error }}
-  </div>
+  <p-message severity="error" *ngIf="error" [text]="error" class="mb-3"></p-message>
 
   <form [formGroup]="quoteForm" (ngSubmit)="onSubmit()" class="mt-4">
-    <div class="mb-3">
-      <label for="text" class="form-label">Quote Text</label>
+    <!-- Quote Text -->
+    <div class="field mb-3">
+      <label for="text" class="form-label">Quote Text *</label>
       <textarea
         id="text"
         formControlName="text"
         class="form-control"
         rows="4"
+        placeholder="Enter the quote text..."
         [class.is-invalid]="quoteForm.get('text')?.invalid && quoteForm.get('text')?.touched"
       ></textarea>
-      <div class="invalid-feedback" *ngIf="quoteForm.get('text')?.errors?.['required']">
+      <div class="invalid-feedback" *ngIf="quoteForm.get('text')?.errors?.['required'] && quoteForm.get('text')?.touched">
         Quote text is required
       </div>
-      <div class="invalid-feedback" *ngIf="quoteForm.get('text')?.errors?.['maxlength']">
+      <div class="invalid-feedback" *ngIf="quoteForm.get('text')?.errors?.['maxlength'] && quoteForm.get('text')?.touched">
         Quote text must not exceed 5000 characters
       </div>
+      <small class="form-text text-muted">
+        {{ quoteForm.get('text')?.value?.length || 0 }}/5000 characters
+      </small>
     </div>
 
-    <div class="mb-3">
-      <label for="authorId" class="form-label">Author</label>
-      <select id="authorId" formControlName="authorId" class="form-control">
-        <option value="">Select an author</option>
+    <!-- Author Selection -->
+    <div class="field mb-3">
+      <label for="authorId" class="form-label">Author *</label>
+      <select 
+        id="authorId" 
+        formControlName="authorId" 
+        class="form-control"
+        [class.is-invalid]="hasAuthorError">
+        <option value="">Select an existing author</option>
         <option *ngFor="let author of authors" [value]="author.id">
-          {{ author.name }}
+          {{ author.name }} ({{ author.quoteCount }} quotes)
         </option>
       </select>
     </div>
 
-    <div class="mb-3" *ngIf="!quoteForm.get('authorId')?.value">
-      <label for="authorName" class="form-label">New Author Name</label>
+    <!-- New Author Name -->
+    <div class="field mb-3" *ngIf="!quoteForm.get('authorId')?.value">
+      <label for="authorName" class="form-label">
+        Or enter new author name *
+      </label>
       <input
         type="text"
         id="authorName"
         formControlName="authorName"
         class="form-control"
         placeholder="Enter new author name"
+        [class.is-invalid]="hasAuthorError"
       >
+      <div class="invalid-feedback" *ngIf="hasAuthorError">
+        Please select an existing author or enter a new author name
+      </div>
     </div>
 
-    <div class="mb-3">
+    <!-- Book Selection -->
+    <div class="field mb-3">
       <label for="bookId" class="form-label">Book</label>
       <select id="bookId" formControlName="bookId" class="form-control">
-        <option value="">Select a book</option>
+        <option value="">Select an existing book (optional)</option>
         <option *ngFor="let book of books" [value]="book.id">
-          {{ book.title }}
+          {{ book.title }} {{ book.isbn ? '(' + book.isbn + ')' : '' }}
         </option>
       </select>
     </div>
 
-    <div *ngIf="!quoteForm.get('bookId')?.value">
-      <div class="mb-3">
-        <label for="bookTitle" class="form-label">New Book Title</label>
+    <!-- New Book Details -->
+    <div *ngIf="!quoteForm.get('bookId')?.value" class="new-book-section">
+      <div class="field mb-3">
+        <label for="bookTitle" class="form-label">Or enter new book title</label>
         <input
           type="text"
           id="bookTitle"
@@ -66,19 +83,20 @@
         >
       </div>
 
-      <div class="mb-3">
+      <div class="field mb-3">
         <label for="isbn" class="form-label">ISBN (Optional)</label>
         <input
           type="text"
           id="isbn"
           formControlName="isbn"
           class="form-control"
-          placeholder="Enter ISBN"
+          placeholder="Enter ISBN (e.g., 978-0123456789)"
         >
       </div>
     </div>
 
-    <div class="mb-3">
+    <!-- Page Number -->
+    <div class="field mb-4">
       <label for="pageNumber" class="form-label">Page Number (Optional)</label>
       <input
         type="number"
@@ -86,21 +104,29 @@
         formControlName="pageNumber"
         class="form-control"
         min="1"
+        placeholder="Enter page number"
+        [class.is-invalid]="quoteForm.get('pageNumber')?.invalid && quoteForm.get('pageNumber')?.touched"
       >
+      <div class="invalid-feedback" *ngIf="quoteForm.get('pageNumber')?.errors?.['min'] && quoteForm.get('pageNumber')?.touched">
+        Page number must be at least 1
+      </div>
     </div>
 
-    <div class="d-flex gap-2">
+    <!-- Form Actions -->
+    <div class="form-actions">
       <button
         type="submit"
         class="btn btn-primary"
-        [disabled]="quoteForm.invalid || loading"
+        [disabled]="isFormInvalid || loading"
       >
-        {{ isEditing ? 'Update' : 'Create' }} Quote
+        <span *ngIf="loading" class="spinner-border spinner-border-sm me-2" role="status"></span>
+        {{ loading ? 'Saving...' : (isEditing ? 'Update Quote' : 'Create Quote') }}
       </button>
       <button
         type="button"
         class="btn btn-secondary"
         routerLink="/quotes"
+        [disabled]="loading"
       >
         Cancel
       </button>

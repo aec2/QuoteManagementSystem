@@ -1,15 +1,186 @@
 .quotes-list {
-  .card {
-    margin-bottom: 1rem;
+  max-width: 800px;
+  margin: 0 auto;
+  
+  h2 {
+    color: #333;
+    font-weight: 600;
+    margin-bottom: 0;
+  }
+  
+  .p-card {
+    margin-bottom: 1.5rem;
+    border-radius: 8px;
+    overflow: hidden;
     
-    .quote-details {
-      margin-top: 0.5rem;
-      padding-top: 0.5rem;
-      border-top: 1px solid #eee;
+    &:hover {
+      transform: translateY(-2px);
+      transition: transform 0.2s ease;
+    }
+    
+    .p-card-header {
+      .flex {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem;
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        border-bottom: 1px solid #dee2e6;
+        
+        h5 {
+          color: #495057;
+          font-weight: 600;
+          margin: 0;
+        }
+        
+        .p-button {
+          margin-left: 0.5rem;
+          
+          &:first-child {
+            margin-left: 0;
+          }
+        }
+      }
+    }
+    
+    .quote-content {
+      padding: 1.5rem;
+      
+      blockquote {
+        border-left: 4px solid #007bff;
+        background: rgba(0, 123, 255, 0.05);
+        padding: 1rem;
+        margin: 0 0 1rem 0;
+        border-radius: 0 4px 4px 0;
+        
+        p {
+          font-size: 1.1rem;
+          line-height: 1.6;
+          margin: 0;
+          color: #333;
+          font-weight: 400;
+        }
+      }
+      
+      .quote-details {
+        color: #6c757d;
+        font-size: 0.875rem;
+        
+        p {
+          margin: 0.25rem 0;
+          display: flex;
+          align-items: center;
+          
+          i {
+            color: #007bff;
+            margin-right: 0.5rem;
+            width: 16px;
+            text-align: center;
+          }
+        }
+      }
     }
   }
-}.add-btn {
-  position: fixed;
-  right: 1rem;
-  bottom: 1rem;
+  
+  // Search input styling
+  .p-input-icon-left {
+    position: relative;
+    
+    i {
+      position: absolute;
+      left: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #6c757d;
+      z-index: 2;
+    }
+    
+    input {
+      padding-left: 2.5rem;
+      border-radius: 20px;
+      border: 1px solid #ced4da;
+      
+      &:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+      }
+    }
+  }
+  
+  // Empty state styling
+  .p-message {
+    border-radius: 6px;
+    margin-bottom: 1rem;
+    
+    &.p-message-info {
+      background: #e7f3ff;
+      border: 1px solid #b3d9ff;
+      color: #0056b3;
+    }
+    
+    &.p-message-error {
+      background: #ffe6e6;
+      border: 1px solid #ffb3b3;
+      color: #cc0000;
+    }
+  }
+  
+  // Loading spinner
+  .d-flex.justify-content-center {
+    padding: 3rem 0;
+  }
+  
+  // Speed dial positioning
+  :host ::ng-deep .p-speeddial {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 1000;
+    
+    .p-speeddial-button {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+      }
+    }
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .quotes-list {
+    padding: 0 0.5rem;
+    
+    .d-flex.justify-content-between {
+      flex-direction: column;
+      gap: 1rem;
+      align-items: stretch !important;
+      
+      h2 {
+        text-align: center;
+      }
+    }
+    
+    .p-card .p-card-header .flex {
+      flex-direction: column;
+      gap: 1rem;
+      align-items: stretch;
+      text-align: center;
+    }
+    
+    :host ::ng-deep .p-speeddial {
+      bottom: 1rem;
+      right: 1rem;
+      
+      .p-speeddial-button {
+        width: 50px;
+        height: 50px;
+      }
+    }
+  }
 }

@@ -1,25 +1,87 @@
 <div class="quotes-list">
-  <div class="p-d-flex p-jc-between p-ai-center p-mb-3">
+  <div class="d-flex justify-content-between align-items-center mb-3">
     <h2>Quotes</h2>
-    <input pInputText type="text" placeholder="Search" [(ngModel)]="searchTerm" />
+    <span class="p-input-icon-left">
+      <i class="pi pi-search"></i>
+      <input pInputText type="text" placeholder="Search quotes..." [(ngModel)]="searchTerm" />
+    </span>
   </div>
 
-  <p-progressSpinner *ngIf="loading" style="width:50px;height:50px"></p-progressSpinner>
+  <div class="d-flex justify-content-center" *ngIf="loading">
+    <p-progressSpinner styleClass="w-4rem h-4rem"></p-progressSpinner>
+  </div>
 
-  <p-message severity="error" *ngIf="error" [text]="error"></p-message>
-  <p-message severity="info" *ngIf="!loading && filteredQuotes.length === 0" text="No quotes found."></p-message>
+  <p-message severity="error" *ngIf="error && !loading" [text]="error"></p-message>
+  
+  <p-message 
+    severity="info" 
+    *ngIf="!loading && !error && filteredQuotes.length === 0 && searchTerm === ''" 
+    text="No quotes found. Click the + button to add your first quote!">
+  </p-message>
+  
+  <p-message 
+    severity="info" 
+    *ngIf="!loading && !error && filteredQuotes.length === 0 && searchTerm !== ''" 
+    text="No quotes match your search criteria.">
+  </p-message>
 
-  <div *ngFor="let quote of filteredQuotes" class="p-mb-3">
+  <div *ngFor="let quote of filteredQuotes" class="mb-3">
     <p-card>
-      <ng-template pTemplate="subtitle">{{ quote.authorName }}</ng-template>
-      <p>{{ quote.text }}</p>
-      <small>{{ quote.bookTitle }} <span *ngIf="quote.pageNumber">- Page {{ quote.pageNumber }}</span></small>
-      <ng-template pTemplate="footer">
-        <button pButton icon="pi pi-pencil" class="p-button-text p-mr-2" (click)="editQuote(quote.id)"></button>
-        <button pButton icon="pi pi-trash" class="p-button-text p-button-danger" (click)="deleteQuote(quote.id)"></button>
+      <ng-template pTemplate="header">
+        <div class="flex justify-content-between align-items-center p-3 border-bottom-1 surface-border">
+          <h5 class="m-0">{{ quote.authorName }}</h5>
+          <div>
+            <p-button 
+              icon="pi pi-pencil" 
+              [text]="true" 
+              [rounded]="true"
+              severity="secondary"
+              size="small"
+              (onClick)="editQuote(quote.id)"
+              pTooltip="Edit quote">
+            </p-button>
+            <p-button 
+              icon="pi pi-trash" 
+              [text]="true" 
+              [rounded]="true"
+              severity="danger"
+              size="small"
+              (onClick)="deleteQuote(quote.id)"
+              pTooltip="Delete quote">
+            </p-button>
+          </div>
+        </div>
       </ng-template>
+      
+      <div class="quote-content">
+        <blockquote class="border-left-3 border-primary pl-3 my-3">
+          <p class="text-lg line-height-3">{{ quote.text }}</p>
+        </blockquote>
+        
+        <div class="quote-details text-sm text-600">
+          <p class="m-0">
+            <i class="pi pi-book mr-1"></i>
+            {{ quote.bookTitle }}
+            <span *ngIf="quote.pageNumber" class="ml-2">
+              <i class="pi pi-file mr-1"></i>
+              Page {{ quote.pageNumber }}
+            </span>
+          </p>
+          <p class="m-0 mt-1">
+            <i class="pi pi-calendar mr-1"></i>
+            Added {{ quote.dateAdded | date:'shortDate' }}
+          </p>
+        </div>
+      </div>
     </p-card>
   </div>
 
-  <p-speedDial [model]="speedDialItems" direction="up" class="add-btn"></p-speedDial>
+  <p-speedDial 
+    [model]="speedDialItems" 
+    direction="up" 
+    className="fixed bottom-3 right-3"
+    buttonClassName="p-button-help"
+    [showIcon]="'pi pi-plus'"
+    [hideIcon]="'pi pi-times'">
+  </p-speedDial>
 </div>

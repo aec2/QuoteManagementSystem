@@ -35,18 +35,18 @@ Thumbs.db
 *.ldf
 
 # Angular
-src/Presentation/QuoteManagement.Angular/node_modules/
-src/Presentation/QuoteManagement.Angular/dist/
-src/Presentation/QuoteManagement.Angular/.angular/
-src/Presentation/QuoteManagement.Angular/tmp/
-src/Presentation/QuoteManagement.Angular/out-tsc/
-src/Presentation/QuoteManagement.Angular/bazel-out/
-src/Presentation/QuoteManagement.Angular/coverage/
-src/Presentation/QuoteManagement.Angular/.sass-cache/
-src/Presentation/QuoteManagement.Angular/connect.lock
-src/Presentation/QuoteManagement.Angular/libpeerconnection.log
-src/Presentation/QuoteManagement.Angular/testem.log
-src/Presentation/QuoteManagement.Angular/typings/
+src/Presentation/QuoteManagement.UI/node_modules/
+src/Presentation/QuoteManagement.UI/dist/
+src/Presentation/QuoteManagement.UI/.angular/
+src/Presentation/QuoteManagement.UI/tmp/
+src/Presentation/QuoteManagement.UI/out-tsc/
+src/Presentation/QuoteManagement.UI/bazel-out/
+src/Presentation/QuoteManagement.UI/coverage/
+src/Presentation/QuoteManagement.UI/.sass-cache/
+src/Presentation/QuoteManagement.UI/connect.lock
+src/Presentation/QuoteManagement.UI/libpeerconnection.log
+src/Presentation/QuoteManagement.UI/testem.log
+src/Presentation/QuoteManagement.UI/typings/
 npm-debug.log
 yarn-error.log
 

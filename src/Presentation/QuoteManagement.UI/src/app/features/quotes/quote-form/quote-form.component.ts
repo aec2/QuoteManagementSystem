@@ -17,6 +17,7 @@ export class QuoteFormComponent implements OnInit {
   isEditing = false;
   loading = false;
   error: string | null = null;
+  quoteId: string | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -31,23 +32,65 @@ export class QuoteFormComponent implements OnInit {
       bookId: [''],
       bookTitle: [''],
       isbn: [''],
-      pageNumber: [null]
+      pageNumber: [null, [Validators.min(1)]]
     });
+
+    // Add custom validator to ensure either authorId or authorName is provided
+    // this.quoteForm.addValidators(this.authorValidator);
   }
 
   ngOnInit(): void {
     this.loadAuthorsAndBooks();
     
-    const id = this.route.snapshot.paramMap.get('id');
-    if (id) {
+    this.quoteId = this.route.snapshot.paramMap.get('id');
+    if (this.quoteId) {
       this.isEditing = true;
-      this.loadQuote(id);
+      this.loadQuote(this.quoteId);
     }
+
+    // Clear authorName when authorId is selected
+    this.quoteForm.get('authorId')?.valueChanges.subscribe(value => {
+      if (value) {
+        this.quoteForm.get('authorName')?.setValue('');
+      }
+    });
+
+    // Clear bookTitle and isbn when bookId is selected
+    this.quoteForm.get('bookId')?.valueChanges.subscribe(value => {
+      if (value) {
+        this.quoteForm.get('bookTitle')?.setValue('');
+        this.quoteForm.get('isbn')?.setValue('');
+      }
+    });
+  }
+
+  // Custom validator to ensure either authorId or authorName is provided
+  private authorValidator(form: FormGroup) {
+    const authorId = form.get('authorId')?.value;
+    const authorName = form.get('authorName')?.value;
+    
+    if (!authorId && !authorName?.trim()) {
+      return { authorRequired: true };
+    }
+    return null;
   }
 
   loadAuthorsAndBooks(): void {
-    this.apiService.getAuthors().subscribe(authors => this.authors = authors);
-    this.apiService.getBooks().subscribe(books => this.books = books);
+    this.apiService.getAuthors().subscribe({
+      next: (authors) => this.authors = authors,
+      error: (error) => {
+        console.error('Error loading authors:', error);
+        this.error = 'Failed to load authors';
+      }
+    });
+    
+    this.apiService.getBooks().subscribe({
+      next: (books) => this.books = books,
+      error: (error) => {
+        console.error('Error loading books:', error);
+        this.error = 'Failed to load books';
+      }
+    });
   }
 
   loadQuote(id: string): void {
@@ -63,6 +106,7 @@ export class QuoteFormComponent implements OnInit {
         this.loading = false;
       },
       error: (error) => {
+        console.error('Error loading quote:', error);
         this.error = 'Failed to load quote';
         this.loading = false;
       }
@@ -70,33 +114,66 @@ export class QuoteFormComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (this.quoteForm.invalid) return;
+    if (this.quoteForm.invalid) {
+      this.markFormGroupTouched();
+      return;
+    }
 
     const formValue = this.quoteForm.value;
     this.loading = true;
+    this.error = null;
 
-    if (this.isEditing) {
-      const id = this.route.snapshot.paramMap.get('id')!;
+    if (this.isEditing && this.quoteId) {
       const updateRequest = {
         text: formValue.text,
-        pageNumber: formValue.pageNumber
+        pageNumber: formValue.pageNumber || undefined
       };
 
-      this.apiService.updateQuote(id, updateRequest).subscribe({
+      this.apiService.updateQuote(this.quoteId, updateRequest).subscribe({
         next: () => this.router.navigate(['/quotes']),
         error: (error) => {
-          this.error = 'Failed to update quote';
+          console.error('Error updating quote:', error);
+          this.error = 'Failed to update quote. Please try again.';
           this.loading = false;
         }
       });
     } else {
-      this.apiService.createQuote(formValue).subscribe({
+      // Clean up the form data before sending
+      const createRequest = {
+        text: formValue.text,
+        authorId: formValue.authorId || undefined,
+        authorName: formValue.authorName?.trim() || undefined,
+        bookId: formValue.bookId || undefined,
+        bookTitle: formValue.bookTitle?.trim() || undefined,
+        isbn: formValue.isbn?.trim() || undefined,
+        pageNumber: formValue.pageNumber || undefined
+      };
+
+      this.apiService.createQuote(createRequest).subscribe({
         next: () => this.router.navigate(['/quotes']),
         error: (error) => {
-          this.error = 'Failed to create quote';
+          console.error('Error creating quote:', error);
+          this.error = 'Failed to create quote. Please try again.';
           this.loading = false;
         }
       });
     }
+  }
+
+  private markFormGroupTouched(): void {
+    Object.keys(this.quoteForm.controls).forEach(key => {
+      const control = this.quoteForm.get(key);
+      control?.markAsTouched();
+    });
+  }
+
+  get isFormInvalid(): boolean {
+    return this.quoteForm.invalid;
+  }
+
+  get hasAuthorError(): boolean {
+    const authorId = this.quoteForm.get('authorId')?.value;
+    const authorName = this.quoteForm.get('authorName')?.value;
+    return this.quoteForm.hasError('authorRequired') && this.quoteForm.touched;
   }
 }
