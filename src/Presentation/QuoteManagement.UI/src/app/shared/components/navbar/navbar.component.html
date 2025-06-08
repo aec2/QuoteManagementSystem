@@ -4,6 +4,6 @@
   </ng-template>
   <ng-template pTemplate="end">
     <button type="button" pButton icon="pi pi-bars" class="p-menubar-button" (click)="mobileMenu.toggle($event)"></button>
-    <p-tieredMenu #mobileMenu [model]="items" popup></p-tieredMenu>
+    <p-tieredMenu #mobileMenu="tieredMenu" [model]="items" popup></p-tieredMenu>
   </ng-template>
 </p-menubar>

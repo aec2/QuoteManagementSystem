@@ -12,6 +12,7 @@ import { ProfileComponent } from './features/profile/profile.component';
 import { NavbarComponent } from './shared/components/navbar/navbar.component';
 
 import { MenubarModule } from 'primeng/menubar';
+import { TieredMenuModule } from 'primeng/tieredmenu';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
@@ -47,6 +48,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
     TabViewModule,
     SpeedDialModule,
     ProgressSpinnerModule,
+    TieredMenuModule,
     MessageModule,
     ToastModule,
     ConfirmDialogModule

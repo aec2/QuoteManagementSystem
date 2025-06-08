@@ -5,7 +5,11 @@
 
 :root {
   --color-primary: #4F46E5;
+  --color-primary-dark: #473FCE;
+  --color-primary-darker: #433BC2;
   --color-secondary: #64748B;
+  --color-secondary-dark: #5D6B81;
+  --color-secondary-darker: #5A687D;
   --color-accent: #F59E0B;
   --color-success: #10B981;
   --color-error: #EF4444;
@@ -77,8 +81,8 @@ h1, h2, h3, h4, h5, h6 {
   border-color: var(--color-primary);
 
   &:hover {
-    background-color: darken(var(--color-primary), 10%);
-    border-color: darken(var(--color-primary), 15%);
+    background-color: var(--color-primary-dark);
+    border-color: var(--color-primary-darker);
   }
 
   &:disabled {
@@ -93,8 +97,8 @@ h1, h2, h3, h4, h5, h6 {
   border-color: var(--color-secondary);
 
   &:hover {
-    background-color: darken(var(--color-secondary), 7%);
-    border-color: darken(var(--color-secondary), 10%);
+    background-color: var(--color-secondary-dark);
+    border-color: var(--color-secondary-darker);
   }
 }
 
