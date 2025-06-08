@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using System.Linq;
+
 namespace QuoteManagement.Domain.ValueObjects
 {
     public abstract class ValueObject
