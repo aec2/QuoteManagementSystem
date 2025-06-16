@@ -1,0 +1,31 @@
+.feed {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  background-color: #f9f9f9;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+}
+
+.feed-item {
+  margin-bottom: 12px;
+  padding: 12px;
+  background-color: #ffffff;
+  border: 1px solid #dddddd;
+  border-radius: 4px;
+  transition: box-shadow 0.2s;
+}
+
+.feed-item:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.feed-title {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.feed-content {
+  font-size: 1em;
+  color: #333333;
+}

@@ -1,0 +1,12 @@
+<div>
+  <h1>Feed Component</h1>
+  <div class="feed-container">
+    <h2>Your Feed</h2>
+    <ul>
+      <li *ngFor="let item of feedItems">
+        <h3>{{ item.title }}</h3>
+        <p>{{ item.content }}</p>
+      </li>
+    </ul>
+  </div>
+</div>
