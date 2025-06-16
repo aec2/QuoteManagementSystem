@@ -1,31 +1,353 @@
-.feed {
+
+.feed-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 1.5rem;
+  min-height: 100vh;
+  background: var(--surface-ground);
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+  }
+}
+
+.feed-header {
+  text-align: center;
+  margin-bottom: 2rem;
+
+  .feed-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-600));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+
+    @media (max-width: 768px) {
+      font-size: 2rem;
+    }
+  }
+
+  .feed-subtitle {
+    font-size: 1.125rem;
+    color: var(--text-color-secondary);
+    margin: 0;
+  }
+}
+
+.loading-container {
   display: flex;
   flex-direction: column;
-  padding: 16px;
-  background-color: #f9f9f9;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
+  gap: 1.5rem;
 }
 
-.feed-item {
-  margin-bottom: 12px;
-  padding: 12px;
-  background-color: #ffffff;
-  border: 1px solid #dddddd;
-  border-radius: 4px;
-  transition: box-shadow 0.2s;
-}
+.quote-skeleton {
+  .quote-card {
+    border: 1px solid var(--surface-border);
+    border-radius: 12px;
+  }
 
-.feed-item:hover {
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
+  .user-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
 
-.feed-title {
-  font-size: 1.2em;
-  font-weight: bold;
+    .user-details {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+  }
+
+  .quote-content {
+    margin: 1rem 0;
+
+    .quote-meta {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+  }
+
+  .quote-actions {
+    display: flex;
+    gap: 1rem;
+  }
 }
 
 .feed-content {
-  font-size: 1em;
-  color: #333333;
+  .quote-item {
+    margin-bottom: 1.5rem;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .quote-card {
+    border: 1px solid var(--surface-border);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+
+    &:hover {
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+      transform: translateY(-2px);
+    }
+
+    ::ng-deep .p-card-body {
+      padding: 1.5rem;
+    }
+
+    ::ng-deep .p-card-content {
+      padding: 0;
+    }
+  }
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  .user-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+
+    .user-name {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: var(--text-color);
+      margin: 0;
+    }
+
+    .user-nickname {
+      font-size: 0.875rem;
+      color: var(--primary-color);
+      font-weight: 500;
+    }
+
+    .quote-date {
+      font-size: 0.75rem;
+      color: var(--text-color-secondary);
+    }
+  }
+}
+
+.quote-content {
+  .quote-text {
+    font-size: 1.125rem;
+    line-height: 1.6;
+    color: var(--text-color);
+    font-style: italic;
+    margin: 1rem 0;
+    padding: 0;
+    border: none;
+    position: relative;
+    
+    &::before {
+      content: '"';
+      font-size: 3rem;
+      color: var(--primary-color);
+      position: absolute;
+      left: -1rem;
+      top: -0.5rem;
+      font-family: Georgia, serif;
+      opacity: 0.3;
+    }
+  }
+
+  .quote-meta {
+    .quote-attribution {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      align-items: center;
+
+      .author-tag {
+        ::ng-deep .p-tag {
+          background: var(--primary-100);
+          color: var(--primary-700);
+        }
+      }
+
+      .book-tag {
+        ::ng-deep .p-tag {
+          background: var(--surface-100);
+          color: var(--text-color);
+        }
+      }
+    }
+  }
+}
+
+.quote-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+
+  .action-button {
+    ::ng-deep .p-button {
+      border-radius: 20px;
+      font-size: 0.875rem;
+      padding: 0.5rem 1rem;
+      transition: all 0.2s ease;
+
+      &:hover {
+        transform: translateY(-1px);
+      }
+    }
+  }
+
+  .like-button {
+    ::ng-deep .p-button.p-button-danger:not(.p-button-outlined) {
+      background: linear-gradient(135deg, #e91e63, #f06292);
+      border-color: transparent;
+
+      &:hover {
+        background: linear-gradient(135deg, #c2185b, #e91e63);
+      }
+    }
+  }
+
+  @media (max-width: 480px) {
+    justify-content: space-between;
+
+    .action-button {
+      flex: 1;
+      
+      ::ng-deep .p-button {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  }
+}
+
+.empty-state {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+
+  .empty-content {
+    text-align: center;
+    max-width: 300px;
+
+    .empty-icon {
+      font-size: 4rem;
+      color: var(--text-color-secondary);
+      margin-bottom: 1rem;
+    }
+
+    h3 {
+      font-size: 1.5rem;
+      color: var(--text-color);
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      color: var(--text-color-secondary);
+      margin-bottom: 2rem;
+    }
+  }
+}
+
+// PrimeNG Component Customizations
+::ng-deep {
+  .p-divider.p-divider-horizontal {
+    margin: 1rem 0;
+    
+    &:before {
+      border-top-color: var(--surface-border);
+    }
+  }
+
+  .p-avatar {
+    font-weight: 600;
+  }
+
+  .p-tag {
+    border-radius: 16px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    padding: 0.25rem 0.75rem;
+
+    .p-tag-icon {
+      margin-right: 0.25rem;
+    }
+  }
+
+  .p-button.p-button-outlined {
+    border-width: 1px;
+  }
+
+  .p-toast .p-toast-message {
+    border-radius: 8px;
+  }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .feed-container {
+    padding: 1rem 0.5rem;
+  }
+
+  .quote-card {
+    ::ng-deep .p-card-body {
+      padding: 1rem !important;
+    }
+  }
+
+  .user-info {
+    gap: 0.75rem;
+
+    .user-details {
+      .user-name {
+        font-size: 1rem;
+      }
+    }
+  }
+
+  .quote-content {
+    .quote-text {
+      font-size: 1rem;
+      
+      &::before {
+        font-size: 2rem;
+        left: -0.5rem;
+      }
+    }
+  }
+
+  .quote-actions {
+    gap: 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .user-info {
+    .user-details {
+      .user-name {
+        font-size: 0.95rem;
+      }
+      
+      .user-nickname {
+        font-size: 0.8rem;
+      }
+    }
+  }
+
+  .quote-content {
+    .quote-attribution {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+  }
 }
