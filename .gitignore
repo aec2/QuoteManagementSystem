@@ -59,3 +59,4 @@ yarn-error.log
 .settings/
 *.sublime-workspace
 .history/
+/src/Presentation/QuoteManagement.API/ClientApp/node_modules
