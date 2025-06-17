@@ -2,10 +2,6 @@ import {
   AutoFocus
 } from "./chunk-3GFQ46KE.js";
 import {
-  NG_VALUE_ACCESSOR,
-  NgControl
-} from "./chunk-P5LPBBT3.js";
-import {
   BaseComponent
 } from "./chunk-HHH6HE4B.js";
 import {
@@ -14,6 +10,10 @@ import {
 import {
   SharedModule
 } from "./chunk-PIJ2I2NR.js";
+import {
+  NG_VALUE_ACCESSOR,
+  NgControl
+} from "./chunk-P5LPBBT3.js";
 import {
   CommonModule,
   NgClass,
@@ -702,4 +702,4 @@ export {
   RadioButton,
   RadioButtonModule
 };
-//# sourceMappingURL=chunk-23AS7GER.js.map
+//# sourceMappingURL=chunk-EK7NFBH5.js.map

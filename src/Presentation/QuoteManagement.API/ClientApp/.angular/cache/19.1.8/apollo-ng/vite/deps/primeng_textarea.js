@@ -1,8 +1,4 @@
 import {
-  NgControl,
-  NgModel
-} from "./chunk-P5LPBBT3.js";
-import {
   BaseComponent
 } from "./chunk-HHH6HE4B.js";
 import "./chunk-VLKHFF7D.js";
@@ -13,6 +9,10 @@ import "./chunk-US7LRVFB.js";
 import "./chunk-PIJ2I2NR.js";
 import "./chunk-GFVF2TMO.js";
 import "./chunk-PXYLXCRT.js";
+import {
+  NgControl,
+  NgModel
+} from "./chunk-P5LPBBT3.js";
 import "./chunk-Q2IWXDGC.js";
 import {
   Directive,

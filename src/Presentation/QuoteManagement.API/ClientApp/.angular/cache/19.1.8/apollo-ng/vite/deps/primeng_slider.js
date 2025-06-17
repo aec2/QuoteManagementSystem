@@ -3,9 +3,6 @@ import {
 } from "./chunk-3GFQ46KE.js";
 import "./chunk-Z7QHAORV.js";
 import {
-  NG_VALUE_ACCESSOR
-} from "./chunk-P5LPBBT3.js";
-import {
   BaseComponent
 } from "./chunk-HHH6HE4B.js";
 import "./chunk-VLKHFF7D.js";
@@ -24,6 +21,9 @@ import {
   removeClass
 } from "./chunk-GFVF2TMO.js";
 import "./chunk-PXYLXCRT.js";
+import {
+  NG_VALUE_ACCESSOR
+} from "./chunk-P5LPBBT3.js";
 import {
   CommonModule,
   NgClass,

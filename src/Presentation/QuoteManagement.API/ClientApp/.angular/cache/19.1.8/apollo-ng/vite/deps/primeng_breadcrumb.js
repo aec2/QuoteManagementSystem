@@ -2,12 +2,12 @@ import {
   Tooltip,
   TooltipModule
 } from "./chunk-VIUSN2IY.js";
+import "./chunk-Z7QHAORV.js";
 import {
   Router,
   RouterLink,
   RouterModule
 } from "./chunk-MYYVJL33.js";
-import "./chunk-Z7QHAORV.js";
 import "./chunk-37UJSS37.js";
 import {
   ChevronRightIcon,

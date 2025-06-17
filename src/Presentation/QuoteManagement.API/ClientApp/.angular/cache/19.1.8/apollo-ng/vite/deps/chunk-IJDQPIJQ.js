@@ -1,7 +1,4 @@
 import {
-  NgModel
-} from "./chunk-P5LPBBT3.js";
-import {
   BaseComponent
 } from "./chunk-HHH6HE4B.js";
 import {
@@ -10,6 +7,9 @@ import {
 import {
   isEmpty
 } from "./chunk-PXYLXCRT.js";
+import {
+  NgModel
+} from "./chunk-P5LPBBT3.js";
 import {
   Directive,
   HostListener,
@@ -289,4 +289,4 @@ export {
   InputText,
   InputTextModule
 };
-//# sourceMappingURL=chunk-S6HI65Y3.js.map
+//# sourceMappingURL=chunk-IJDQPIJQ.js.map

@@ -1,7 +1,4 @@
 import {
-  NG_VALUE_ACCESSOR
-} from "./chunk-P5LPBBT3.js";
-import {
   Ripple
 } from "./chunk-ERPCM6ED.js";
 import {
@@ -14,6 +11,9 @@ import {
   PrimeTemplate,
   SharedModule
 } from "./chunk-PIJ2I2NR.js";
+import {
+  NG_VALUE_ACCESSOR
+} from "./chunk-P5LPBBT3.js";
 import {
   CommonModule,
   NgClass,
@@ -706,4 +706,4 @@ export {
   ToggleButton,
   ToggleButtonModule
 };
-//# sourceMappingURL=chunk-AOITWVUE.js.map
+//# sourceMappingURL=chunk-ZIFBIQXX.js.map
