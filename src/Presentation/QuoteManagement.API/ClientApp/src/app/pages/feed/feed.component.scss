@@ -54,6 +54,16 @@
       justify-content: center;
     }
   }
+
+  // Smaller book covers on mobile
+  .flex.gap-3 {
+    gap: 0.75rem;
+    
+    img {
+      width: 3rem !important;
+      height: 4rem !important;
+    }
+  }
 }
 
 // Dark mode adjustments
