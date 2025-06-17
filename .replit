@@ -6,3 +6,19 @@ channel = "stable-24_05"
 
 [deployment]
 run = ["sh", "-c", "ng serve"]
+
+[workflows]
+runButton = "Angular Dev Server"
+
+[[workflows.workflow]]
+name = "Angular Dev Server"
+author = 4341587
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd src/Presentation/QuoteManagement.API/ClientApp && ng serve --host 0.0.0.0 --port 5000"
+
+[[ports]]
+localPort = 5000
+externalPort = 80
