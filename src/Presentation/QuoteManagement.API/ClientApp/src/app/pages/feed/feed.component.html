@@ -43,7 +43,6 @@
             <div class="text-xs text-400">{{ quote.datePosted | date: 'short' }}</div>
           </div>
         </div>
-
         <!-- Quote Content -->
         <div class="quote-content mb-4">
           <blockquote class="border-left-3 border-primary pl-4 italic text-lg line-height-3 my-4 mb-6">"{{ getDisplayedQuoteText(quote) }}"</blockquote>
@@ -61,29 +60,11 @@
             >
             </p-button>
           </div>
-        </div>
 
-        <!-- Book Cover, Tags and Metadata -->
-        <div class="flex gap-4 mb-4">
-          <!-- Book Cover -->
-          <div class="flex-shrink-0">
-            <div class="book-cover-container">
-              <img 
-                [src]="quote.bookCoverUrl || '/demo/images/ecommerce/blue-book.jpg'" 
-                [alt]="quote.bookName"
-                class="book-cover-image"
-                (error)="onBookCoverError($event)"
-              />
-            </div>
-          </div>
-          
-          <!-- Tags -->
-          <div class="flex-1">
-            <div class="flex flex-wrap gap-2 mb-3">
-              <p-tag [value]="'📖 ' + quote.bookName" severity="info" styleClass="text-sm"> </p-tag>
-              <p-tag [value]="'✍️ ' + quote.author" severity="secondary" styleClass="text-sm"> </p-tag>
-              <p-tag [value]="quote.genre" severity="success" styleClass="text-sm" *ngIf="quote.genre"> </p-tag>
-            </div>
+          <div class="flex flex-wrap gap-2 mb-3 mt-4">
+            <p-tag [value]="'📖 ' + quote.bookName" severity="info" styleClass="text-sm"> </p-tag>
+            <p-tag [value]="'✍️ ' + quote.author" severity="secondary" styleClass="text-sm"> </p-tag>
+            <p-tag [value]="quote.genre" severity="success" styleClass="text-sm" *ngIf="quote.genre"> </p-tag>
           </div>
         </div>
 
@@ -91,13 +72,12 @@
         <div class="flex justify-between align-items-center">
           <div class="flex gap-2">
             <p-button icon="pi pi-heart" [label]="quote.likes.toString()" severity="secondary" size="small" [outlined]="!quote.isLiked" (click)="toggleLike(i)" styleClass="quote-action-btn"> </p-button>
-
-            <p-button icon="pi pi-bookmark" severity="secondary" size="small" [outlined]="!quote.isBookmarked" (click)="toggleBookmark(i)" styleClass="quote-action-btn"> </p-button>
+            <p-button icon="pi pi-comment" [label]="quote.comments.toString()" severity="secondary" size="small" outlined styleClass="quote-action-btn"> </p-button>
           </div>
 
           <div class="flex gap-2">
             <p-button icon="pi pi-copy" severity="secondary" size="small" outlined (click)="copyQuote(quote.quoteText)" pTooltip="Copy quote" tooltipPosition="top"> </p-button>
-
+            <p-button icon="pi pi-bookmark" severity="secondary" size="small" [outlined]="!quote.isBookmarked" (click)="toggleBookmark(i)" styleClass="quote-action-btn"> </p-button>
             <p-button icon="pi pi-share-alt" severity="secondary" size="small" outlined (click)="shareQuote(quote)" pTooltip="Share quote" tooltipPosition="top"> </p-button>
           </div>
         </div>
