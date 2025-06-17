@@ -19,7 +19,6 @@ interface Quote {
   quoteText: string;
   author: string;
   bookName: string;
-  bookCoverUrl?: string;
   genre?: string;
   datePosted: Date;
   likes: number;
@@ -68,7 +67,6 @@ export class FeedComponent implements OnInit {
           quoteText: 'It is our choices, Harry, that show what we truly are, far more than our abilities.',
           author: 'J.K. Rowling',
           bookName: 'Harry Potter and the Chamber of Secrets',
-          bookCoverUrl: '/demo/images/books/harry-potter.jpg',
           genre: 'Fantasy',
           datePosted: new Date(2024, 5, 15, 10, 30),
           likes: 127,
@@ -83,7 +81,6 @@ export class FeedComponent implements OnInit {
           quoteText: 'The sky above the port was the color of television, tuned to a dead channel.',
           author: 'William Gibson',
           bookName: 'Neuromancer',
-          bookCoverUrl: '/demo/images/books/neuromancer.jpg',
           genre: 'Cyberpunk',
           datePosted: new Date(2024, 5, 14, 16, 45),
           likes: 89,
@@ -98,7 +95,6 @@ export class FeedComponent implements OnInit {
           quoteText: 'It was the best of times, it was the worst of times, it was the age of wisdom, it was the age of foolishness.',
           author: 'Charles Dickens',
           bookName: 'A Tale of Two Cities',
-          bookCoverUrl: '/demo/images/books/tale-two-cities.jpg',
           genre: 'Classic Literature',
           datePosted: new Date(2024, 5, 13, 9, 15),
           likes: 203,
@@ -113,7 +109,6 @@ export class FeedComponent implements OnInit {
           quoteText: 'Man is condemned to be free; because once thrown into the world, he is responsible for everything he does.',
           author: 'Jean-Paul Sartre',
           bookName: 'Being and Nothingness',
-          bookCoverUrl: '/demo/images/books/being-nothingness.jpg',
           genre: 'Philosophy',
           datePosted: new Date(2024, 5, 12, 14, 20),
           likes: 156,
@@ -128,7 +123,6 @@ export class FeedComponent implements OnInit {
           quoteText: 'The truth will set you free, but first it will piss you off.',
           author: 'Gloria Steinem',
           bookName: 'My Life on the Road',
-          bookCoverUrl: '/demo/images/books/my-life-road.jpg',
           genre: 'Biography',
           datePosted: new Date(2024, 5, 11, 11, 30),
           likes: 92,
@@ -143,7 +137,6 @@ export class FeedComponent implements OnInit {
           quoteText: 'Those who cannot remember the past are condemned to repeat it.',
           author: 'George Santayana',
           bookName: 'The Life of Reason',
-          bookCoverUrl: '/demo/images/books/life-reason.jpg',
           genre: 'Philosophy',
           datePosted: new Date(2024, 5, 10, 8, 45),
           likes: 178,
@@ -230,9 +223,5 @@ export class FeedComponent implements OnInit {
         life: 3000
       });
     });
-  }
-
-  onImageError(event: any) {
-    event.target.src = '/demo/images/ecommerce/blue-book.jpg';
   }
 }

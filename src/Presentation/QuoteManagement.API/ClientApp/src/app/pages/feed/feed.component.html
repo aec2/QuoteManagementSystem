@@ -55,34 +55,23 @@
             "{{ quote.quoteText }}"
           </blockquote>
           
-          <!-- Book Cover and Tags -->
-          <div class="flex gap-3 mb-3 mt-4">
-            <div class="flex-shrink-0">
-              <img 
-                [src]="quote.bookCoverUrl || '/demo/images/ecommerce/blue-book.jpg'" 
-                [alt]="quote.bookName"
-                class="w-16 h-20 object-cover rounded shadow-sm border border-surface-200"
-                (error)="onImageError($event)"
-              />
-            </div>
-            <div class="flex flex-wrap gap-2 align-items-start flex-1">
-              <p-tag 
-                [value]="'📖 ' + quote.bookName" 
-                severity="info" 
-                styleClass="text-sm">
-              </p-tag>
-              <p-tag 
-                [value]="'✍️ ' + quote.author" 
-                severity="secondary" 
-                styleClass="text-sm">
-              </p-tag>
-              <p-tag 
-                [value]="quote.genre" 
-                severity="success" 
-                styleClass="text-sm"
-                *ngIf="quote.genre">
-              </p-tag>
-            </div>
+          <div class="flex flex-wrap gap-2 mb-3 mt-4">
+            <p-tag 
+              [value]="'📖 ' + quote.bookName" 
+              severity="info" 
+              styleClass="text-sm">
+            </p-tag>
+            <p-tag 
+              [value]="'✍️ ' + quote.author" 
+              severity="secondary" 
+              styleClass="text-sm">
+            </p-tag>
+            <p-tag 
+              [value]="quote.genre" 
+              severity="success" 
+              styleClass="text-sm"
+              *ngIf="quote.genre">
+            </p-tag>
           </div>
         </div>
 
