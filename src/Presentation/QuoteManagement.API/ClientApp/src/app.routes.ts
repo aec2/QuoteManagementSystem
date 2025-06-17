@@ -10,8 +10,8 @@ export const appRoutes: Routes = [
         children: [
             {
                 path: '',
-                loadComponent: () => import('./app/pages/dashboards/ecommercedashboard').then(c => c.EcommerceDashboard),
-                data: { breadcrumb: 'E-Commerce Dashboard' },
+                loadComponent: () => import('./app/pages/feed/feed.component').then(c => c.FeedComponent),
+                data: { breadcrumb: 'Akış' },
             },
             {
                 path: 'dashboard-banking',
