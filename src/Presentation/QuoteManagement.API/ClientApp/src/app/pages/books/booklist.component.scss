@@ -16,3 +16,14 @@
         .aspect-3-4 {
             aspect-ratio: 3/4;
         }
+        
+        .book-cover-small {
+            max-width: 180px;
+            width: 100%;
+        }
+        
+        @media (max-width: 768px) {
+            .book-cover-small {
+                max-width: 140px;
+            }
+        }

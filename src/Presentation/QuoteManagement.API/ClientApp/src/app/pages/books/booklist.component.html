@@ -7,7 +7,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 <div *ngFor="let book of books" class="book-card">
                     <div class="relative group cursor-pointer">
-                        <div class="aspect-3-4 overflow-hidden rounded-lg shadow-lg">
+                        <div class="aspect-3-4 overflow-hidden rounded-lg shadow-lg book-cover-small mx-auto">
                             <img 
                                 [src]="book.coverImageUrl || '/demo/images/ecommerce/blue-book.jpg'" 
                                 [alt]="book.title"
