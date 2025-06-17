@@ -2,13 +2,7 @@
   <div class="card mb-4">
     <div class="flex justify-between align-items-center mb-4">
       <div class="font-semibold text-2xl">📚 Alıntılar</div>
-      <p-button 
-        label="Alıntı Ekle" 
-        icon="pi pi-plus" 
-        (click)="showBookSearchModal = true"
-        styleClass="add-quote-btn"
-        size="small">
-      </p-button>
+      <p-button label="Alıntı Ekle" icon="pi pi-plus" (click)="showBookSearchModal = true" styleClass="add-quote-btn" size="small"> </p-button>
     </div>
   </div>
 
@@ -103,99 +97,75 @@
 </div>
 
 <!-- Book Search Modal -->
-<p-dialog 
-  header="Kitap Seç" 
-  [(visible)]="showBookSearchModal" 
-  [modal]="true" 
-  [closable]="true"
-  [dismissableMask]="true"
-  [style]="{width: '600px'}"
-  styleClass="book-search-modal">
-  
+<p-dialog header="Kitap Seç" [(visible)]="showBookSearchModal" [modal]="true" [closable]="true" [dismissableMask]="true" [style]="{ width: '600px', minHeight: '400px' }" styleClass="book-search-modal">
   <div class="flex flex-column gap-4">
     <!-- Search Input -->
     <div class="flex flex-column gap-2">
       <label for="bookSearch" class="font-semibold">Kitap Ara</label>
       <span class="p-input-icon-left">
         <i class="pi pi-search"></i>
-        <input 
-          pInputText 
-          id="bookSearch"
-          [(ngModel)]="bookSearchQuery" 
-          (input)="searchBooks()"
-          placeholder="Kitap adı veya yazar ara..."
-          class="w-full"
-          autocomplete="off">
+        <input pInputText id="bookSearch" [(ngModel)]="bookSearchQuery" (input)="searchBooks()" placeholder="Kitap adı veya yazar ara..." class="w-full" autocomplete="off" />
       </span>
     </div>
 
-    <!-- Loading State -->
-    <div *ngIf="searchingBooks" class="text-center py-4">
-      <p-progressSpinner strokeWidth="4" [style]="{width: '50px', height: '50px'}"></p-progressSpinner>
-      <div class="mt-2">Kitaplar aranıyor...</div>
-    </div>
+    <!-- Content Area -->
+    <div class="search-content-area" style="min-height: 250px">
+      <!-- Loading State -->
+      <div *ngIf="searchingBooks" class="flex flex-column align-items-center justify-content-center h-full py-6">
+        <p-progressSpinner strokeWidth="4" [style]="{ width: '50px', height: '50px' }"></p-progressSpinner>
+        <div class="mt-3 text-600">Kitaplar aranıyor...</div>
+      </div>
 
-    <!-- Empty State -->
-    <div *ngIf="!searchingBooks && bookSearchQuery && searchResults.length === 0" class="text-center py-4">
-      <i class="pi pi-search text-4xl text-300 mb-3"></i>
-      <div class="text-500">Arama sonucu bulunamadı</div>
-      <div class="text-400 text-sm">Farklı anahtar kelimeler deneyin</div>
-    </div>
+      <!-- Empty State -->
+      <div *ngIf="!searchingBooks && bookSearchQuery && searchResults.length === 0" class="flex flex-column align-items-center justify-content-center h-full py-6">
+        <i class="pi pi-search text-4xl text-300 mb-3"></i>
+        <div class="text-600 font-medium mb-2">Arama sonucu bulunamadı</div>
+        <div class="text-400 text-sm">Farklı anahtar kelimeler deneyin</div>
+      </div>
 
-    <!-- Search Results -->
-    <div *ngIf="!searchingBooks && searchResults.length > 0" class="search-results max-h-20rem overflow-y-auto">
-      <div class="text-sm text-500 mb-3">{{searchResults.length}} sonuç bulundu</div>
-      <div class="flex flex-column">
-        <div 
-          *ngFor="let book of searchResults; let i = index" 
-          class="book-result-item p-3 cursor-pointer hover:bg-surface-50 transition-colors transition-duration-150"
-          [class.border-top]="i > 0"
-          [class.border-surface-200]="i > 0"
-          (click)="selectBookAndProceed(book)"
-          [class.selected]="selectedBook?.id === book.id">
-          
-          <div class="flex align-items-center gap-3">
-            <div class="book-cover-mini">
-              <img 
-                [src]="book.coverImageUrl || '/demo/images/ecommerce/blue-book.jpg'" 
-                [alt]="book.title"
-                class="w-full h-full object-cover border-round"
-                (error)="onBookCoverError($event)">
+      <!-- Search Results -->
+      <div *ngIf="!searchingBooks && searchResults.length > 0" class="search-results">
+        <div class="text-sm text-500 mb-3">{{ searchResults.length }} sonuç bulundu</div>
+        <div class="border-1 border-surface-200 border-round overflow-hidden max-h-20rem overflow-y-auto">
+          <div
+            *ngFor="let book of searchResults; let i = index"
+            class="book-result-item p-3 cursor-pointer hover:bg-surface-50 transition-colors transition-duration-150"
+            [class.border-top]="i > 0"
+            [class.border-surface-200]="i > 0"
+            [class.bg-primary-50]="selectedBook?.id === book.id"
+            (click)="selectBookAndProceed(book)"
+          >
+            <div class="flex flex-column align-items-center text-center gap-3">
+              <!-- Book Cover -->
+              <div class="book-cover-mini" style="width: 64px; height: 96px">
+                <img [src]="book.coverImageUrl || '/demo/images/ecommerce/blue-book.jpg'" [alt]="book.title" class="w-full h-full object-cover border-round shadow-1" (error)="onBookCoverError($event)" />
+              </div>
+
+              <!-- Book Info -->
+              <div class="flex flex-column align-items-center gap-1">
+                <div class="font-semibold text-900 line-height-3">{{ book.title }}</div>
+                <div class="text-600 text-sm">{{ book.author || 'Bilinmeyen Yazar' }}</div>
+                <div class="text-400 text-xs" *ngIf="book.isbn">ISBN: {{ book.isbn }}</div>
+                <p-tag [value]="book.quoteCount + ' alıntı'" severity="info" styleClass="text-xs"> </p-tag>
+              </div>
             </div>
-            
-            <div class="flex-1">
-              <div class="font-semibold text-900 mb-1 line-height-3">{{book.title}}</div>
-              <div class="text-600 text-sm mb-1">{{book.author || 'Bilinmeyen Yazar'}}</div>
-              <div class="text-400 text-xs" *ngIf="book.isbn">ISBN: {{book.isbn}}</div>
-              <p-tag 
-                [value]="book.quoteCount + ' alıntı'" 
-                severity="info" 
-                styleClass="text-xs mt-1">
-              </p-tag>
-            </div>
-            
-            <i class="pi pi-chevron-right text-400"></i>
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- Initial State -->
-    <div *ngIf="!bookSearchQuery && !searchingBooks" class="text-center py-6">
-      <i class="pi pi-book text-4xl text-300 mb-3"></i>
-      <div class="text-500 mb-2">Alıntı eklemek için kitap arayın</div>
-      <div class="text-400 text-sm">Kitap adı veya yazar adı ile arama yapabilirsiniz</div>
+      <!-- Initial State -->
+      <div *ngIf="!bookSearchQuery && !searchingBooks" class="flex flex-column align-items-center justify-content-center h-full py-6">
+        <i class="pi pi-book text-4xl text-300 mb-3"></i>
+        <div class="text-600 font-medium mb-2">Alıntı eklemek için kitap arayın</div>
+        <div class="text-400 text-sm text-center">Kitap adı veya yazar adı ile arama yapabilirsiniz</div>
+      </div>
     </div>
   </div>
 
   <ng-template pTemplate="footer">
-    <p-button 
-      label="İptal" 
-      icon="pi pi-times" 
-      (click)="closeBookSearchModal()"
-      text 
-      severity="secondary">
-    </p-button>
+    <div class="flex justify-content-end">
+      <p-button label="İptal" icon="pi pi-times" (click)="closeBookSearchModal()" text severity="secondary"> </p-button>
+    </div>
   </ng-template>
 </p-dialog>
 
