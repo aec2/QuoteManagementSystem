@@ -1,10 +1,10 @@
 import {
-  AutoFocus
-} from "./chunk-3GFQ46KE.js";
-import {
   Badge,
   BadgeModule
 } from "./chunk-JY2F4UKV.js";
+import {
+  AutoFocus
+} from "./chunk-3GFQ46KE.js";
 import {
   Ripple
 } from "./chunk-ERPCM6ED.js";
@@ -1953,4 +1953,4 @@ export {
   Button,
   ButtonModule
 };
-//# sourceMappingURL=chunk-OY34RIW6.js.map
+//# sourceMappingURL=chunk-S2X4EU46.js.map

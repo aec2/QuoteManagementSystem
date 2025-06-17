@@ -36,6 +36,7 @@ interface Quote {
   templateUrl: './feed.component.html',
   styleUrls: ['./feed.component.scss']
 })
+
 export class FeedComponent implements OnInit {
   quotes: Quote[] = [];
   loading = true;

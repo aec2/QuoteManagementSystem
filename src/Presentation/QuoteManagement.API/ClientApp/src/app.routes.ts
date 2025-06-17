@@ -14,6 +14,11 @@ export const appRoutes: Routes = [
                 data: { breadcrumb: 'Akış' },
             },
             {
+                path: 'books',
+                loadComponent: () => import('./app/pages/books/booklist.component').then(c => c.BookList),
+                data: { breadcrumb: 'Kitaplar' },
+            },
+            {
                 path: 'dashboard-banking',
                 loadComponent: () => import('./app/pages/dashboards/bankingdashboard').then(c => c.BankingDashboard),
                 data: { breadcrumb: 'Banking Dashboard' },

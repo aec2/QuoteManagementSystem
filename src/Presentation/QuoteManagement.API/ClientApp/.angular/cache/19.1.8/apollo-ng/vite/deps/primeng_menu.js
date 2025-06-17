@@ -3,9 +3,6 @@ import {
   TooltipModule
 } from "./chunk-VIUSN2IY.js";
 import {
-  ConnectedOverlayScrollHandler
-} from "./chunk-Z7QHAORV.js";
-import {
   Badge,
   BadgeModule
 } from "./chunk-JY2F4UKV.js";
@@ -14,6 +11,9 @@ import {
   RouterLinkActive,
   RouterModule
 } from "./chunk-MYYVJL33.js";
+import {
+  ConnectedOverlayScrollHandler
+} from "./chunk-Z7QHAORV.js";
 import {
   zindexutils
 } from "./chunk-37UJSS37.js";

@@ -8,6 +8,9 @@ import {
   Checkbox
 } from "./chunk-UABDFQOO.js";
 import {
+  Tooltip
+} from "./chunk-VIUSN2IY.js";
+import {
   Overlay
 } from "./chunk-3V3GKXX7.js";
 import {
@@ -19,9 +22,6 @@ import {
 import {
   Chip
 } from "./chunk-U3I5JNBE.js";
-import {
-  Tooltip
-} from "./chunk-VIUSN2IY.js";
 import {
   AutoFocus
 } from "./chunk-3GFQ46KE.js";

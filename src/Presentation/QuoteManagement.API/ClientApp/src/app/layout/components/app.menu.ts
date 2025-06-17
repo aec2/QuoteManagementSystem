@@ -35,6 +35,11 @@ export class AppMenu {
                         routerLink: ['/'],
                     },
                     {
+                        label: 'Kitaplar',
+                        icon: 'pi pi-fw pi-book',
+                        routerLink: ['/books'],
+                    },
+                    {
                         label: 'Banking',
                         icon: 'pi pi-fw pi-image',
                         routerLink: ['/dashboard-banking'],
