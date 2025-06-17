@@ -44,8 +44,22 @@
           </div>
         </div>
 
-        <!-- Quote Content -->
-        <div class="quote-content mb-4">
+        <!-- Quote Content with Book Cover -->
+        <div class="flex gap-4 mb-4">
+          <!-- Book Cover -->
+          <div class="flex-shrink-0">
+            <div class="book-cover-container">
+              <img 
+                [src]="quote.bookCoverUrl || '/demo/images/ecommerce/blue-book.jpg'" 
+                [alt]="quote.bookName"
+                class="book-cover-image"
+                (error)="onBookCoverError($event)"
+              />
+            </div>
+          </div>
+          
+          <!-- Quote Content -->
+          <div class="quote-content flex-1">
           <blockquote class="border-left-3 border-primary pl-4 italic text-lg line-height-3 my-4 mb-6">"{{ getDisplayedQuoteText(quote) }}"</blockquote>
 
           <!-- Read More/Less Button for Long Quotes -->
@@ -63,9 +77,10 @@
           </div>
 
           <div class="flex flex-wrap gap-2 mb-3 mt-4">
-            <p-tag [value]="'📖 ' + quote.bookName" severity="info" styleClass="text-sm"> </p-tag>
-            <p-tag [value]="'✍️ ' + quote.author" severity="secondary" styleClass="text-sm"> </p-tag>
-            <p-tag [value]="quote.genre" severity="success" styleClass="text-sm" *ngIf="quote.genre"> </p-tag>
+              <p-tag [value]="'📖 ' + quote.bookName" severity="info" styleClass="text-sm"> </p-tag>
+              <p-tag [value]="'✍️ ' + quote.author" severity="secondary" styleClass="text-sm"> </p-tag>
+              <p-tag [value]="quote.genre" severity="success" styleClass="text-sm" *ngIf="quote.genre"> </p-tag>
+            </div>
           </div>
         </div>
 

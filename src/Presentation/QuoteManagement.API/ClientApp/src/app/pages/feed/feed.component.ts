@@ -19,6 +19,7 @@ interface Quote {
   quoteText: string;
   author: string;
   bookName: string;
+  bookCoverUrl?: string;
   genre?: string;
   datePosted: Date;
   likes: number;
@@ -69,6 +70,7 @@ export class FeedComponent implements OnInit {
           quoteText: 'It is our choices, Harry, that show what we truly are, far more than our abilities.',
           author: 'J.K. Rowling',
           bookName: 'Harry Potter and the Chamber of Secrets',
+          bookCoverUrl: '/demo/images/ecommerce/blue-book.jpg',
           genre: 'Fantasy',
           datePosted: new Date(2024, 5, 15, 10, 30),
           likes: 127,
@@ -83,6 +85,7 @@ export class FeedComponent implements OnInit {
           quoteText: 'The sky above the port was the color of television, tuned to a dead channel.',
           author: 'William Gibson',
           bookName: 'Neuromancer',
+          bookCoverUrl: '/demo/images/ecommerce/blue-book.jpg',
           genre: 'Cyberpunk',
           datePosted: new Date(2024, 5, 14, 16, 45),
           likes: 89,
@@ -97,6 +100,7 @@ export class FeedComponent implements OnInit {
           quoteText: 'It was the best of times, it was the worst of times, it was the age of wisdom, it was the age of foolishness, it was the epoch of belief, it was the epoch of incredulity, it was the season of Light, it was the season of Darkness, it was the spring of hope, it was the winter of despair.',
           author: 'Charles Dickens',
           bookName: 'A Tale of Two Cities',
+          bookCoverUrl: '/demo/images/ecommerce/blue-book.jpg',
           genre: 'Classic Literature',
           datePosted: new Date(2024, 5, 13, 9, 15),
           likes: 203,
@@ -111,6 +115,7 @@ export class FeedComponent implements OnInit {
           quoteText: 'Man is condemned to be free; because once thrown into the world, he is responsible for everything he does. It carries the weight of the whole world on its shoulders; it is responsible for itself and for all men; and it must create the values by which it chooses to live.',
           author: 'Jean-Paul Sartre',
           bookName: 'Being and Nothingness',
+          bookCoverUrl: '/demo/images/ecommerce/blue-book.jpg',
           genre: 'Philosophy',
           datePosted: new Date(2024, 5, 12, 14, 20),
           likes: 156,
@@ -125,6 +130,7 @@ export class FeedComponent implements OnInit {
           quoteText: 'The truth will set you free, but first it will piss you off.',
           author: 'Gloria Steinem',
           bookName: 'My Life on the Road',
+          bookCoverUrl: '/demo/images/ecommerce/blue-book.jpg',
           genre: 'Biography',
           datePosted: new Date(2024, 5, 11, 11, 30),
           likes: 92,
@@ -139,6 +145,7 @@ export class FeedComponent implements OnInit {
           quoteText: 'Those who cannot remember the past are condemned to repeat it.',
           author: 'George Santayana',
           bookName: 'The Life of Reason',
+          bookCoverUrl: '/demo/images/ecommerce/blue-book.jpg',
           genre: 'Philosophy',
           datePosted: new Date(2024, 5, 10, 8, 45),
           likes: 178,
@@ -153,6 +160,7 @@ export class FeedComponent implements OnInit {
           quoteText: 'In vain have I struggled. It will not do. My feelings will not be repressed. You must allow me to tell you how ardently I admire and love you.',
           author: 'Jane Austen',
           bookName: 'Pride and Prejudice',
+          bookCoverUrl: '/demo/images/ecommerce/blue-book.jpg',
           genre: 'Romance',
           datePosted: new Date(2024, 5, 9, 20, 15),
           likes: 245,
@@ -167,6 +175,7 @@ export class FeedComponent implements OnInit {
           quoteText: 'Big Brother is watching you. The Party seeks power entirely for its own sake. We are not interested in the good of others; we are interested solely in power, pure power. What we shall destroy you with is the very idea that power belongs to anyone but us.',
           author: 'George Orwell',
           bookName: '1984',
+          bookCoverUrl: '/demo/images/ecommerce/blue-book.jpg',
           genre: 'Dystopian Fiction',
           datePosted: new Date(2024, 5, 8, 13, 45),
           likes: 334,
@@ -181,6 +190,7 @@ export class FeedComponent implements OnInit {
           quoteText: 'For most of history, Anonymous was a woman.',
           author: 'Virginia Woolf',
           bookName: 'A Room of One\'s Own',
+          bookCoverUrl: '/demo/images/ecommerce/blue-book.jpg',
           genre: 'Feminist Literature',
           datePosted: new Date(2024, 5, 7, 11, 20),
           likes: 187,
@@ -195,6 +205,7 @@ export class FeedComponent implements OnInit {
           quoteText: 'All that is gold does not glitter, not all those who wander are lost; the old that is strong does not wither, deep roots are not reached by the frost.',
           author: 'J.R.R. Tolkien',
           bookName: 'The Lord of the Rings',
+          bookCoverUrl: '/demo/images/ecommerce/blue-book.jpg',
           genre: 'Fantasy',
           datePosted: new Date(2024, 5, 6, 16, 30),
           likes: 412,
@@ -209,6 +220,7 @@ export class FeedComponent implements OnInit {
           quoteText: 'I went to the woods to live deliberately, to front only the essential facts of life, and see if I could not learn what it had to teach, and not, when I came to die, discover that I had not lived. I did not wish to live what was not life, living is so dear.',
           author: 'Henry David Thoreau',
           bookName: 'Walden',
+          bookCoverUrl: '/demo/images/ecommerce/blue-book.jpg',
           genre: 'Philosophy',
           datePosted: new Date(2024, 5, 5, 7, 45),
           likes: 198,
@@ -223,6 +235,7 @@ export class FeedComponent implements OnInit {
           quoteText: 'And all at once, summer collapsed into fall.',
           author: 'Oscar Wilde',
           bookName: 'The Picture of Dorian Gray',
+          bookCoverUrl: '/demo/images/ecommerce/blue-book.jpg',
           genre: 'Gothic Fiction',
           datePosted: new Date(2024, 5, 4, 19, 10),
           likes: 76,
@@ -237,6 +250,7 @@ export class FeedComponent implements OnInit {
           quoteText: 'The universe is not only stranger than we imagine, it is stranger than we can imagine. In the depths of space and time, in the quantum realm where particles dance with probability, we find that reality itself defies our most fundamental assumptions about existence.',
           author: 'Carl Sagan',
           bookName: 'Cosmos',
+          bookCoverUrl: '/demo/images/ecommerce/blue-book.jpg',
           genre: 'Science',
           datePosted: new Date(2024, 5, 3, 12, 25),
           likes: 267,
@@ -251,6 +265,7 @@ export class FeedComponent implements OnInit {
           quoteText: 'Many years later, as he faced the firing squad, Colonel Aureliano Buendía was to remember that distant afternoon when his father took him to discover ice.',
           author: 'Gabriel García Márquez',
           bookName: 'One Hundred Years of Solitude',
+          bookCoverUrl: '/demo/images/ecommerce/blue-book.jpg',
           genre: 'Magical Realism',
           datePosted: new Date(2024, 5, 2, 15, 40),
           likes: 145,
@@ -265,6 +280,7 @@ export class FeedComponent implements OnInit {
           quoteText: 'The only way to deal with an unfree world is to become so absolutely free that your very existence is an act of rebellion. Freedom is not something that anybody can be given; freedom is something people take and people are as free as they want to be.',
           author: 'James Baldwin',
           bookName: 'Nobody Knows My Name',
+          bookCoverUrl: '/demo/images/ecommerce/blue-book.jpg',
           genre: 'Social Commentary',
           datePosted: new Date(2024, 5, 1, 9, 55),
           likes: 298,
@@ -377,5 +393,9 @@ export class FeedComponent implements OnInit {
 
   isQuoteExpanded(quoteId: number): boolean {
     return !!this.expandedQuotes[quoteId];
+  }
+
+  onBookCoverError(event: any) {
+    event.target.src = '/demo/images/ecommerce/blue-book.jpg';
   }
 }

@@ -4,6 +4,28 @@
   padding: 1rem;
 }
 
+.book-cover-container {
+  width: 80px;
+  height: 120px;
+  flex-shrink: 0;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.book-cover-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  cursor: pointer;
+}
+
 .quote-content {
   blockquote {
     margin: 0;
@@ -48,6 +70,11 @@
 @media (max-width: 768px) {
   .feed-container {
     padding: 0.5rem;
+  }
+  
+  .book-cover-container {
+    width: 60px;
+    height: 90px;
   }
   
   .quote-content blockquote {
