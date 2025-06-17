@@ -1,6 +1,6 @@
 import {
   BaseComponent
-} from "./chunk-HHH6HE4B.js";
+} from "./chunk-PNKU6JVV.js";
 import {
   createElement,
   focus,
@@ -156,4 +156,4 @@ var FocusTrapModule = class _FocusTrapModule {
 export {
   FocusTrap
 };
-//# sourceMappingURL=chunk-V22OBQLB.js.map
+//# sourceMappingURL=chunk-62IPFOHS.js.map
