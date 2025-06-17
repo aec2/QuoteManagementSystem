@@ -97,14 +97,14 @@
 </div>
 
 <!-- Book Search Modal -->
-<p-dialog header="Kitap Seç" [(visible)]="showBookSearchModal" [modal]="true" [closable]="true" [dismissableMask]="true" [style]="{ width: '600px', minHeight: '400px' }" styleClass="book-search-modal">
+<p-dialog header="Alıntı Paylaş" [(visible)]="showBookSearchModal" [modal]="true" [closable]="true" [dismissableMask]="true" [style]="{ width: '600px', minHeight: '400px' }" styleClass="book-search-modal">
   <div class="flex flex-column gap-4">
     <!-- Search Input -->
     <div class="flex flex-column gap-2">
       <label for="bookSearch" class="font-semibold">Kitap Ara</label>
       <span class="p-input-icon-left">
         <i class="pi pi-search"></i>
-        <input pInputText id="bookSearch" [(ngModel)]="bookSearchQuery" (input)="searchBooks()" placeholder="Kitap adı veya yazar ara..." class="w-full" autocomplete="off" />
+        <input pInputText id="bookSearch" [(ngModel)]="bookSearchQuery" (input)="searchBooks()" placeholder="Kitaplarda Ara" class="w-full" autocomplete="off" />
       </span>
     </div>
 
@@ -130,23 +130,41 @@
           <div
             *ngFor="let book of searchResults; let i = index"
             class="book-result-item p-3 cursor-pointer hover:bg-surface-50 transition-colors transition-duration-150"
-            [class.border-top]="i > 0"
-            [class.border-surface-200]="i > 0"
+            [class.border-bottom-1]="i < searchResults.length - 1"
+            [class.border-surface-200]="i < searchResults.length - 1"
             [class.bg-primary-50]="selectedBook?.id === book.id"
             (click)="selectBookAndProceed(book)"
           >
-            <div class="flex flex-column align-items-center text-center gap-3">
+            <div class="flex align-items-start gap-3">
               <!-- Book Cover -->
-              <div class="book-cover-mini" style="width: 64px; height: 96px">
-                <img [src]="book.coverImageUrl || '/demo/images/ecommerce/blue-book.jpg'" [alt]="book.title" class="w-full h-full object-cover border-round shadow-1" (error)="onBookCoverError($event)" />
+              <div class="book-cover-mini flex-shrink-0" style="width: 48px; height: 72px">
+                <img 
+                  [src]="book.coverImageUrl || '/demo/images/ecommerce/blue-book.jpg'" 
+                  [alt]="book.title" 
+                  class="w-full h-full object-cover border-round shadow-1" 
+                  (error)="onBookCoverError($event)" 
+                />
               </div>
 
               <!-- Book Info -->
-              <div class="flex flex-column align-items-center gap-1">
-                <div class="font-semibold text-900 line-height-3">{{ book.title }}</div>
-                <div class="text-600 text-sm">{{ book.author || 'Bilinmeyen Yazar' }}</div>
-                <div class="text-400 text-xs" *ngIf="book.isbn">ISBN: {{ book.isbn }}</div>
-                <p-tag [value]="book.quoteCount + ' alıntı'" severity="info" styleClass="text-xs"> </p-tag>
+              <div class="flex-1 min-w-0">
+                <div class="font-semibold text-900 line-height-3 mb-1 text-overflow-ellipsis overflow-hidden white-space-nowrap">
+                  {{ book.title }}
+                </div>
+                <div class="text-600 text-sm mb-1" *ngIf="book.author">
+                  {{ book.author }}
+                </div>
+                <div class="text-400 text-xs mb-2" *ngIf="book.isbn">
+                  ISBN: {{ book.isbn }}
+                </div>
+                <div class="flex align-items-center gap-2">
+                  <p-tag [value]="book.quoteCount + ' alıntı'" severity="info" styleClass="text-xs"></p-tag>
+                </div>
+              </div>
+
+              <!-- Arrow Icon -->
+              <div class="flex-shrink-0 flex align-items-center">
+                <i class="pi pi-chevron-right text-400"></i>
               </div>
             </div>
           </div>

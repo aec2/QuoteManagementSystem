@@ -173,3 +173,45 @@
     border-color: var(--surface-600);
   }
 }
+.book-search-modal {
+  .book-result-item {
+    &:hover {
+      background-color: var(--surface-50);
+    }
+    
+    .book-cover-mini {
+      img {
+        border: 1px solid var(--surface-200);
+      }
+    }
+    
+    .text-overflow-ellipsis {
+      text-overflow: ellipsis;
+    }
+  }
+  
+  .search-content-area {
+    .search-results {
+      .book-result-item:last-child {
+        border-bottom: none !important;
+      }
+    }
+  }
+}
+
+// Utility classes for text overflow
+.text-overflow-ellipsis {
+  text-overflow: ellipsis;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.white-space-nowrap {
+  white-space: nowrap;
+}
+
+.min-w-0 {
+  min-width: 0;
+}
