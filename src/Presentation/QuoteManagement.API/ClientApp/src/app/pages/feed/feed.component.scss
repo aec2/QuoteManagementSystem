@@ -26,6 +26,16 @@
   }
 }
 
+.quote-expand-btn {
+  color: var(--primary-color);
+  font-size: 0.875rem;
+  
+  &:hover {
+    background-color: var(--primary-50);
+    color: var(--primary-700);
+  }
+}
+
 .card {
   transition: box-shadow 0.3s ease;
   

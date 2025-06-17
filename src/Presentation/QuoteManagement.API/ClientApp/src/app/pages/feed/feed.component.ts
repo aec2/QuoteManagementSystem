@@ -48,6 +48,8 @@ interface Quote {
 export class FeedComponent implements OnInit {
   quotes: Quote[] = [];
   loading = true;
+  expandedQuotes: { [key: number]: boolean } = {};
+  readonly CHARACTER_LIMIT = 250;
 
   constructor(private messageService: MessageService) { }
 
@@ -92,7 +94,7 @@ export class FeedComponent implements OnInit {
           userName: 'Emma Rodriguez',
           userNickname: '@classic_lit',
           userAvatar: 'https://i.pravatar.cc/150?u=emma',
-          quoteText: 'It was the best of times, it was the worst of times, it was the age of wisdom, it was the age of foolishness.',
+          quoteText: 'It was the best of times, it was the worst of times, it was the age of wisdom, it was the age of foolishness, it was the epoch of belief, it was the epoch of incredulity, it was the season of Light, it was the season of Darkness, it was the spring of hope, it was the winter of despair.',
           author: 'Charles Dickens',
           bookName: 'A Tale of Two Cities',
           genre: 'Classic Literature',
@@ -106,7 +108,7 @@ export class FeedComponent implements OnInit {
           userName: 'Michael Johnson',
           userNickname: '@philosophy_mike',
           userAvatar: 'https://i.pravatar.cc/150?u=michael',
-          quoteText: 'Man is condemned to be free; because once thrown into the world, he is responsible for everything he does.',
+          quoteText: 'Man is condemned to be free; because once thrown into the world, he is responsible for everything he does. It carries the weight of the whole world on its shoulders; it is responsible for itself and for all men; and it must create the values by which it chooses to live.',
           author: 'Jean-Paul Sartre',
           bookName: 'Being and Nothingness',
           genre: 'Philosophy',
@@ -141,6 +143,132 @@ export class FeedComponent implements OnInit {
           datePosted: new Date(2024, 5, 10, 8, 45),
           likes: 178,
           isLiked: true,
+          isBookmarked: true
+        },
+        {
+          id: 7,
+          userName: 'Sophia Williams',
+          userNickname: '@romantic_reader',
+          userAvatar: 'https://i.pravatar.cc/150?u=sophia',
+          quoteText: 'In vain have I struggled. It will not do. My feelings will not be repressed. You must allow me to tell you how ardently I admire and love you.',
+          author: 'Jane Austen',
+          bookName: 'Pride and Prejudice',
+          genre: 'Romance',
+          datePosted: new Date(2024, 5, 9, 20, 15),
+          likes: 245,
+          isLiked: false,
+          isBookmarked: true
+        },
+        {
+          id: 8,
+          userName: 'Robert Martinez',
+          userNickname: '@dystopian_thoughts',
+          userAvatar: 'https://i.pravatar.cc/150?u=robert',
+          quoteText: 'Big Brother is watching you. The Party seeks power entirely for its own sake. We are not interested in the good of others; we are interested solely in power, pure power. What we shall destroy you with is the very idea that power belongs to anyone but us.',
+          author: 'George Orwell',
+          bookName: '1984',
+          genre: 'Dystopian Fiction',
+          datePosted: new Date(2024, 5, 8, 13, 45),
+          likes: 334,
+          isLiked: true,
+          isBookmarked: false
+        },
+        {
+          id: 9,
+          userName: 'Maya Patel',
+          userNickname: '@modernist_maya',
+          userAvatar: 'https://i.pravatar.cc/150?u=maya',
+          quoteText: 'For most of history, Anonymous was a woman.',
+          author: 'Virginia Woolf',
+          bookName: 'A Room of One\'s Own',
+          genre: 'Feminist Literature',
+          datePosted: new Date(2024, 5, 7, 11, 20),
+          likes: 187,
+          isLiked: false,
+          isBookmarked: true
+        },
+        {
+          id: 10,
+          userName: 'James Thompson',
+          userNickname: '@adventure_jim',
+          userAvatar: 'https://i.pravatar.cc/150?u=james',
+          quoteText: 'All that is gold does not glitter, not all those who wander are lost; the old that is strong does not wither, deep roots are not reached by the frost.',
+          author: 'J.R.R. Tolkien',
+          bookName: 'The Lord of the Rings',
+          genre: 'Fantasy',
+          datePosted: new Date(2024, 5, 6, 16, 30),
+          likes: 412,
+          isLiked: true,
+          isBookmarked: true
+        },
+        {
+          id: 11,
+          userName: 'Isabella Green',
+          userNickname: '@nature_lover',
+          userAvatar: 'https://i.pravatar.cc/150?u=isabella',
+          quoteText: 'I went to the woods to live deliberately, to front only the essential facts of life, and see if I could not learn what it had to teach, and not, when I came to die, discover that I had not lived. I did not wish to live what was not life, living is so dear.',
+          author: 'Henry David Thoreau',
+          bookName: 'Walden',
+          genre: 'Philosophy',
+          datePosted: new Date(2024, 5, 5, 7, 45),
+          likes: 198,
+          isLiked: false,
+          isBookmarked: false
+        },
+        {
+          id: 12,
+          userName: 'Omar Hassan',
+          userNickname: '@poetic_soul',
+          userAvatar: 'https://i.pravatar.cc/150?u=omar',
+          quoteText: 'And all at once, summer collapsed into fall.',
+          author: 'Oscar Wilde',
+          bookName: 'The Picture of Dorian Gray',
+          genre: 'Gothic Fiction',
+          datePosted: new Date(2024, 5, 4, 19, 10),
+          likes: 76,
+          isLiked: true,
+          isBookmarked: false
+        },
+        {
+          id: 13,
+          userName: 'Rachel Cohen',
+          userNickname: '@sci_enthusiast',
+          userAvatar: 'https://i.pravatar.cc/150?u=rachel',
+          quoteText: 'The universe is not only stranger than we imagine, it is stranger than we can imagine. In the depths of space and time, in the quantum realm where particles dance with probability, we find that reality itself defies our most fundamental assumptions about existence.',
+          author: 'Carl Sagan',
+          bookName: 'Cosmos',
+          genre: 'Science',
+          datePosted: new Date(2024, 5, 3, 12, 25),
+          likes: 267,
+          isLiked: false,
+          isBookmarked: true
+        },
+        {
+          id: 14,
+          userName: 'Andre Silva',
+          userNickname: '@magical_realism',
+          userAvatar: 'https://i.pravatar.cc/150?u=andre',
+          quoteText: 'Many years later, as he faced the firing squad, Colonel Aureliano Buendía was to remember that distant afternoon when his father took him to discover ice.',
+          author: 'Gabriel García Márquez',
+          bookName: 'One Hundred Years of Solitude',
+          genre: 'Magical Realism',
+          datePosted: new Date(2024, 5, 2, 15, 40),
+          likes: 145,
+          isLiked: true,
+          isBookmarked: false
+        },
+        {
+          id: 15,
+          userName: 'Priya Sharma',
+          userNickname: '@wisdom_seeker',
+          userAvatar: 'https://i.pravatar.cc/150?u=priya',
+          quoteText: 'The only way to deal with an unfree world is to become so absolutely free that your very existence is an act of rebellion. Freedom is not something that anybody can be given; freedom is something people take and people are as free as they want to be.',
+          author: 'James Baldwin',
+          bookName: 'Nobody Knows My Name',
+          genre: 'Social Commentary',
+          datePosted: new Date(2024, 5, 1, 9, 55),
+          likes: 298,
+          isLiked: false,
           isBookmarked: true
         }
       ];
@@ -223,5 +351,31 @@ export class FeedComponent implements OnInit {
         life: 3000
       });
     });
+  }
+
+  isQuoteLong(quoteText: string): boolean {
+    return quoteText.length > this.CHARACTER_LIMIT;
+  }
+
+  getTruncatedQuote(quoteText: string): string {
+    return quoteText.substring(0, this.CHARACTER_LIMIT) + '...';
+  }
+
+  getDisplayedQuoteText(quote: Quote): string {
+    if (!this.isQuoteLong(quote.quoteText)) {
+      return quote.quoteText;
+    }
+    
+    return this.expandedQuotes[quote.id] 
+      ? quote.quoteText 
+      : this.getTruncatedQuote(quote.quoteText);
+  }
+
+  toggleQuoteExpansion(quoteId: number): void {
+    this.expandedQuotes[quoteId] = !this.expandedQuotes[quoteId];
+  }
+
+  isQuoteExpanded(quoteId: number): boolean {
+    return !!this.expandedQuotes[quoteId];
   }
 }
