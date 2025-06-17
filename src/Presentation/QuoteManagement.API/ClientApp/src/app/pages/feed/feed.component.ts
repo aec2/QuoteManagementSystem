@@ -15,6 +15,9 @@ import { TooltipModule } from 'primeng/tooltip';
 import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { InputGroupModule } from 'primeng/inputgroup';
+import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
+import { FluidModule } from 'primeng/fluid';
 
 interface Quote {
   id: number;
@@ -46,26 +49,28 @@ interface Book {
   selector: 'app-feed',
   standalone: true,
   imports: [
-    CommonModule, 
+    CommonModule,
     FormsModule,
-    CardModule, 
-    ButtonModule, 
-    AvatarModule, 
-    SkeletonModule, 
-    ToastModule, 
-    DataViewModule, 
-    TagModule, 
-    DividerModule, 
+    CardModule,
+    ButtonModule,
+    AvatarModule,
+    SkeletonModule,
+    ToastModule,
+    DataViewModule,
+    TagModule,
+    DividerModule,
     TooltipModule,
     DialogModule,
     InputTextModule,
-    ProgressSpinnerModule
+    ProgressSpinnerModule,
+    InputGroupModule,
+    InputGroupAddonModule,
+    FluidModule
   ],
   providers: [MessageService],
   templateUrl: './feed.component.html',
   styleUrls: ['./feed.component.scss']
 })
-
 export class FeedComponent implements OnInit {
   quotes: Quote[] = [];
   loading = true;
@@ -508,7 +513,7 @@ export class FeedComponent implements OnInit {
       },
       {
         id: '7',
-        title: 'Harry Potter and the Philosopher\'s Stone',
+        title: "Harry Potter and the Philosopher's Stone",
         author: 'J.K. Rowling',
         isbn: '9780747532699',
         coverImageUrl: 'https://covers.openlibrary.org/b/isbn/9780747532699-L.jpg',
@@ -548,14 +553,11 @@ export class FeedComponent implements OnInit {
     }
 
     this.searchingBooks = true;
-    
+
     // Simulate API delay
     setTimeout(() => {
       const query = this.bookSearchQuery.toLowerCase().trim();
-      this.searchResults = this.allBooks.filter(book => 
-        book.title.toLowerCase().includes(query) ||
-        (book.author && book.author.toLowerCase().includes(query))
-      );
+      this.searchResults = this.allBooks.filter((book) => book.title.toLowerCase().includes(query) || (book.author && book.author.toLowerCase().includes(query)));
       this.searchingBooks = false;
     }, 800);
   }
@@ -563,10 +565,10 @@ export class FeedComponent implements OnInit {
   selectBookAndProceed(book: Book) {
     this.selectedBook = book;
     this.showBookSearchModal = false;
-    
+
     // Navigate to quote adding page with selected book data
-    this.router.navigate(['/pages/quotes/add'], { 
-      state: { selectedBook: book } 
+    this.router.navigate(['/pages/quotes/add'], {
+      state: { selectedBook: book }
     });
   }
 
