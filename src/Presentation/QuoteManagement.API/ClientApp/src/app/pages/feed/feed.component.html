@@ -145,10 +145,12 @@
     <!-- Search Results -->
     <div *ngIf="!searchingBooks && searchResults.length > 0" class="search-results max-h-20rem overflow-y-auto">
       <div class="text-sm text-500 mb-3">{{searchResults.length}} sonuç bulundu</div>
-      <div class="flex flex-column gap-2">
+      <div class="flex flex-column">
         <div 
-          *ngFor="let book of searchResults" 
-          class="book-result-item p-3 border-1 border-surface-300 border-round cursor-pointer hover:bg-surface-50 transition-colors transition-duration-150"
+          *ngFor="let book of searchResults; let i = index" 
+          class="book-result-item p-3 cursor-pointer hover:bg-surface-50 transition-colors transition-duration-150"
+          [class.border-top]="i > 0"
+          [class.border-surface-200]="i > 0"
           (click)="selectBookAndProceed(book)"
           [class.selected]="selectedBook?.id === book.id">
           
