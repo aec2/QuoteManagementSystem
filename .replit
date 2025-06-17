@@ -1,8 +1,8 @@
-modules = ["nodejs-20", "dotnet-7.0", "web", "dotnet-8.0"]
-run = "dotnet run"
+modules = ["nodejs-20", "dotnet-7.0", "web", "angular-node-20", "dotnet-8.0"]
+run = "ng serve"
 
 [nix]
 channel = "stable-24_05"
 
 [deployment]
-run = ["sh", "-c", "dotnet run"]
+run = ["sh", "-c", "ng serve"]
