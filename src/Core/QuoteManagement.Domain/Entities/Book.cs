@@ -7,16 +7,18 @@ namespace QuoteManagement.Domain.Entities
     {
         public string Title { get; private set; }
         public ISBN ISBN { get; private set; }
+        public string CoverImageUrl { get; private set; }
         
         // Navigation property
         public virtual ICollection<Quote> Quotes { get; private set; }
         
         protected Book() { } // For EF
         
-        public Book(string title, string isbn = null)
+        public Book(string title, string isbn = null, string coverImageUrl = null)
         {
             SetTitle(title);
             ISBN = !string.IsNullOrWhiteSpace(isbn) ? new ISBN(isbn) : null;
+            CoverImageUrl = coverImageUrl;
             Quotes = new HashSet<Quote>();
         }
         
@@ -36,6 +38,11 @@ namespace QuoteManagement.Domain.Entities
         public void UpdateISBN(string isbn)
         {
             ISBN = !string.IsNullOrWhiteSpace(isbn) ? new ISBN(isbn) : null;
+        }
+
+        public void UpdateCoverImage(string coverImageUrl)
+        {
+            CoverImageUrl = coverImageUrl;
         }
     }
 }

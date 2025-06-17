@@ -5,6 +5,7 @@ namespace QuoteManagement.Application.DTOs
         public Guid Id { get; set; }
         public string Title { get; set; }
         public string ISBN { get; set; }
+        public string CoverImageUrl { get; set; }
         public int QuoteCount { get; set; }
     }
 }
