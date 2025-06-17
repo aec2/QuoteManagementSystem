@@ -117,8 +117,10 @@
           <!-- Initial State -->
           <div *ngIf="!bookSearchQuery && !searchingBooks" class="flex flex-column align-items-center justify-content-center h-full py-6">
             <i class="pi pi-book text-4xl text-300 mb-3"></i>
-            <div class="text-600 font-medium mb-2">Alıntı eklemek için kitap arayın</div>
-            <div class="text-400 text-sm">Kitap adı veya yazar adı ile arama yapabilirsiniz</div>
+            <div class="flex flex-wrap gap-2 align-items-center justify-content-center">
+              <div class="text-600 font-medium">Alıntı eklemek için kitap arayın</div>
+              <div class="text-400 text-sm">Kitap adı veya yazar adı ile arama yapabilirsiniz</div>
+            </div>
           </div>
           <!-- Loading State -->
           <div *ngIf="searchingBooks" class="flex flex-column align-items-center justify-content-center h-full py-6">
