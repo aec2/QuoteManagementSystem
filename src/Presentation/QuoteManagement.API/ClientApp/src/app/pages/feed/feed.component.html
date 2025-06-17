@@ -99,8 +99,8 @@
 <!-- Book Search Modal -->
 <p-dialog header="Alıntı Paylaş" [(visible)]="showBookSearchModal" [modal]="true" [closable]="true" [dismissableMask]="true" [style]="{ width: '600px', minHeight: '400px' }" styleClass="book-search-modal">
   <div class="p-6">
-    <p-fluid class="grid grid-cols-12 gap-4">
-      <div class="col-span-12">
+    <p-fluid>
+      <div class="flex flex-column gap-4">
         <!-- Search Input -->
         <div class="flex flex-column gap-2">
           <label for="bookSearch" class="font-semibold">Kitap Ara</label>
@@ -111,11 +111,9 @@
             <input pInputText id="bookSearch" [(ngModel)]="bookSearchQuery" (input)="searchBooks()" placeholder="Kitaplarda Ara" class="w-full" autocomplete="off" />
           </p-inputgroup>
         </div>
-      </div>
 
-      <!-- Content Area -->
-      <div class="search-content-area" style="min-height: 250px">
-        <div class="col-span-12">
+        <!-- Content Area -->
+        <div class="search-content-area" style="min-height: 250px">
           <!-- Initial State -->
           <div *ngIf="!bookSearchQuery && !searchingBooks" class="flex flex-column align-items-center justify-content-center h-full py-6">
             <i class="pi pi-book text-4xl text-300 mb-3"></i>
