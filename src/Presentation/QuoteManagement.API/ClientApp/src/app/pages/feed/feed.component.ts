@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { AvatarModule } from 'primeng/avatar';
@@ -10,6 +12,9 @@ import { DataViewModule } from 'primeng/dataview';
 import { TagModule } from 'primeng/tag';
 import { DividerModule } from 'primeng/divider';
 import { TooltipModule } from 'primeng/tooltip';
+import { DialogModule } from 'primeng/dialog';
+import { InputTextModule } from 'primeng/inputtext';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 interface Quote {
   id: number;
@@ -28,10 +33,34 @@ interface Quote {
   isBookmarked: boolean;
 }
 
+interface Book {
+  id: string;
+  title: string;
+  author?: string;
+  isbn?: string;
+  coverImageUrl?: string;
+  quoteCount: number;
+}
+
 @Component({
   selector: 'app-feed',
   standalone: true,
-  imports: [CommonModule, CardModule, ButtonModule, AvatarModule, SkeletonModule, ToastModule, DataViewModule, TagModule, DividerModule, TooltipModule],
+  imports: [
+    CommonModule, 
+    FormsModule,
+    CardModule, 
+    ButtonModule, 
+    AvatarModule, 
+    SkeletonModule, 
+    ToastModule, 
+    DataViewModule, 
+    TagModule, 
+    DividerModule, 
+    TooltipModule,
+    DialogModule,
+    InputTextModule,
+    ProgressSpinnerModule
+  ],
   providers: [MessageService],
   templateUrl: './feed.component.html',
   styleUrls: ['./feed.component.scss']
@@ -43,10 +72,22 @@ export class FeedComponent implements OnInit {
   expandedQuotes: { [key: number]: boolean } = {};
   readonly CHARACTER_LIMIT = 250;
 
-  constructor(private messageService: MessageService) {}
+  // Book Search Modal
+  showBookSearchModal = false;
+  bookSearchQuery = '';
+  searchResults: Book[] = [];
+  searchingBooks = false;
+  selectedBook: Book | null = null;
+  allBooks: Book[] = [];
+
+  constructor(
+    private messageService: MessageService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.loadMockData();
+    this.loadMockBooks();
   }
 
   private loadMockData() {
@@ -413,5 +454,127 @@ export class FeedComponent implements OnInit {
 
   onBookCoverError(event: any) {
     event.target.src = '/demo/images/ecommerce/blue-book.jpg';
+  }
+
+  private loadMockBooks() {
+    this.allBooks = [
+      {
+        id: '1',
+        title: 'The Great Gatsby',
+        author: 'F. Scott Fitzgerald',
+        isbn: '9780743273565',
+        coverImageUrl: 'https://covers.openlibrary.org/b/isbn/9780743273565-L.jpg',
+        quoteCount: 15
+      },
+      {
+        id: '2',
+        title: 'To Kill a Mockingbird',
+        author: 'Harper Lee',
+        isbn: '9780061120084',
+        coverImageUrl: 'https://covers.openlibrary.org/b/isbn/9780061120084-L.jpg',
+        quoteCount: 23
+      },
+      {
+        id: '3',
+        title: '1984',
+        author: 'George Orwell',
+        isbn: '9780452284234',
+        coverImageUrl: 'https://covers.openlibrary.org/b/isbn/9780452284234-L.jpg',
+        quoteCount: 31
+      },
+      {
+        id: '4',
+        title: 'Pride and Prejudice',
+        author: 'Jane Austen',
+        isbn: '9780141439518',
+        coverImageUrl: 'https://covers.openlibrary.org/b/isbn/9780141439518-L.jpg',
+        quoteCount: 18
+      },
+      {
+        id: '5',
+        title: 'The Catcher in the Rye',
+        author: 'J.D. Salinger',
+        isbn: '9780316769174',
+        coverImageUrl: 'https://covers.openlibrary.org/b/isbn/9780316769174-L.jpg',
+        quoteCount: 12
+      },
+      {
+        id: '6',
+        title: 'Lord of the Flies',
+        author: 'William Golding',
+        isbn: '9780571056866',
+        coverImageUrl: 'https://covers.openlibrary.org/b/isbn/9780571056866-L.jpg',
+        quoteCount: 27
+      },
+      {
+        id: '7',
+        title: 'Harry Potter and the Philosopher\'s Stone',
+        author: 'J.K. Rowling',
+        isbn: '9780747532699',
+        coverImageUrl: 'https://covers.openlibrary.org/b/isbn/9780747532699-L.jpg',
+        quoteCount: 42
+      },
+      {
+        id: '8',
+        title: 'The Hobbit',
+        author: 'J.R.R. Tolkien',
+        isbn: '9780547928227',
+        coverImageUrl: 'https://covers.openlibrary.org/b/isbn/9780547928227-L.jpg',
+        quoteCount: 35
+      },
+      {
+        id: '9',
+        title: 'Brave New World',
+        author: 'Aldous Huxley',
+        isbn: '9780060850524',
+        coverImageUrl: 'https://covers.openlibrary.org/b/isbn/9780060850524-L.jpg',
+        quoteCount: 19
+      },
+      {
+        id: '10',
+        title: 'The Chronicles of Narnia',
+        author: 'C.S. Lewis',
+        isbn: '9780066238500',
+        coverImageUrl: 'https://covers.openlibrary.org/b/isbn/9780066238500-L.jpg',
+        quoteCount: 28
+      }
+    ];
+  }
+
+  searchBooks() {
+    if (!this.bookSearchQuery.trim()) {
+      this.searchResults = [];
+      return;
+    }
+
+    this.searchingBooks = true;
+    
+    // Simulate API delay
+    setTimeout(() => {
+      const query = this.bookSearchQuery.toLowerCase().trim();
+      this.searchResults = this.allBooks.filter(book => 
+        book.title.toLowerCase().includes(query) ||
+        (book.author && book.author.toLowerCase().includes(query))
+      );
+      this.searchingBooks = false;
+    }, 800);
+  }
+
+  selectBookAndProceed(book: Book) {
+    this.selectedBook = book;
+    this.showBookSearchModal = false;
+    
+    // Navigate to quote adding page with selected book data
+    this.router.navigate(['/pages/quotes/add'], { 
+      state: { selectedBook: book } 
+    });
+  }
+
+  closeBookSearchModal() {
+    this.showBookSearchModal = false;
+    this.bookSearchQuery = '';
+    this.searchResults = [];
+    this.selectedBook = null;
+    this.searchingBooks = false;
   }
 }

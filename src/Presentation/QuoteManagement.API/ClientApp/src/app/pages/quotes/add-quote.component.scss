@@ -1,0 +1,104 @@
+
+.add-quote-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.selected-book-info {
+  background: var(--surface-50);
+  border: 1px solid var(--surface-200);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  
+  .book-cover {
+    width: 80px;
+    height: 120px;
+    flex-shrink: 0;
+    border-radius: 0.375rem;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.field {
+  .ng-invalid.ng-touched {
+    border-color: var(--red-500);
+    
+    &:focus {
+      box-shadow: 0 0 0 0.2rem rgba(239, 68, 68, 0.25);
+    }
+  }
+}
+
+// Form validation styles
+.p-inputtext.ng-invalid.ng-touched,
+.p-inputtextarea.ng-invalid.ng-touched,
+.p-inputnumber.ng-invalid.ng-touched {
+  border-color: var(--red-500);
+}
+
+// Character counter styling
+.character-counter {
+  transition: color 0.2s ease;
+  
+  &.warning {
+    color: var(--orange-500);
+  }
+  
+  &.danger {
+    color: var(--red-500);
+    font-weight: 600;
+  }
+}
+
+// Save button enhancement
+.p-button[type="submit"] {
+  font-weight: 600;
+  padding: 0.75rem 2rem;
+  
+  &:not(:disabled) {
+    background: linear-gradient(135deg, var(--green-500), var(--green-600));
+    border: none;
+    
+    &:hover {
+      background: linear-gradient(135deg, var(--green-600), var(--green-700));
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .add-quote-container {
+    padding: 0.5rem;
+  }
+  
+  .selected-book-info {
+    padding: 1rem;
+    
+    .book-cover {
+      width: 60px;
+      height: 90px;
+    }
+  }
+  
+  .flex.justify-between {
+    flex-direction: column;
+    gap: 1rem;
+    
+    .flex {
+      justify-content: stretch;
+      width: 100%;
+    }
+  }
+}
+
+// Dark mode adjustments
+@media (prefers-color-scheme: dark) {
+  .selected-book-info {
+    background: var(--surface-800);
+    border-color: var(--surface-600);
+  }
+}

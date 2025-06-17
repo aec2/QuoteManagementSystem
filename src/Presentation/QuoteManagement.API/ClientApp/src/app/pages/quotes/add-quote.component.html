@@ -1,0 +1,193 @@
+
+<div class="add-quote-container">
+  <!-- Header -->
+  <div class="card mb-4">
+    <div class="flex align-items-center justify-between mb-4">
+      <div class="flex align-items-center gap-3">
+        <p-button 
+          icon="pi pi-arrow-left" 
+          (click)="goBackToBookSelection()"
+          text 
+          size="small"
+          pTooltip="Geri dön"
+          tooltipPosition="bottom">
+        </p-button>
+        <div>
+          <h1 class="text-2xl font-bold text-900 m-0">Alıntı Ekle</h1>
+          <p class="text-600 m-0 mt-1">Seçili kitaptan yeni bir alıntı ekleyin</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Selected Book Info (Non-editable) -->
+  <div class="card mb-4" *ngIf="selectedBook">
+    <div class="flex align-items-center justify-between mb-3">
+      <h3 class="text-lg font-semibold text-900 m-0">Seçili Kitap</h3>
+      <p-tag value="Seçildi" severity="success" icon="pi pi-check"></p-tag>
+    </div>
+    
+    <div class="selected-book-info">
+      <div class="flex align-items-start gap-4">
+        <div class="book-cover">
+          <img 
+            [src]="selectedBook.coverImageUrl || '/demo/images/ecommerce/blue-book.jpg'" 
+            [alt]="selectedBook.title"
+            class="w-full h-full object-cover border-round"
+            (error)="onBookCoverError($event)">
+        </div>
+        
+        <div class="flex-1">
+          <h4 class="text-xl font-semibold text-900 mb-2 line-height-3">{{selectedBook.title}}</h4>
+          <p class="text-600 mb-2" *ngIf="selectedBook.author">
+            <i class="pi pi-user mr-2"></i>{{selectedBook.author}}
+          </p>
+          <p class="text-500 text-sm mb-2" *ngIf="selectedBook.isbn">
+            <i class="pi pi-id-card mr-2"></i>ISBN: {{selectedBook.isbn}}
+          </p>
+          <p-tag 
+            [value]="selectedBook.quoteCount + ' mevcut alıntı'" 
+            severity="info" 
+            icon="pi pi-quote-left">
+          </p-tag>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quote Form -->
+  <form [formGroup]="quoteForm" (ngSubmit)="onSubmit()">
+    <div class="card mb-4">
+      <h3 class="text-lg font-semibold text-900 mb-4">Alıntı Bilgileri</h3>
+      
+      <!-- Quote Text -->
+      <div class="field mb-4">
+        <label for="quoteText" class="font-semibold block mb-2">
+          Alıntı Metni <span class="text-red-500">*</span>
+        </label>
+        <textarea 
+          pInputTextarea 
+          id="quoteText"
+          formControlName="quoteText"
+          rows="6" 
+          placeholder="Kitaptan alıntı metnini buraya yazın..."
+          class="w-full"
+          [class.ng-invalid]="isFieldInvalid('quoteText')"
+          autoResize="true">
+        </textarea>
+        
+        <div class="flex justify-between align-items-center mt-2">
+          <small 
+            class="text-red-500" 
+            *ngIf="isFieldInvalid('quoteText')">
+            {{getFieldError('quoteText')}}
+          </small>
+          <small 
+            class="text-500" 
+            [class.text-orange-500]="getCharacterCount() > 800"
+            [class.text-red-500]="getCharacterCount() > 1000">
+            {{getCharacterCount()}}/1000 karakter
+          </small>
+        </div>
+      </div>
+
+      <!-- Page Number -->
+      <div class="field mb-4">
+        <label for="pageNumber" class="font-semibold block mb-2">
+          Sayfa Numarası <span class="text-400">(İsteğe bağlı)</span>
+        </label>
+        <p-inputNumber
+          id="pageNumber"
+          formControlName="pageNumber"
+          placeholder="Örn: 42"
+          [showButtons]="true"
+          [min]="1"
+          [max]="10000"
+          styleClass="w-full md:w-20rem"
+          [class.ng-invalid]="isFieldInvalid('pageNumber')">
+        </p-inputNumber>
+        
+        <small 
+          class="text-red-500 block mt-1" 
+          *ngIf="isFieldInvalid('pageNumber')">
+          {{getFieldError('pageNumber')}}
+        </small>
+      </div>
+
+      <p-divider></p-divider>
+
+      <!-- Categories/Tags -->
+      <div class="field mb-4">
+        <label for="categories" class="font-semibold block mb-2">
+          Kategoriler <span class="text-400">(İsteğe bağlı)</span>
+        </label>
+        <p-multiSelect
+          [options]="categories"
+          [(ngModel)]="selectedCategories"
+          optionLabel="name"
+          placeholder="Alıntınızı kategorilere ayırın"
+          [showClear]="true"
+          [filter]="true"
+          filterPlaceHolder="Kategori ara..."
+          styleClass="w-full"
+          [ngModelOptions]="{standalone: true}"
+          appendTo="body">
+          
+          <ng-template pTemplate="item" let-category>
+            <div class="flex align-items-center gap-2">
+              <span>{{category.name}}</span>
+            </div>
+          </ng-template>
+        </p-multiSelect>
+        
+        <small class="text-500 block mt-1">
+          Alıntınızın konusuna uygun kategoriler seçebilirsiniz
+        </small>
+      </div>
+
+      <!-- Selected Categories Preview -->
+      <div class="field" *ngIf="selectedCategories.length > 0">
+        <label class="font-semibold block mb-2">Seçili Kategoriler</label>
+        <div class="flex flex-wrap gap-2">
+          <p-tag 
+            *ngFor="let category of selectedCategories" 
+            [value]="category.name" 
+            severity="info">
+          </p-tag>
+        </div>
+      </div>
+    </div>
+
+    <!-- Form Actions -->
+    <div class="card">
+      <div class="flex justify-between align-items-center">
+        <p-button 
+          label="İptal" 
+          icon="pi pi-times" 
+          (click)="cancel()"
+          text 
+          severity="secondary">
+        </p-button>
+        
+        <div class="flex gap-2">
+          <p-button 
+            label="Kaydet" 
+            icon="pi pi-check" 
+            type="submit"
+            [loading]="saving"
+            loadingIcon="pi pi-spin pi-spinner"
+            [disabled]="quoteForm.invalid"
+            severity="success">
+          </p-button>
+        </div>
+      </div>
+      
+      <small class="text-500 block mt-2">
+        <i class="pi pi-info-circle mr-1"></i>
+        Alıntınız kaydedildikten sonra ana sayfada görünecektir
+      </small>
+    </div>
+  </form>
+</div>
+
+<p-toast></p-toast>
