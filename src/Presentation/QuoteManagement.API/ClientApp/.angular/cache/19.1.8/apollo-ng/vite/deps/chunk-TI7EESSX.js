@@ -1,6 +1,6 @@
 import {
   Select
-} from "./chunk-TKUI27RM.js";
+} from "./chunk-EDXES5LP.js";
 import {
   InputNumber
 } from "./chunk-2SGOEBPD.js";
@@ -1453,4 +1453,4 @@ export {
   Paginator,
   PaginatorModule
 };
-//# sourceMappingURL=chunk-2LMMN6PF.js.map
+//# sourceMappingURL=chunk-TI7EESSX.js.map
