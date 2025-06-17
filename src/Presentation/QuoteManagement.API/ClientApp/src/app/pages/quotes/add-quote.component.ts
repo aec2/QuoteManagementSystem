@@ -1,4 +1,3 @@
-
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -6,7 +5,7 @@ import { Router } from '@angular/router';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
-import { InputTextareaModule } from 'primeng/inputtextarea';
+import { InputTextarea } from 'primeng/inputtextarea';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { ToastModule } from 'primeng/toast';
@@ -31,20 +30,7 @@ interface Category {
 @Component({
   selector: 'app-add-quote',
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    CardModule,
-    ButtonModule,
-    InputTextModule,
-    InputTextareaModule,
-    InputNumberModule,
-    MultiSelectModule,
-    ToastModule,
-    DividerModule,
-    TagModule
-  ],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, CardModule, ButtonModule, InputTextModule, InputTextarea, InputNumberModule, MultiSelectModule, ToastModule, DividerModule, TagModule],
   providers: [MessageService],
   templateUrl: './add-quote.component.html',
   styleUrls: ['./add-quote.component.scss']
@@ -70,6 +56,7 @@ export class AddQuoteComponent implements OnInit {
   ngOnInit() {
     // Get selected book from navigation state
     const navigation = this.router.getCurrentNavigation();
+    console.log(navigation);
     if (navigation?.extras.state?.['selectedBook']) {
       this.selectedBook = navigation.extras.state['selectedBook'];
     } else {
@@ -117,7 +104,7 @@ export class AddQuoteComponent implements OnInit {
         author: this.selectedBook.author,
         quoteText: this.quoteForm.value.quoteText,
         pageNumber: this.quoteForm.value.pageNumber,
-        categories: this.selectedCategories.map(cat => cat.code)
+        categories: this.selectedCategories.map((cat) => cat.code)
       };
 
       // Simulate API call
@@ -130,7 +117,7 @@ export class AddQuoteComponent implements OnInit {
         });
 
         this.saving = false;
-        
+
         // Navigate back to feed after successful save
         setTimeout(() => {
           this.router.navigate(['/pages/feed']);
@@ -142,7 +129,7 @@ export class AddQuoteComponent implements OnInit {
   }
 
   private markFormGroupTouched() {
-    Object.keys(this.quoteForm.controls).forEach(key => {
+    Object.keys(this.quoteForm.controls).forEach((key) => {
       const control = this.quoteForm.get(key);
       control?.markAsTouched();
     });

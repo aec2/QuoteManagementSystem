@@ -100,10 +100,9 @@
 <p-dialog header="Alıntı Paylaş" [(visible)]="showBookSearchModal" [modal]="true" [closable]="true" [dismissableMask]="true" [style]="{ width: '600px', minHeight: '400px' }" styleClass="book-search-modal">
   <div class="p-6">
     <p-fluid>
-      <div class="flex flex-column gap-4">
+      <div class="grid grid-cols-2 gap-4">
         <!-- Search Input -->
         <div class="flex flex-column gap-2">
-          <label for="bookSearch" class="font-semibold">Kitap Ara</label>
           <p-inputgroup>
             <p-inputgroup-addon>
               <i class="pi pi-search"></i>
@@ -116,16 +115,16 @@
         <div class="search-content-area" style="min-height: 250px">
           <!-- Initial State -->
           <div *ngIf="!bookSearchQuery && !searchingBooks" class="flex flex-column align-items-center justify-content-center h-full py-6">
-            <i class="pi pi-book text-4xl text-300 mb-3"></i>
+            <i class="pi pi-book text-4xl text-300 mb-3 mr-2"></i>
             <div class="flex flex-wrap gap-2 align-items-center justify-content-center">
-              <div class="text-600 font-medium">Alıntı eklemek için kitap arayın</div>
               <div class="text-400 text-sm">Kitap adı veya yazar adı ile arama yapabilirsiniz</div>
             </div>
           </div>
+
           <!-- Loading State -->
           <div *ngIf="searchingBooks" class="flex flex-column align-items-center justify-content-center h-full py-6">
-            <p-progressSpinner strokeWidth="4" [style]="{ width: '50px', height: '50px' }"></p-progressSpinner>
-            <div class="mt-3 text-600">Kitaplar aranıyor...</div>
+            <p-progressSpinner strokeWidth="4" [style]="{ width: '30px', height: '30px' }"></p-progressSpinner>
+            <div class="mt-3 text-600 ml-4">Kitaplar aranıyor...</div>
           </div>
           <!-- Empty State -->
           <div *ngIf="!searchingBooks && bookSearchQuery && searchResults.length === 0" class="flex flex-column align-items-center justify-content-center h-full py-6">

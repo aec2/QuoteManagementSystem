@@ -562,14 +562,23 @@ export class FeedComponent implements OnInit {
     }, 800);
   }
 
-  selectBookAndProceed(book: Book) {
-    this.selectedBook = book;
-    this.showBookSearchModal = false;
+  async selectBookAndProceed(book: Book) {
+    try {
+      this.selectedBook = book;
+      this.showBookSearchModal = false;
 
-    // Navigate to quote adding page with selected book data
-    this.router.navigate(['/pages/quotes/add'], {
-      state: { selectedBook: book }
-    });
+      // Navigate to quote adding page with selected book data
+      await this.router.navigate(['/pages/quotes/add'], {
+        state: { selectedBook: book }
+      });
+    } catch (error) {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Navigation Error',
+        detail: 'Failed to load quote adding page.',
+        life: 3000
+      });
+    }
   }
 
   closeBookSearchModal() {
