@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
-import { InputTextareaModule } from 'primeng/inputtextarea';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { ToastModule } from 'primeng/toast';
@@ -30,7 +29,7 @@ interface Category {
 @Component({
   selector: 'app-add-quote',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, CardModule, ButtonModule, InputTextModule, InputTextareaModule, InputNumberModule, MultiSelectModule, ToastModule, DividerModule, TagModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, CardModule, ButtonModule, InputTextModule, InputNumberModule, MultiSelectModule, ToastModule, DividerModule, TagModule],
   providers: [MessageService],
   templateUrl: './add-quote.component.html',
   styleUrls: ['./add-quote.component.scss']
