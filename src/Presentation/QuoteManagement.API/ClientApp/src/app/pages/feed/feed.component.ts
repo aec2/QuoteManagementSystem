@@ -89,6 +89,7 @@ export class FeedComponent implements OnInit {
   searchingBooks = false;
   selectedBook: Book | null = null;
   allBooks: Book[] = [];
+  openMenus = new Set<number>();
 
   constructor(
     private messageService: MessageService,
@@ -399,13 +400,11 @@ export class FeedComponent implements OnInit {
   }
 
   shareQuote(quote: Quote) {
-    const shareText = `"${quote.quoteText}" - ${quote.author}, ${quote.bookName}`;
-
     if (navigator.share) {
       navigator
         .share({
           title: `Quote from ${quote.bookName}`,
-          text: shareText,
+          text: `"${quote.quoteText}" - ${quote.author}, ${quote.bookName}`,
           url: window.location.href
         })
         .then(() => {
@@ -620,4 +619,45 @@ export class FeedComponent implements OnInit {
     this.activeFilter = filter;
     this.filterQuotes();
   }
+
+    // Menu management methods
+    toggleQuoteMenu(quoteId: number) {
+      if (this.openMenus.has(quoteId)) {
+        this.openMenus.delete(quoteId);
+      } else {
+        // Close all other menus and open this one
+        this.openMenus.clear();
+        this.openMenus.add(quoteId);
+      }
+    }
+  
+    isQuoteMenuOpen(quoteId: number): boolean {
+      return this.openMenus.has(quoteId);
+    }
+  
+    // Quote action methods
+    editQuote(quote: Quote) {
+      this.openMenus.clear();
+      // Navigate to edit page or open edit modal
+      this.messageService.add({
+        severity: 'info',
+        summary: 'Edit Quote',
+        detail: 'Edit functionality to be implemented'
+      });
+    }
+  
+    deleteQuote(quoteId: number) {
+      this.openMenus.clear();
+      // Show confirmation dialog and delete
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Delete Quote',
+        detail: 'Delete functionality to be implemented'
+      });
+    }
+  
+    shareQuoteFromMenu(quote: Quote) {
+      this.openMenus.clear();
+      this.shareQuote(quote);
+    }
 }
