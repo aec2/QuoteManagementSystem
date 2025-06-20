@@ -565,6 +565,7 @@ export class FeedComponent implements OnInit {
   }
 
   async selectBookAndProceed(book: Book) {
+    console.log("🚀 ~ FeedComponent ~ selectBookAndProceed ~ book:", book)
     try {
       this.selectedBook = book;
       this.showBookSearchModal = false;

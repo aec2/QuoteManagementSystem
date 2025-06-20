@@ -53,13 +53,10 @@ export class AddQuoteComponent implements OnInit {
   }
 
   ngOnInit() {
-    // Get selected book from navigation state
     const navigation = this.router.getCurrentNavigation();
-    console.log(navigation);
     if (navigation?.extras.state?.['selectedBook']) {
       this.selectedBook = navigation.extras.state['selectedBook'];
     } else {
-      // Check if book data is in history state
       const state = window.history.state;
       if (state?.selectedBook) {
         this.selectedBook = state.selectedBook;
@@ -69,7 +66,7 @@ export class AddQuoteComponent implements OnInit {
         return;
       }
     }
-
+   console.log("🚀 ~ AddQuoteComponent ~ ngOnInit ~ selectedBook:", this.selectedBook);
     this.loadCategories();
   }
 

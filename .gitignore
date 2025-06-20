@@ -60,3 +60,4 @@ yarn-error.log
 *.sublime-workspace
 .history/
 /src/Presentation/QuoteManagement.API/ClientApp/node_modules
+/src/Presentation/QuoteManagement.API/ClientApp/.angular/cache/19.1.8/apollo-ng/.tsbuildinfo
