@@ -1,87 +1,182 @@
+
 <div class="feed-container">
-  <div class="card mb-4">
-    <div class="flex justify-between align-items-center mb-4">
-      <div class="font-semibold text-2xl">📚 Alıntılar</div>
-      <p-button label="Alıntı Ekle" icon="pi pi-plus" (click)="showBookSearchModal = true" styleClass="add-quote-btn" size="small"> </p-button>
+  <!-- Header Section -->
+  <div class="header-section mb-6">
+    <div class="flex align-items-center justify-between mb-4">
+      <div class="flex align-items-center gap-3">
+        <i class="pi pi-book text-primary text-2xl"></i>
+        <h1 class="text-3xl font-bold text-900 m-0">Digital Quote Book</h1>
+      </div>
+      <div class="flex align-items-center gap-3">
+        <i class="pi pi-bookmark text-500"></i>
+        <span class="text-500">Quote Library</span>
+        <i class="pi pi-lightbulb text-500"></i>
+        <span class="text-500">Inspiration</span>
+        <p-button 
+          label="Add Quote" 
+          icon="pi pi-plus" 
+          (click)="showBookSearchModal = true" 
+          styleClass="add-quote-btn" 
+          size="small">
+        </p-button>
+        <i class="pi pi-user text-500"></i>
+        <span class="text-500">Sign Out</span>
+      </div>
+    </div>
+
+    <!-- Search and Filter Section -->
+    <div class="search-filter-section">
+      <div class="flex align-items-center justify-center gap-4 mb-4">
+        <div class="search-container">
+          <p-inputgroup styleClass="w-20rem">
+            <p-inputgroup-addon>
+              <i class="pi pi-search"></i>
+            </p-inputgroup-addon>
+            <input 
+              pInputText 
+              placeholder="Search quotes, authors, or sources..." 
+              class="w-full" 
+              autocomplete="off" />
+          </p-inputgroup>
+        </div>
+      </div>
+
+      <div class="flex align-items-center justify-center gap-2">
+        <p-button 
+          label="All Quotes" 
+          styleClass="filter-btn-active" 
+          size="small">
+        </p-button>
+        <p-button 
+          label="With Sources" 
+          severity="secondary" 
+          outlined 
+          size="small">
+        </p-button>
+        <p-button 
+          label="Personal Thoughts" 
+          severity="secondary" 
+          outlined 
+          size="small">
+        </p-button>
+      </div>
     </div>
   </div>
 
   <!-- Loading State -->
-  <div *ngIf="loading">
-    <div class="card mb-4" *ngFor="let item of [1, 2, 3]">
-      <div class="font-semibold text-xl mb-4">Quote Loading...</div>
-      <div class="rounded-border border border-surface p-4">
-        <div class="flex mb-4">
-          <p-skeleton shape="circle" size="4rem" styleClass="mr-3"></p-skeleton>
-          <div class="flex-1">
-            <p-skeleton width="10rem" styleClass="mb-2"></p-skeleton>
-            <p-skeleton width="5rem" styleClass="mb-2"></p-skeleton>
-            <p-skeleton height=".5rem"></p-skeleton>
-          </div>
-        </div>
-        <p-skeleton width="100%" height="80px" styleClass="mb-4"></p-skeleton>
+  <div *ngIf="loading" class="grid">
+    <div class="col-12 md:col-4" *ngFor="let item of [1, 2, 3, 4, 5, 6]">
+      <div class="card h-full">
+        <p-skeleton width="100%" height="120px" styleClass="mb-3"></p-skeleton>
+        <p-skeleton width="80%" height="1rem" styleClass="mb-2"></p-skeleton>
+        <p-skeleton width="60%" height="1rem" styleClass="mb-3"></p-skeleton>
         <div class="flex justify-between">
-          <p-skeleton width="6rem" height="2rem"></p-skeleton>
-          <p-skeleton width="4rem" height="2rem"></p-skeleton>
+          <p-skeleton width="4rem" height="1.5rem"></p-skeleton>
+          <p-skeleton width="3rem" height="1.5rem"></p-skeleton>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Quotes Feed -->
-  <div *ngIf="!loading">
-    <div class="card mb-4" *ngFor="let quote of quotes; let i = index">
-      <div class="flex align-items-center mb-3">
-        <i class="pi pi-quote-left text-primary mr-2"></i>
-        <span class="font-semibold text-lg">Alıntı</span>
-      </div>
-
-      <div class="border border-surface rounded-border p-4">
-        <!-- User Info -->
-        <div class="flex align-items-center mb-4">
-          <p-avatar [image]="quote.userAvatar" size="large" shape="circle" styleClass="mr-3"> </p-avatar>
-          <div>
-            <div class="font-semibold text-lg">{{ quote.userName }}</div>
-            <div class="text-sm text-500 mb-1">{{ quote.userNickname }}</div>
-            <div class="text-xs text-400">{{ quote.datePosted | date: 'short' }}</div>
-          </div>
-        </div>
+  <!-- Quotes Grid -->
+  <div *ngIf="!loading" class="grid">
+    <div class="col-12 md:col-4" *ngFor="let quote of quotes; let i = index">
+      <div class="card h-full hover:shadow-3 transition-all transition-duration-200 cursor-pointer">
         <!-- Quote Content -->
         <div class="quote-content mb-4">
-          <blockquote class="border-left-3 border-primary pl-4 italic text-lg line-height-3 my-4 mb-6">"{{ getDisplayedQuoteText(quote) }}"</blockquote>
+          <blockquote class="text-900 font-medium line-height-3 my-0 mb-4">
+            "{{ getDisplayedQuoteText(quote) }}"
+          </blockquote>
 
           <!-- Read More/Less Button for Long Quotes -->
           <div class="text-center mb-3" *ngIf="isQuoteLong(quote.quoteText)">
             <p-button
               [label]="isQuoteExpanded(quote.id) ? 'Show less' : 'Read more'"
-              [icon]="isQuoteExpanded(quote.id) ? 'pi pi-chevron-up' : 'pi pi-chevron-down'"
               severity="secondary"
               size="small"
               text
               (click)="toggleQuoteExpansion(quote.id)"
-              styleClass="quote-expand-btn"
-            >
+              styleClass="quote-expand-btn">
             </p-button>
           </div>
+        </div>
 
-          <div class="flex flex-wrap gap-2 mb-3 mt-4">
-            <p-tag [value]="'📖 ' + quote.bookName" severity="info" styleClass="text-sm"> </p-tag>
-            <p-tag [value]="'✍️ ' + quote.author" severity="secondary" styleClass="text-sm"> </p-tag>
-            <p-tag [value]="quote.genre" severity="success" styleClass="text-sm" *ngIf="quote.genre"> </p-tag>
+        <!-- Quote Metadata -->
+        <div class="quote-metadata">
+          <div class="flex align-items-center gap-2 mb-3">
+            <i class="pi pi-bookmark text-primary"></i>
+            <span class="text-primary font-medium">Sourced</span>
+          </div>
+
+          <!-- Author and Book Info -->
+          <div class="source-info mb-3">
+            <div class="text-900 font-semibold mb-1">{{ quote.author }}</div>
+            <div class="text-600 text-sm">{{ quote.bookName }}</div>
+          </div>
+
+          <!-- Date and User Info -->
+          <div class="flex align-items-center justify-between">
+            <div class="flex align-items-center gap-2">
+              <i class="pi pi-calendar text-400 text-xs"></i>
+              <span class="text-400 text-xs">{{ quote.datePosted | date: 'MMM d, yyyy' }}</span>
+            </div>
+            <div class="flex align-items-center gap-2">
+              <i class="pi pi-user text-400 text-xs"></i>
+              <span class="text-400 text-xs">{{ quote.userNickname }}</span>
+            </div>
           </div>
         </div>
 
         <!-- Action Buttons -->
-        <div class="flex justify-between align-items-center">
+        <div class="flex align-items-center justify-between mt-4 pt-3 border-top-1 border-surface-200">
           <div class="flex gap-2">
-            <p-button icon="pi pi-heart" [label]="quote.likes.toString()" severity="secondary" size="small" [outlined]="!quote.isLiked" (click)="toggleLike(i)" styleClass="quote-action-btn"> </p-button>
-            <p-button icon="pi pi-comment" [label]="quote.comments.toString()" severity="secondary" size="small" outlined styleClass="quote-action-btn"> </p-button>
+            <p-button 
+              icon="pi pi-heart" 
+              [severity]="quote.isLiked ? 'danger' : 'secondary'" 
+              size="small" 
+              [outlined]="!quote.isLiked" 
+              (click)="toggleLike(i)"
+              pTooltip="Like quote" 
+              tooltipPosition="top">
+            </p-button>
+            <p-button 
+              icon="pi pi-comment" 
+              severity="secondary" 
+              size="small" 
+              outlined 
+              pTooltip="Comments" 
+              tooltipPosition="top">
+            </p-button>
           </div>
 
           <div class="flex gap-2">
-            <p-button icon="pi pi-copy" severity="secondary" size="small" outlined (click)="copyQuote(quote.quoteText)" pTooltip="Copy quote" tooltipPosition="top"> </p-button>
-            <p-button icon="pi pi-bookmark" severity="secondary" size="small" [outlined]="!quote.isBookmarked" (click)="toggleBookmark(i)" styleClass="quote-action-btn"> </p-button>
-            <p-button icon="pi pi-share-alt" severity="secondary" size="small" outlined (click)="shareQuote(quote)" pTooltip="Share quote" tooltipPosition="top"> </p-button>
+            <p-button 
+              icon="pi pi-copy" 
+              severity="secondary" 
+              size="small" 
+              outlined 
+              (click)="copyQuote(quote.quoteText)" 
+              pTooltip="Copy quote" 
+              tooltipPosition="top">
+            </p-button>
+            <p-button 
+              icon="pi pi-bookmark" 
+              [severity]="quote.isBookmarked ? 'success' : 'secondary'" 
+              size="small" 
+              [outlined]="!quote.isBookmarked" 
+              (click)="toggleBookmark(i)" 
+              pTooltip="Bookmark" 
+              tooltipPosition="top">
+            </p-button>
+            <p-button 
+              icon="pi pi-share-alt" 
+              severity="secondary" 
+              size="small" 
+              outlined 
+              (click)="shareQuote(quote)" 
+              pTooltip="Share quote" 
+              tooltipPosition="top">
+            </p-button>
           </div>
         </div>
       </div>
@@ -89,15 +184,27 @@
   </div>
 
   <!-- Empty State -->
-  <div *ngIf="!loading && quotes.length === 0" class="card text-center p-6">
+  <div *ngIf="!loading && quotes.length === 0" class="text-center p-8">
     <i class="pi pi-book text-6xl text-300 mb-4"></i>
     <h3 class="text-xl font-semibold mb-2">No quotes yet</h3>
-    <p class="text-500">Start sharing your favorite book quotes!</p>
+    <p class="text-500 mb-4">Start building your digital quote collection!</p>
+    <p-button 
+      label="Add Your First Quote" 
+      icon="pi pi-plus" 
+      (click)="showBookSearchModal = true">
+    </p-button>
   </div>
 </div>
 
 <!-- Book Search Modal -->
-<p-dialog header="Alıntı Paylaş" [(visible)]="showBookSearchModal" [modal]="true" [closable]="true" [dismissableMask]="true" [style]="{ width: '600px', minHeight: '400px' }" styleClass="book-search-modal">
+<p-dialog 
+  header="Alıntı Paylaş" 
+  [(visible)]="showBookSearchModal" 
+  [modal]="true" 
+  [closable]="true" 
+  [dismissableMask]="true" 
+  [style]="{ width: '600px', minHeight: '400px' }" 
+  styleClass="book-search-modal">
   <div class="p-6">
     <p-fluid>
       <div class="grid grid-cols-2 gap-4">
@@ -107,7 +214,14 @@
             <p-inputgroup-addon>
               <i class="pi pi-search"></i>
             </p-inputgroup-addon>
-            <input pInputText id="bookSearch" [(ngModel)]="bookSearchQuery" (input)="searchBooks()" placeholder="Kitaplarda Ara" class="w-full" autocomplete="off" />
+            <input 
+              pInputText 
+              id="bookSearch" 
+              [(ngModel)]="bookSearchQuery" 
+              (input)="searchBooks()" 
+              placeholder="Kitaplarda Ara" 
+              class="w-full" 
+              autocomplete="off" />
           </p-inputgroup>
         </div>
 
@@ -126,12 +240,14 @@
             <p-progressSpinner strokeWidth="4" [style]="{ width: '30px', height: '30px' }"></p-progressSpinner>
             <div class="mt-3 text-600 ml-4">Kitaplar aranıyor...</div>
           </div>
+
           <!-- Empty State -->
           <div *ngIf="!searchingBooks && bookSearchQuery && searchResults.length === 0" class="flex flex-column align-items-center justify-content-center h-full py-6">
             <i class="pi pi-search text-4xl text-300 mb-3"></i>
             <div class="text-600 font-medium mb-2">Arama sonucu bulunamadı</div>
             <div class="text-400 text-sm">Farklı anahtar kelimeler deneyin</div>
           </div>
+
           <!-- Search Results -->
           <div *ngIf="!searchingBooks && searchResults.length > 0" class="search-results">
             <div class="text-sm text-500 mb-3">{{ searchResults.length }} sonuç bulundu</div>
@@ -142,12 +258,15 @@
                 [class.border-bottom-1]="i < searchResults.length - 1"
                 [class.border-surface-200]="i < searchResults.length - 1"
                 [class.bg-primary-50]="selectedBook?.id === book.id"
-                (click)="selectBookAndProceed(book)"
-              >
+                (click)="selectBookAndProceed(book)">
                 <div class="flex align-items-start gap-3">
                   <!-- Book Cover -->
                   <div class="book-cover-mini flex-shrink-0" style="width: 48px; height: 72px">
-                    <img [src]="book.coverImageUrl || '/demo/images/ecommerce/blue-book.jpg'" [alt]="book.title" class="w-full h-full object-cover border-round shadow-1" (error)="onBookCoverError($event)" />
+                    <img 
+                      [src]="book.coverImageUrl || '/demo/images/ecommerce/blue-book.jpg'" 
+                      [alt]="book.title" 
+                      class="w-full h-full object-cover border-round shadow-1" 
+                      (error)="onBookCoverError($event)" />
                   </div>
 
                   <!-- Book Info -->
@@ -179,7 +298,13 @@
 
   <ng-template pTemplate="footer">
     <div class="flex justify-content-end">
-      <p-button label="İptal" icon="pi pi-times" (click)="closeBookSearchModal()" text severity="secondary"> </p-button>
+      <p-button 
+        label="İptal" 
+        icon="pi pi-times" 
+        (click)="closeBookSearchModal()" 
+        text 
+        severity="secondary">
+      </p-button>
     </div>
   </ng-template>
 </p-dialog>
