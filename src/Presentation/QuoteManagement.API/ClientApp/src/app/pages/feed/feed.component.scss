@@ -501,3 +501,13 @@ button {
     opacity: 0;
   }
 }
+
+/** optional polish **/
+.quote-menu {
+  @apply transition-all duration-150;
+  pointer-events: none;          /* prevent ghost clicks */
+}
+.group:hover .quote-menu,
+.group:focus .quote-menu {
+  pointer-events: auto;          /* reactivate when visible */
+}

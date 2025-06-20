@@ -72,6 +72,7 @@ interface Book {
   styleUrls: ['./feed.component.scss']
 })
 export class FeedComponent implements OnInit {
+  shareText: string;
   quotes: Quote[] = [];
   filteredQuotes: Quote[] = [];
   loading = true;
@@ -94,7 +95,9 @@ export class FeedComponent implements OnInit {
   constructor(
     private messageService: MessageService,
     private router: Router
-  ) {}
+  ) {
+    this.shareText = 'Default share text';
+  }
 
   ngOnInit() {
     this.loadMockData();
@@ -111,9 +114,10 @@ export class FeedComponent implements OnInit {
           userName: 'Canzâde Abdullah Efendi',
           userNickname: '@nakkalAmca',
           userAvatar: 'https://1k-cdn.com/resimler/uyeler/68599_1748522060_4IwFt.png',
-          quoteText: 'Türk-Arap münasebetleri üzerine, bu münasebetlerin en gergin olduğu bir zamanda -bir Müslüman hissiyatıyla- imal-i fikr eden değerli mütefekkir Prof. Halil Hâlid, bu husustaki eserini şu cümlelerle bitirmektedir: "Ey Araplar ve Türkler! Sizi şaşırtmaya, sersem etmeye ve birbirinizle uğraştırmaya çalışanlardan sakınınız. Bilgisizlikten doğan kötü zanları artık bırakınız."',
+          quoteText:
+            'Türk-Arap münasebetleri üzerine, bu münasebetlerin en gergin olduğu bir zamanda -bir Müslüman hissiyatıyla- imal-i fikr eden değerli mütefekkir Prof. Halil Hâlid, bu husustaki eserini şu cümlelerle bitirmektedir: "Ey Araplar ve Türkler! Sizi şaşırtmaya, sersem etmeye ve birbirinizle uğraştırmaya çalışanlardan sakınınız. Bilgisizlikten doğan kötü zanları artık bırakınız."',
           author: 'Kadir Mısıroğlu',
-          bookName: 'Filistin Dramı\'nın Düşündürdükleri',
+          bookName: "Filistin Dramı'nın Düşündürdükleri",
           comments: [],
           bookCoverUrl: 'https://1k-cdn.com/resimler/kitaplar/1654598_1734055480_pL4tu.jpg',
           genre: 'Tarih',
@@ -127,7 +131,8 @@ export class FeedComponent implements OnInit {
           userName: 'Taha Kılınç',
           userNickname: '@tahaklinc',
           userAvatar: 'https://1k-cdn.com/resimler/yazarlar/56586_1698730132_Ce92Y.jpg',
-          quoteText: 'Halil İnalcık Hoca aktarıyor: "Hükümdarın gücü askeri güce, askeri güç hazineye, hazine reâyanın ödediği vergilere, vergilerin artışı da adalete bağlıdır. Bu nedenle akıllı hükümdar, kendi egemenliğini korumak ve gücünü arttırmak istiyorsa, reâyaya adaletle muamele etmeli, zulümden kaçmalıdır."',
+          quoteText:
+            'Halil İnalcık Hoca aktarıyor: "Hükümdarın gücü askeri güce, askeri güç hazineye, hazine reâyanın ödediği vergilere, vergilerin artışı da adalete bağlıdır. Bu nedenle akıllı hükümdar, kendi egemenliğini korumak ve gücünü arttırmak istiyorsa, reâyaya adaletle muamele etmeli, zulümden kaçmalıdır."',
           author: 'Taha Kılınç',
           bookName: 'Dalları Gökte Bir Ağaç',
           comments: [],
@@ -143,7 +148,7 @@ export class FeedComponent implements OnInit {
           userName: 'Mark Seemann',
           userNickname: '@markseemann',
           userAvatar: 'https://1k-cdn.com/resimler/yazarlar/81224_1741583284_Rxj1i.jpeg',
-          quoteText: 'Constructor Injection is the act of statically defining the list of required Dependencies by specifying them as parameters to the class\'s constructor.',
+          quoteText: "Constructor Injection is the act of statically defining the list of required Dependencies by specifying them as parameters to the class's constructor.",
           author: 'Mark Seemann',
           bookName: 'Dependency Injection',
           comments: [],
@@ -175,9 +180,10 @@ export class FeedComponent implements OnInit {
           userName: 'İslam Bilgini',
           userNickname: '@islamibilgini',
           userAvatar: 'https://i.pravatar.cc/150?u=islam',
-          quoteText: 'Eğer insanlar bizi seviyorsa bu durum bizim faziletimizden ziyade Allah\'ın, insanların gözünde değerimizi düşürecek kusurlarımızı örtmesindendir. "Eğer üstünüzde Allah\'ın lütuf ve merhameti olmasaydı, içinizden hiçbir kimse asla temize çıkamazdı." (Nur 21)',
+          quoteText:
+            'Eğer insanlar bizi seviyorsa bu durum bizim faziletimizden ziyade Allah\'ın, insanların gözünde değerimizi düşürecek kusurlarımızı örtmesindendir. "Eğer üstünüzde Allah\'ın lütuf ve merhameti olmasaydı, içinizden hiçbir kimse asla temize çıkamazdı." (Nur 21)',
           author: 'İslami Kaynak',
-          bookName: 'Kur\'an-ı Kerim',
+          bookName: "Kur'an-ı Kerim",
           comments: [],
           bookCoverUrl: '/demo/images/ecommerce/blue-book.jpg',
           genre: 'Din',
@@ -191,7 +197,8 @@ export class FeedComponent implements OnInit {
           userName: 'Scott Wlaschin',
           userNickname: '@scottwlaschin',
           userAvatar: 'https://i.pravatar.cc/150?u=scott',
-          quoteText: 'As a developer, you may think that your job is to write code. I disagree. A developer\'s job is to solve a problem through software, and coding is just one aspect of software development. Good design and communication are just as important, if not more so.',
+          quoteText:
+            "As a developer, you may think that your job is to write code. I disagree. A developer's job is to solve a problem through software, and coding is just one aspect of software development. Good design and communication are just as important, if not more so.",
           author: 'Scott Wlaschin',
           bookName: 'Domain Modeling Made Functional',
           comments: [],
@@ -207,7 +214,8 @@ export class FeedComponent implements OnInit {
           userName: 'Mesut Özbilir',
           userNickname: '@mesutozbilir',
           userAvatar: 'https://i.pravatar.cc/150?u=mesut',
-          quoteText: '"Evlilik=Mutluluk" gibi gerçekliği olmayan bir denklem kurulması, buradan hareketle evlenilmesi ve umulanın bulunamaması. Hâlbuki evlilik mutlu bir hayat vermez, sâdece "mutlu anlar" verebilir. O anlar ise bedel olarak ağır sorumluluklar ve fedakarlıklar ister.',
+          quoteText:
+            '"Evlilik=Mutluluk" gibi gerçekliği olmayan bir denklem kurulması, buradan hareketle evlenilmesi ve umulanın bulunamaması. Hâlbuki evlilik mutlu bir hayat vermez, sâdece "mutlu anlar" verebilir. O anlar ise bedel olarak ağır sorumluluklar ve fedakarlıklar ister.',
           author: 'Mesut Özbilir',
           bookName: 'Hayat Dersleri',
           comments: [],
@@ -273,7 +281,7 @@ export class FeedComponent implements OnInit {
           userAvatar: 'https://i.pravatar.cc/150?u=gazali',
           quoteText: 'Şüpheler gerçeğe götürür. Şüphe etmeyen araştırmaz, araştırmayan görmez, görmeyen [hakka] kör kalır.',
           author: 'Gazâlî',
-          bookName: 'Mizânü\'l-Amel',
+          bookName: "Mizânü'l-Amel",
           comments: [],
           bookCoverUrl: '/demo/images/ecommerce/blue-book.jpg',
           genre: 'Felsefe',
@@ -319,7 +327,8 @@ export class FeedComponent implements OnInit {
           userName: 'Vladimir Khorikov',
           userNickname: '@vkhorikov',
           userAvatar: 'https://i.pravatar.cc/150?u=vladimir',
-          quoteText: 'We programmers all like to work on greenfield projects, those that we build from the ground up ourselves. However, you are most likely working on a legacy project right now or will be at some point in the future. There is no way around it. Each greenfield project becomes someone else\'s legacy code base someday.',
+          quoteText:
+            "We programmers all like to work on greenfield projects, those that we build from the ground up ourselves. However, you are most likely working on a legacy project right now or will be at some point in the future. There is no way around it. Each greenfield project becomes someone else's legacy code base someday.",
           author: 'Vladimir Khorikov',
           bookName: 'Unit Testing Principles, Practices, and Patterns',
           comments: [],
@@ -416,10 +425,10 @@ export class FeedComponent implements OnInit {
           });
         })
         .catch(() => {
-          this.fallbackShare(shareText);
+          this.fallbackShare(this.shareText);
         });
     } else {
-      this.fallbackShare(shareText);
+      this.fallbackShare(this.shareText);
     }
   }
 
@@ -564,7 +573,7 @@ export class FeedComponent implements OnInit {
   }
 
   async selectBookAndProceed(book: Book) {
-    console.log("🚀 ~ FeedComponent ~ selectBookAndProceed ~ book:", book)
+    console.log('🚀 ~ FeedComponent ~ selectBookAndProceed ~ book:', book);
     try {
       this.selectedBook = book;
       this.showBookSearchModal = false;
@@ -597,19 +606,14 @@ export class FeedComponent implements OnInit {
     // Apply search filter
     if (this.searchQuery.trim()) {
       const query = this.searchQuery.toLowerCase().trim();
-      filtered = filtered.filter(quote => 
-        quote.quoteText.toLowerCase().includes(query) ||
-        quote.author.toLowerCase().includes(query) ||
-        quote.bookName.toLowerCase().includes(query) ||
-        quote.userName.toLowerCase().includes(query)
-      );
+      filtered = filtered.filter((quote) => quote.quoteText.toLowerCase().includes(query) || quote.author.toLowerCase().includes(query) || quote.bookName.toLowerCase().includes(query) || quote.userName.toLowerCase().includes(query));
     }
 
     // Apply category filter
     if (this.activeFilter === 'sourced') {
-      filtered = filtered.filter(quote => quote.author && quote.bookName);
+      filtered = filtered.filter((quote) => quote.author && quote.bookName);
     } else if (this.activeFilter === 'personal') {
-      filtered = filtered.filter(quote => !quote.author || !quote.bookName);
+      filtered = filtered.filter((quote) => !quote.author || !quote.bookName);
     }
 
     this.filteredQuotes = filtered;
@@ -620,44 +624,44 @@ export class FeedComponent implements OnInit {
     this.filterQuotes();
   }
 
-    // Menu management methods
-    toggleQuoteMenu(quoteId: number) {
-      if (this.openMenus.has(quoteId)) {
-        this.openMenus.delete(quoteId);
-      } else {
-        // Close all other menus and open this one
-        this.openMenus.clear();
-        this.openMenus.add(quoteId);
-      }
-    }
-  
-    isQuoteMenuOpen(quoteId: number): boolean {
-      return this.openMenus.has(quoteId);
-    }
-  
-    // Quote action methods
-    editQuote(quote: Quote) {
+  // Menu management methods
+  toggleQuoteMenu(quoteId: number) {
+    if (this.openMenus.has(quoteId)) {
+      this.openMenus.delete(quoteId);
+    } else {
+      // Close all other menus and open this one
       this.openMenus.clear();
-      // Navigate to edit page or open edit modal
-      this.messageService.add({
-        severity: 'info',
-        summary: 'Edit Quote',
-        detail: 'Edit functionality to be implemented'
-      });
+      this.openMenus.add(quoteId);
     }
-  
-    deleteQuote(quoteId: number) {
-      this.openMenus.clear();
-      // Show confirmation dialog and delete
-      this.messageService.add({
-        severity: 'warn',
-        summary: 'Delete Quote',
-        detail: 'Delete functionality to be implemented'
-      });
-    }
-  
-    shareQuoteFromMenu(quote: Quote) {
-      this.openMenus.clear();
-      this.shareQuote(quote);
-    }
+  }
+
+  isQuoteMenuOpen(quoteId: number): boolean {
+    return this.openMenus.has(quoteId);
+  }
+
+  // Quote action methods
+  editQuote(quote: Quote) {
+    this.openMenus.clear();
+    // Navigate to edit page or open edit modal
+    this.messageService.add({
+      severity: 'info',
+      summary: 'Edit Quote',
+      detail: 'Edit functionality to be implemented'
+    });
+  }
+
+  deleteQuote(quoteId: number) {
+    this.openMenus.clear();
+    // Show confirmation dialog and delete
+    this.messageService.add({
+      severity: 'warn',
+      summary: 'Delete Quote',
+      detail: 'Delete functionality to be implemented'
+    });
+  }
+
+  shareQuoteFromMenu(quote: Quote) {
+    this.openMenus.clear();
+    this.shareQuote(quote);
+  }
 }
