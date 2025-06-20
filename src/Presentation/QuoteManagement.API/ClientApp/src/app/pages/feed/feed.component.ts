@@ -73,9 +73,14 @@ interface Book {
 })
 export class FeedComponent implements OnInit {
   quotes: Quote[] = [];
+  filteredQuotes: Quote[] = [];
   loading = true;
   expandedQuotes: { [key: number]: boolean } = {};
   readonly CHARACTER_LIMIT = 250;
+
+  // Search and Filter
+  searchQuery = '';
+  activeFilter = 'all';
 
   // Book Search Modal
   showBookSearchModal = false;
@@ -342,6 +347,7 @@ export class FeedComponent implements OnInit {
         }
       ];
       this.quotes = realQuotes;
+      this.filteredQuotes = realQuotes;
       this.loading = false;
     }, 2000);
   }
@@ -583,5 +589,34 @@ export class FeedComponent implements OnInit {
     this.searchResults = [];
     this.selectedBook = null;
     this.searchingBooks = false;
+  }
+
+  filterQuotes() {
+    let filtered = this.quotes;
+
+    // Apply search filter
+    if (this.searchQuery.trim()) {
+      const query = this.searchQuery.toLowerCase().trim();
+      filtered = filtered.filter(quote => 
+        quote.quoteText.toLowerCase().includes(query) ||
+        quote.author.toLowerCase().includes(query) ||
+        quote.bookName.toLowerCase().includes(query) ||
+        quote.userName.toLowerCase().includes(query)
+      );
+    }
+
+    // Apply category filter
+    if (this.activeFilter === 'sourced') {
+      filtered = filtered.filter(quote => quote.author && quote.bookName);
+    } else if (this.activeFilter === 'personal') {
+      filtered = filtered.filter(quote => !quote.author || !quote.bookName);
+    }
+
+    this.filteredQuotes = filtered;
+  }
+
+  setFilter(filter: string) {
+    this.activeFilter = filter;
+    this.filterQuotes();
   }
 }

@@ -1,70 +1,161 @@
-<div class="feed-container">
+
+<div class="quote-library-container">
+  <!-- Hero Section -->
+  <div class="hero-section bg-gradient-to-br from-slate-600 to-slate-800 text-white py-20 px-6">
+    <div class="max-w-4xl mx-auto text-center">
+      <h1 class="text-5xl font-bold mb-6">Quote Library</h1>
+      <p class="text-xl mb-8 opacity-90">
+        A curated collection of wisdom, thoughts, and insights from various
+        <br>sources and personal reflections.
+      </p>
+      <div class="flex justify-center gap-8 text-sm opacity-75">
+        <span>{{ quotes.length }} quotes collected</span>
+        <span>•</span>
+        <span>Carefully Curated</span>
+        <span>•</span>
+        <span>Always Growing</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Search and Filter Section -->
+  <div class="search-section bg-white py-8 px-6 border-b">
+    <div class="max-w-6xl mx-auto">
+      <!-- Search Bar -->
+      <div class="flex justify-center mb-6">
+        <div class="relative w-full max-w-md">
+          <i class="pi pi-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+          <input 
+            type="text" 
+            placeholder="Search quotes, authors, or sources..."
+            class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            [(ngModel)]="searchQuery"
+            (input)="filterQuotes()">
+        </div>
+      </div>
+
+      <!-- Filter Tabs -->
+      <div class="flex justify-center">
+        <div class="flex bg-gray-100 rounded-lg p-1">
+          <button 
+            class="px-6 py-2 text-sm font-medium rounded-md transition-colors"
+            [class]="activeFilter === 'all' ? 'bg-green-500 text-white' : 'text-gray-600 hover:text-gray-900'"
+            (click)="setFilter('all')">
+            All Quotes
+          </button>
+          <button 
+            class="px-6 py-2 text-sm font-medium rounded-md transition-colors"
+            [class]="activeFilter === 'sourced' ? 'bg-gray-600 text-white' : 'text-gray-600 hover:text-gray-900'"
+            (click)="setFilter('sourced')">
+            With Sources
+          </button>
+          <button 
+            class="px-6 py-2 text-sm font-medium rounded-md transition-colors"
+            [class]="activeFilter === 'personal' ? 'bg-gray-600 text-white' : 'text-gray-600 hover:text-gray-900'"
+            (click)="setFilter('personal')">
+            Personal Thoughts
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Loading State -->
-  <div *ngIf="loading" class="grid">
-    <div class="col-12 lg:col-4" *ngFor="let item of [1, 2, 3, 4, 5, 6]">
-      <div class="card h-full">
-        <p-skeleton width="100%" height="120px" styleClass="mb-3"></p-skeleton>
+  <div *ngIf="loading" class="max-w-6xl mx-auto px-6 py-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6" *ngFor="let item of [1, 2, 3, 4, 5, 6]">
+        <p-skeleton width="100%" height="120px" styleClass="mb-4"></p-skeleton>
         <p-skeleton width="80%" height="1rem" styleClass="mb-2"></p-skeleton>
-        <p-skeleton width="60%" height="1rem" styleClass="mb-3"></p-skeleton>
-        <div class="flex justify-between">
-          <p-skeleton width="4rem" height="1.5rem"></p-skeleton>
-          <p-skeleton width="3rem" height="1.5rem"></p-skeleton>
+        <p-skeleton width="60%" height="1rem" styleClass="mb-4"></p-skeleton>
+        <div class="flex justify-between items-center">
+          <p-skeleton width="4rem" height="1rem"></p-skeleton>
+          <p-skeleton width="3rem" height="1rem"></p-skeleton>
         </div>
       </div>
     </div>
   </div>
 
   <!-- Quotes Grid -->
-  <div *ngIf="!loading" class="grid">
-    <div class="col-12 lg:col-4" *ngFor="let quote of quotes; let i = index; let first = first" [ngClass]="{ 'lg:col-4': first, 'lg:col-4 md:col-6 sm:col-12': !first }">
-      <div class="card h-full hover:shadow-3 transition-all transition-duration-200 cursor-pointer">
-        <!-- Quote Content -->
+  <div *ngIf="!loading" class="max-w-6xl mx-auto px-6 py-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="quote-card bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow" 
+           *ngFor="let quote of filteredQuotes; let i = index">
+        
+        <!-- Quote Text -->
         <div class="quote-content mb-4">
-          <blockquote class="text-900 font-medium line-height-3 my-0 mb-4">"{{ getDisplayedQuoteText(quote) }}"</blockquote>
-
+          <p class="text-gray-800 leading-relaxed mb-4">"{{ getDisplayedQuoteText(quote) }}"</p>
+          
           <!-- Read More/Less Button for Long Quotes -->
-          <div class="text-center mb-3" *ngIf="isQuoteLong(quote.quoteText)">
-            <p-button [label]="isQuoteExpanded(quote.id) ? 'Show less' : 'Read more'" severity="secondary" size="small" text (click)="toggleQuoteExpansion(quote.id)" styleClass="quote-expand-btn"> </p-button>
+          <div class="text-center mb-4" *ngIf="isQuoteLong(quote.quoteText)">
+            <button 
+              class="text-green-500 text-sm hover:text-green-600 transition-colors"
+              (click)="toggleQuoteExpansion(quote.id)">
+              {{ isQuoteExpanded(quote.id) ? 'Read less' : 'Read more' }}
+            </button>
           </div>
         </div>
 
-        <!-- Quote Metadata -->
-        <div class="quote-metadata">
-          <div class="flex align-items-center gap-2 mb-3">
-            <i class="pi pi-bookmark text-primary"></i>
-            <span class="text-primary font-medium">Sourced</span>
-          </div>
-
-          <!-- Author and Book Info -->
-          <div class="source-info mb-3">
-            <div class="text-900 font-semibold mb-1">{{ quote.author }}</div>
-            <div class="text-600 text-sm">{{ quote.bookName }}</div>
+        <!-- Author and Source -->
+        <div class="border-t pt-4">
+          <div class="flex items-start justify-between mb-4">
+            <div class="flex-1">
+              <div class="text-orange-500 font-medium mb-1">{{ quote.userName }}</div>
+              <div class="flex items-center gap-2 text-sm text-gray-600">
+                <i class="pi pi-book text-xs"></i>
+                <span class="font-medium">Source</span>
+              </div>
+              <div class="text-sm text-gray-700 mt-1">{{ quote.bookName }}</div>
+            </div>
+            
+            <!-- Source Badge -->
+            <div class="flex items-center gap-1">
+              <i class="pi pi-check-circle text-green-500 text-sm"></i>
+              <span class="text-xs text-green-600 font-medium">{{ quote.author ? 'Sourced' : 'Personal' }}</span>
+            </div>
           </div>
 
           <!-- Date and User Info -->
-          <div class="flex align-items-center justify-between">
-            <div class="flex align-items-center gap-2">
-              <i class="pi pi-calendar text-400 text-xs"></i>
-              <span class="text-400 text-xs">{{ quote.datePosted | date: 'MMM d, yyyy' }}</span>
+          <div class="flex items-center justify-between text-xs text-gray-500">
+            <div class="flex items-center gap-1">
+              <i class="pi pi-calendar"></i>
+              <span>{{ quote.datePosted | date: 'MMM d, yyyy' }}</span>
             </div>
-            <div class="flex align-items-center gap-2">
-              <i class="pi pi-user text-400 text-xs"></i>
-              <span class="text-400 text-xs">{{ quote.userNickname }}</span>
+            <div class="flex items-center gap-1">
+              <i class="pi pi-user"></i>
+              <span>{{ quote.userNickname }}</span>
             </div>
           </div>
         </div>
 
         <!-- Action Buttons -->
-        <div class="flex align-items-center justify-between mt-4 pt-3 border-top-1 border-surface-200">
+        <div class="flex items-center justify-between mt-4 pt-4 border-t">
           <div class="flex gap-2">
-            <p-button icon="pi pi-heart" [severity]="quote.isLiked ? 'danger' : 'secondary'" size="small" [outlined]="!quote.isLiked" (click)="toggleLike(i)" pTooltip="Like quote" tooltipPosition="top"> </p-button>
-            <p-button icon="pi pi-comment" severity="secondary" size="small" outlined pTooltip="Comments" tooltipPosition="top"> </p-button>
+            <button 
+              class="flex items-center gap-1 px-2 py-1 text-xs rounded transition-colors"
+              [class]="quote.isLiked ? 'text-red-500 bg-red-50' : 'text-gray-500 hover:text-red-500 hover:bg-red-50'"
+              (click)="toggleLike(i)">
+              <i class="pi pi-heart" [class.pi-heart-fill]="quote.isLiked"></i>
+              <span>{{ quote.likes }}</span>
+            </button>
+            <button 
+              class="flex items-center gap-1 px-2 py-1 text-xs text-gray-500 hover:text-blue-500 hover:bg-blue-50 rounded transition-colors"
+              (click)="copyQuote(quote.quoteText)">
+              <i class="pi pi-copy"></i>
+            </button>
           </div>
 
           <div class="flex gap-2">
-            <p-button icon="pi pi-copy" severity="secondary" size="small" outlined (click)="copyQuote(quote.quoteText)" pTooltip="Copy quote" tooltipPosition="top"> </p-button>
-            <p-button icon="pi pi-bookmark" [severity]="quote.isBookmarked ? 'success' : 'secondary'" size="small" [outlined]="!quote.isBookmarked" (click)="toggleBookmark(i)" pTooltip="Bookmark" tooltipPosition="top"> </p-button>
-            <p-button icon="pi pi-share-alt" severity="secondary" size="small" outlined (click)="shareQuote(quote)" pTooltip="Share quote" tooltipPosition="top"> </p-button>
+            <button 
+              class="flex items-center gap-1 px-2 py-1 text-xs rounded transition-colors"
+              [class]="quote.isBookmarked ? 'text-yellow-500 bg-yellow-50' : 'text-gray-500 hover:text-yellow-500 hover:bg-yellow-50'"
+              (click)="toggleBookmark(i)">
+              <i class="pi pi-bookmark" [class.pi-bookmark-fill]="quote.isBookmarked"></i>
+            </button>
+            <button 
+              class="flex items-center gap-1 px-2 py-1 text-xs text-gray-500 hover:text-blue-500 hover:bg-blue-50 rounded transition-colors"
+              (click)="shareQuote(quote)">
+              <i class="pi pi-share-alt"></i>
+            </button>
           </div>
         </div>
       </div>
@@ -72,12 +163,26 @@
   </div>
 
   <!-- Empty State -->
-  <div *ngIf="!loading && quotes.length === 0" class="text-center p-8">
-    <i class="pi pi-book text-6xl text-300 mb-4"></i>
-    <h3 class="text-xl font-semibold mb-2">No quotes yet</h3>
-    <p class="text-500 mb-4">Start building your digital quote collection!</p>
-    <p-button label="Add Your First Quote" icon="pi pi-plus" (click)="showBookSearchModal = true"> </p-button>
+  <div *ngIf="!loading && filteredQuotes.length === 0" class="max-w-4xl mx-auto text-center py-16 px-6">
+    <i class="pi pi-book text-6xl text-gray-300 mb-4"></i>
+    <h3 class="text-xl font-semibold mb-2">No quotes found</h3>
+    <p class="text-gray-500 mb-6">Try adjusting your search or filter criteria</p>
+    <button 
+      class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg transition-colors flex items-center gap-2 mx-auto"
+      (click)="showBookSearchModal = true">
+      <i class="pi pi-plus"></i>
+      Add Your First Quote
+    </button>
   </div>
+
+  <!-- Floating Add Button -->
+  <button 
+    class="fixed bottom-8 right-8 bg-green-500 hover:bg-green-600 text-white w-14 h-14 rounded-full shadow-lg hover:shadow-xl transition-all flex items-center justify-center z-10"
+    (click)="showBookSearchModal = true"
+    pTooltip="Add new quote"
+    tooltipPosition="left">
+    <i class="pi pi-plus text-xl"></i>
+  </button>
 </div>
 
 <!-- Book Search Modal -->

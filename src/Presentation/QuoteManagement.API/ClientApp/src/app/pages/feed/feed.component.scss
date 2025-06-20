@@ -371,3 +371,133 @@
     background-color: rgba(var(--primary-color-rgb), 0.1) !important;
   }
 }
+.quote-library-container {
+  min-height: 100vh;
+  background-color: #f8fafc;
+}
+
+.hero-section {
+  background: linear-gradient(135deg, #475569 0%, #334155 100%);
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><g fill="%23ffffff" fill-opacity="0.05"><circle cx="30" cy="30" r="2"/></g></svg>') repeat;
+  }
+
+  > div {
+    position: relative;
+    z-index: 1;
+  }
+}
+
+.search-section {
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+}
+
+.quote-card {
+  transition: all 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  }
+
+  .quote-content {
+    min-height: 120px;
+  }
+}
+
+// Custom button styles
+button {
+  transition: all 0.2s ease;
+
+  &:hover {
+    transform: translateY(-1px);
+  }
+}
+
+// Filter tabs
+.bg-gray-100 {
+  background-color: #f1f5f9;
+}
+
+// Floating action button
+.fixed {
+  &:hover {
+    transform: translateY(-2px);
+  }
+}
+
+// Custom scrollbar for modal
+.search-content-area {
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 3px;
+
+    &:hover {
+      background: #a8a8a8;
+    }
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .hero-section {
+    padding: 3rem 1rem;
+
+    h1 {
+      font-size: 2.5rem;
+    }
+
+    p {
+      font-size: 1rem;
+    }
+  }
+
+  .search-section {
+    padding: 1.5rem 1rem;
+  }
+
+  .quote-card {
+    margin-bottom: 1rem;
+  }
+}
+
+// Animation for quote cards
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.quote-card {
+  animation: fadeInUp 0.5s ease forwards;
+}
+
+// Stagger animation for quote cards
+@for $i from 1 through 12 {
+  .quote-card:nth-child(#{$i}) {
+    animation-delay: #{$i * 0.1}s;
+    opacity: 0;
+  }
+}
