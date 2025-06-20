@@ -511,3 +511,15 @@ button {
 .group:focus .quote-menu {
   pointer-events: auto;          /* reactivate when visible */
 }
+
+// Hide the more options trigger until the card is hovered or the menu is open
+.more-options-btn {
+  @apply opacity-0 transition-opacity duration-150;
+  pointer-events: none;
+}
+
+.quote-card:hover .more-options-btn,
+.more-options-btn.is-open {
+  @apply opacity-100;
+  pointer-events: auto;
+}

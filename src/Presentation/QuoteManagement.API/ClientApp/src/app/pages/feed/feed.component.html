@@ -63,12 +63,12 @@
   <!-- Quotes Grid -->
   <div *ngIf="!loading" class="max-w-6xl mx-auto px-6 py-8">
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <div class="quote-card bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow" *ngFor="let quote of filteredQuotes; let i = index">
+      <div class="quote-card group bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow" *ngFor="let quote of filteredQuotes; let i = index">
         <!-- Header with More Options -->
         <div class="flex justify-between items-start mb-4">
           <div class="flex-1"></div>
           <div class="relative">
-            <button class="text-gray-400 hover:text-gray-600 p-1 rounded transition-colors" (click)="toggleQuoteMenu(quote.id)" [attr.aria-expanded]="isQuoteMenuOpen(quote.id)" aria-label="More options">
+            <button class="more-options-btn text-gray-400 hover:text-gray-600 p-1 rounded transition-colors" (click)="toggleQuoteMenu(quote.id)" [attr.aria-expanded]="isQuoteMenuOpen(quote.id)" [ngClass]="{ 'is-open': isQuoteMenuOpen(quote.id) }" aria-label="More options">
               <i class="pi pi-ellipsis-v"></i>
             </button>
 
