@@ -15,7 +15,7 @@ export const appRoutes: Routes = [
             },
             {
                 path: 'books',
-                loadComponent: () => import('./app/pages/books/booklist.component').then((c) => c.BookList),
+                loadChildren: () => import('./app/pages/books/books.routes'),
                 data: { breadcrumb: 'Kitaplar' }
             },
             {

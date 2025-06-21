@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
@@ -16,19 +17,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { TagModule } from 'primeng/tag';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { PaginatorModule } from 'primeng/paginator';
-
-interface Book {
-    id: string;
-    title: string;
-    isbn: string;
-    coverImageUrl: string;
-    quoteCount: number;
-    rating: number;
-    author?: string;
-    genre?: string;
-    readingStatus?: 'read' | 'reading' | 'want-to-read';
-    readingProgress?: number;
-}
+import { BookService, Book } from '../../services/book.service';
 
 interface SortOption {
     label: string;
@@ -91,6 +80,11 @@ export class BookList implements OnInit {
     currentPage: number = 1;
     pageSize: number = 12;
     activeFilters: ActiveFilter[] = [];
+
+    constructor(
+        private router: Router,
+        private bookService: BookService
+    ) {}
     
     // Options for dropdowns
     sortOptions: SortOption[] = [
@@ -143,192 +137,22 @@ export class BookList implements OnInit {
     }
 
     ngOnInit() {
-        // Simulate loading
-        setTimeout(() => {
-            this.books = [
-                {
-                    id: '1',
-                    title: 'The Great Gatsby',
-                    author: 'F. Scott Fitzgerald',
-                    genre: 'Classic Fiction',
-                    isbn: '9780743273565',
-                    coverImageUrl: 'https://covers.openlibrary.org/b/isbn/9780743273565-L.jpg',
-                    quoteCount: 15,
-                    rating: 4.5,
-                    readingStatus: 'read'
-                },
-                {
-                    id: '2',
-                    title: 'To Kill a Mockingbird',
-                    author: 'Harper Lee',
-                    genre: 'Classic Fiction',
-                    isbn: '9780061120084',
-                    coverImageUrl: 'https://covers.openlibrary.org/b/isbn/9780061120084-L.jpg',
-                    quoteCount: 23,
-                    rating: 4.7,
-                    readingStatus: 'read'
-                },
-                {
-                    id: '3',
-                    title: '1984',
-                    author: 'George Orwell',
-                    genre: 'Dystopian Fiction',
-                    isbn: '9780452284234',
-                    coverImageUrl: 'https://covers.openlibrary.org/b/isbn/9780452284234-L.jpg',
-                    quoteCount: 31,
-                    rating: 4.6,
-                    readingStatus: 'reading',
-                    readingProgress: 65
-                },
-                {
-                    id: '4',
-                    title: 'Pride and Prejudice',
-                    author: 'Jane Austen',
-                    genre: 'Romance',
-                    isbn: '9780141439518',
-                    coverImageUrl: 'https://covers.openlibrary.org/b/isbn/9780141439518-L.jpg',
-                    quoteCount: 18,
-                    rating: 4.8,
-                    readingStatus: 'read'
-                },
-                {
-                    id: '5',
-                    title: 'The Catcher in the Rye',
-                    author: 'J.D. Salinger',
-                    genre: 'Coming of Age',
-                    isbn: '9780316769174',
-                    coverImageUrl: 'https://covers.openlibrary.org/b/isbn/9780316769174-L.jpg',
-                    quoteCount: 12,
-                    rating: 4.2,
-                    readingStatus: 'want-to-read'
-                },
-                {
-                    id: '6',
-                    title: 'Lord of the Flies',
-                    author: 'William Golding',
-                    genre: 'Dystopian Fiction',
-                    isbn: '9780571056866',
-                    coverImageUrl: 'https://covers.openlibrary.org/b/isbn/9780571056866-L.jpg',
-                    quoteCount: 27,
-                    rating: 4.1,
-                    readingStatus: 'read'
-                },
-                {
-                    id: '7',
-                    title: 'Harry Potter and the Philosopher\'s Stone',
-                    author: 'J.K. Rowling',
-                    genre: 'Fantasy',
-                    isbn: '9780747532699',
-                    coverImageUrl: 'https://covers.openlibrary.org/b/isbn/9780747532699-L.jpg',
-                    quoteCount: 42,
-                    rating: 4.9,
-                    readingStatus: 'read'
-                },
-                {
-                    id: '8',
-                    title: 'The Hobbit',
-                    author: 'J.R.R. Tolkien',
-                    genre: 'Fantasy',
-                    isbn: '9780547928227',
-                    coverImageUrl: 'https://covers.openlibrary.org/b/isbn/9780547928227-L.jpg',
-                    quoteCount: 35,
-                    rating: 4.8,
-                    readingStatus: 'read'
-                },
-                {
-                    id: '9',
-                    title: 'Brave New World',
-                    author: 'Aldous Huxley',
-                    genre: 'Dystopian Fiction',
-                    isbn: '9780060850524',
-                    coverImageUrl: 'https://covers.openlibrary.org/b/isbn/9780060850524-L.jpg',
-                    quoteCount: 19,
-                    rating: 4.3,
-                    readingStatus: 'reading',
-                    readingProgress: 32
-                },
-                {
-                    id: '10',
-                    title: 'The Chronicles of Narnia',
-                    author: 'C.S. Lewis',
-                    genre: 'Fantasy',
-                    isbn: '9780066238500',
-                    coverImageUrl: 'https://covers.openlibrary.org/b/isbn/9780066238500-L.jpg',
-                    quoteCount: 28,
-                    rating: 4.7,
-                    readingStatus: 'want-to-read'
-                },
-                {
-                    id: '11',
-                    title: 'Jane Eyre',
-                    author: 'Charlotte Brontë',
-                    genre: 'Gothic Fiction',
-                    isbn: '9780141441146',
-                    coverImageUrl: 'https://covers.openlibrary.org/b/isbn/9780141441146-L.jpg',
-                    quoteCount: 16,
-                    rating: 4.4,
-                    readingStatus: 'read'
-                },
-                {
-                    id: '12',
-                    title: 'The Picture of Dorian Gray',
-                    author: 'Oscar Wilde',
-                    genre: 'Gothic Fiction',
-                    isbn: '9780141439570',
-                    coverImageUrl: 'https://covers.openlibrary.org/b/isbn/9780141439570-L.jpg',
-                    quoteCount: 21,
-                    rating: 4.5,
-                    readingStatus: 'reading',
-                    readingProgress: 78
-                },
-                {
-                    id: '13',
-                    title: 'Fahrenheit 451',
-                    author: 'Ray Bradbury',
-                    genre: 'Dystopian Fiction',
-                    isbn: '9781451673319',
-                    coverImageUrl: 'https://covers.openlibrary.org/b/isbn/9781451673319-L.jpg',
-                    quoteCount: 24,
-                    rating: 4.6,
-                    readingStatus: 'want-to-read'
-                },
-                {
-                    id: '14',
-                    title: 'Animal Farm',
-                    author: 'George Orwell',
-                    genre: 'Political Satire',
-                    isbn: '9780451526342',
-                    coverImageUrl: 'https://covers.openlibrary.org/b/isbn/9780451526342-L.jpg',
-                    quoteCount: 14,
-                    rating: 4.4,
-                    readingStatus: 'read'
-                },
-                {
-                    id: '15',
-                    title: 'The Lord of the Rings',
-                    author: 'J.R.R. Tolkien',
-                    genre: 'Fantasy',
-                    isbn: '9780544003415',
-                    coverImageUrl: 'https://covers.openlibrary.org/b/isbn/9780544003415-L.jpg',
-                    quoteCount: 58,
-                    rating: 4.9,
-                    readingStatus: 'read'
-                },
-                {
-                    id: '16',
-                    title: 'Wuthering Heights',
-                    author: 'Emily Brontë',
-                    genre: 'Gothic Fiction',
-                    isbn: '9780141439556',
-                    coverImageUrl: 'https://covers.openlibrary.org/b/isbn/9780141439556-L.jpg',
-                    quoteCount: 13,
-                    rating: 4.3,
-                    readingStatus: 'want-to-read'
-                }
-            ];
-            this.applyFiltersAndSort();
-            this.isLoading = false;
-        }, 1500);
+        this.loadBooks();
+    }
+
+    private loadBooks() {
+        this.isLoading = true;
+        this.bookService.getAllBooks().subscribe({
+            next: (books) => {
+                this.books = books;
+                this.applyFiltersAndSort();
+                this.isLoading = false;
+            },
+            error: (err) => {
+                console.error('Error loading books:', err);
+                this.isLoading = false;
+            }
+        });
     }
 
     onImageError(event: any) {
@@ -374,10 +198,10 @@ export class BookList implements OnInit {
         const baseClasses = 'grid gap-4';
         switch (this.selectedDensity) {
             case 'comfortable':
-                return `${baseClasses} grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5`;
+                return `${baseClasses} grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5`;
             case 'compact':
             default:
-                return `${baseClasses} grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-8 2xl:grid-cols-9`;
+                return `${baseClasses} grid-cols-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-8 2xl:grid-cols-9`;
         }
     }
 
@@ -468,8 +292,7 @@ export class BookList implements OnInit {
     }
 
     viewBookDetails(book: Book): void {
-        // TODO: Navigate to book details page
-        console.log('View book details:', book);
+        this.router.navigate(['/books', book.id]);
     }
 
     editBook(book: Book): void {

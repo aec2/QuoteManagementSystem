@@ -1,0 +1,335 @@
+// Enhanced styles for Book Detail Component
+// These styles enhance Tailwind classes and PrimeNG components
+
+// Component host styling
+:host {
+  display: block;
+  scroll-behavior: smooth;
+}
+
+// Enhanced backdrop-blur elements
+.backdrop-blur-md {
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  &:hover {
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+}
+
+// Animate gradient backgrounds
+.bg-gradient-to-r, .bg-gradient-to-br {
+  background-size: 200% 200%;
+  animation: gradient-shift 4s ease-in-out infinite;
+}
+
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+// Enhanced grid animations
+.space-y-6 > *,
+.space-y-4 > * {
+  animation: slideInUp 0.6s ease-out forwards;
+  
+  &:nth-child(2n) {
+    animation-delay: 0.1s;
+  }
+  
+  &:nth-child(3n) {
+    animation-delay: 0.15s;
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Book cover image effects
+.aspect-\[3\/4\] img {
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  &:hover {
+    transform: scale(1.05);
+    filter: brightness(1.1) saturate(1.1);
+  }
+}
+
+// Quote card hover effects
+.group {
+  &:hover {
+    .quote-card {
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+    }
+  }
+}
+
+// Enhanced quote styling
+blockquote {
+  position: relative;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: linear-gradient(to bottom, #4f46e5, #7c3aed);
+    border-radius: 2px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  &:hover::before {
+    opacity: 1;
+  }
+}
+
+// PrimeNG component enhancements
+:host ::ng-deep {
+  
+  // Enhanced button hover effects
+  .p-button {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    &:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+    
+    &:active {
+      transform: translateY(-1px);
+      transition-duration: 0.1s;
+    }
+    
+    // Rounded buttons
+    &.p-button-rounded {
+      border-radius: 50%;
+      width: 3rem;
+      height: 3rem;
+    }
+  }
+
+  // Enhanced skeleton loading
+  .p-skeleton {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+      animation: skeleton-shimmer 1.5s infinite;
+    }
+  }
+
+  @keyframes skeleton-shimmer {
+    0% { left: -100%; }
+    100% { left: 100%; }
+  }
+
+  // Enhanced rating styling
+  .p-rating {
+    .p-rating-star {
+      transition: all 0.2s ease;
+      
+      &:hover {
+        transform: scale(1.2);
+      }
+    }
+  }
+
+  // Enhanced chip styling
+  .p-chip {
+    transition: all 0.25s ease;
+    
+    &:hover {
+      transform: translateY(-2px) scale(1.05);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  // Tooltip enhancements
+  .p-tooltip {
+    .p-tooltip-text {
+      background: rgba(15, 23, 42, 0.9);
+      backdrop-filter: blur(8px);
+      border-radius: 8px;
+      font-size: 0.875rem;
+    }
+  }
+}
+
+// Text gradient effect for titles
+.text-transparent {
+  &.bg-gradient-to-r {
+    background-size: 200% 100%;
+    animation: text-gradient-shift 3s ease-in-out infinite;
+  }
+}
+
+@keyframes text-gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+// Loading animation
+.animate-pulse {
+  animation: pulse-custom 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse-custom {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+// Sticky positioning enhancement
+.sticky {
+  top: 1rem;
+  
+  @media (max-width: 1024px) {
+    position: relative;
+    top: 0;
+  }
+}
+
+// Quote interaction effects
+.quote-text {
+  transition: all 0.3s ease;
+  
+  &:hover {
+    color: #4f46e5;
+    padding-left: 1rem;
+  }
+}
+
+// Custom scrollbar for quotes section
+.quotes-container {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(79, 70, 229, 0.3) transparent;
+  
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: rgba(79, 70, 229, 0.3);
+    border-radius: 3px;
+    
+    &:hover {
+      background: rgba(79, 70, 229, 0.5);
+    }
+  }
+}
+
+// Dark mode specific enhancements
+@media (prefers-color-scheme: dark) {
+  :host ::ng-deep {
+    .backdrop-blur-md {
+      border-color: rgba(148, 163, 184, 0.2);
+    }
+    
+    .p-button:hover {
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    }
+    
+    .p-skeleton::after {
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+    }
+  }
+}
+
+// Mobile responsive enhancements
+@media (max-width: 768px) {
+  .backdrop-blur-md {
+    margin-left: -0.5rem;
+    margin-right: -0.5rem;
+    border-radius: 1rem;
+  }
+  
+  .grid {
+    gap: 1rem;
+  }
+  
+  .space-y-6 {
+    gap: 1rem;
+  }
+  
+  .space-y-4 {
+    gap: 0.75rem;
+  }
+  
+  :host ::ng-deep {
+    .p-button {
+      &:hover {
+        transform: none; // Disable hover transforms on mobile
+      }
+    }
+  }
+}
+
+// Print styles
+@media print {
+  :host ::ng-deep {
+    .p-button,
+    .backdrop-blur-md {
+      display: none !important;
+    }
+    
+    .quote-card {
+      break-inside: avoid;
+      margin-bottom: 1rem;
+      border: 1px solid #e5e7eb;
+    }
+  }
+}
+
+// Accessibility enhancements
+:host ::ng-deep {
+  button:focus-visible,
+  .p-button:focus-visible {
+    outline: 2px solid #4f46e5;
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+}
+
+// Reduced motion support
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+} 
+
+.custom-background {
+  background-color: #fff;
+}

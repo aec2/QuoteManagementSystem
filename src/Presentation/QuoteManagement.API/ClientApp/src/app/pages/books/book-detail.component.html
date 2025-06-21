@@ -1,0 +1,285 @@
+<!-- Book Detail Page -->
+<div
+    class="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 p-6">
+    <div class="max-w-7xl mx-auto">
+
+        <!-- Loading State -->
+        <div *ngIf="isLoading" class="animate-pulse">
+            <!-- Header Skeleton -->
+            <div
+                class="backdrop-blur-md bg-white dark:bg-slate-800/70 rounded-2xl border border-white/20 dark:border-slate-700/20 shadow-xl mb-8 p-6">
+                <div class="flex items-center gap-4 mb-4">
+                    <p-skeleton shape="circle" size="3rem"></p-skeleton>
+                    <div class="flex-1">
+                        <p-skeleton width="200px" height="2rem" styleClass="mb-2"></p-skeleton>
+                        <p-skeleton width="100px" height="1rem"></p-skeleton>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Skeleton -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Book Cover Skeleton -->
+                <div class="lg:col-span-1">
+                    <div class="sticky top-4">
+                        <p-skeleton width="100%" height="400px" styleClass="rounded-xl mb-6"></p-skeleton>
+                        <p-skeleton width="100%" height="3rem" styleClass="mb-3 rounded-xl"></p-skeleton>
+                        <p-skeleton width="100%" height="3rem" styleClass="rounded-xl"></p-skeleton>
+                    </div>
+                </div>
+
+                <!-- Book Info Skeleton -->
+                <div class="lg:col-span-2">
+                    <div
+                        class="backdrop-blur-md bg-white dark:bg-slate-800/70 rounded-2xl border border-white/20 dark:border-slate-700/20 shadow-lg p-6">
+                        <p-skeleton width="60%" height="3rem" styleClass="mb-4"></p-skeleton>
+                        <p-skeleton width="40%" height="1.5rem" styleClass="mb-6"></p-skeleton>
+                        <div class="flex gap-4 mb-6">
+                            <p-skeleton width="80px" height="1rem"></p-skeleton>
+                            <p-skeleton width="100px" height="1rem"></p-skeleton>
+                            <p-skeleton width="120px" height="1rem"></p-skeleton>
+                        </div>
+                        <p-skeleton width="100%" height="8rem"></p-skeleton>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Error State -->
+        <div *ngIf="error && !isLoading" class="text-center py-16">
+            <div
+                class="backdrop-blur-md bg-white dark:bg-slate-800/70 rounded-2xl border border-white/20 dark:border-slate-700/20 shadow-lg p-8">
+                <i class="pi pi-exclamation-triangle text-6xl text-red-500 mb-4"></i>
+                <h2 class="text-2xl font-bold text-slate-800 dark:text-slate-200 mb-4">Book Not Found</h2>
+                <p class="text-slate-600 dark:text-slate-400 mb-6">{{ error }}</p>
+                <div class="flex gap-4 justify-center">
+                    <button pButton pRipple label="Go Back" icon="pi pi-arrow-left" class="p-button-secondary"
+                        (click)="goBack()">
+                    </button>
+                    <button pButton pRipple label="Try Again" icon="pi pi-refresh" class="p-button-primary"
+                        (click)="loadBook()">
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Book Content -->
+        <div *ngIf="book && !isLoading" class="space-y-6">
+
+            <!-- Header Section -->
+            <div
+                class="backdrop-blur-md bg-white dark:bg-slate-800/70 rounded-2xl border border-white/20 dark:border-slate-700/20 shadow-xl p-6">
+                <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                    <div class="flex items-center gap-4">
+                        <button pButton pRipple icon="pi pi-arrow-left"
+                            class="p-button-outlined p-button-secondary p-button-rounded" (click)="goBack()"
+                            pTooltip="Back to Books" tooltipPosition="bottom">
+                        </button>
+                        <div>
+                            <h1
+                                class="text-2xl font-bold bg-gradient-to-r from-slate-800 to-slate-600 dark:from-white dark:to-slate-200 bg-clip-text text-transparent mb-1">
+                                Book Details
+                            </h1>
+                            <p class="text-slate-600 dark:text-slate-400">
+                                Complete information and quotes
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-3">
+                        <button pButton pRipple label="Share" icon="pi pi-share-alt"
+                            class="p-button-outlined p-button-secondary px-6 py-3 font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5"
+                            (click)="shareBook()" pTooltip="Share this book" tooltipPosition="bottom">
+                        </button>
+                        <button pButton pRipple label="Add Quote" icon="pi pi-plus"
+                            class="bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 border-0 px-6 py-3 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5"
+                            (click)="addQuote()">
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+                <!-- Book Cover and Actions -->
+                <div class="lg:col-span-1">
+                    <div class="sticky top-4 space-y-4">
+                        <!-- Book Cover -->
+                        <!-- <div
+                                    class="bg-white rounded-2xl border border-slate-200 shadow-lg overflow-hidden">
+                                    <div class="p-4 pb-0 mb-4  ">
+                                        <div class="aspect-[3/4] w-full max-w-md mx-auto overflow-hidden rounded-lg shadow-lg">
+                                            <img [src]="book.coverImageUrl || '/demo/images/ecommerce/blue-book.jpg'"
+                                                [alt]="book.title"
+                                                class="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                                                (error)="onImageError($event)" />
+                                        </div>
+                                    </div>
+                                </div> -->
+
+                        <!-- Book Information Card -->
+                        <div class="custom-background bg-white rounded-2xl border border-slate-200 shadow-lg p-6 mt-4">
+                            <!-- Book Cover -->
+                            <div class="aspect-[3/4] w-full max-w-md mx-auto overflow-hidden rounded-lg shadow-lg">
+                                <img [src]="book.coverImageUrl || '/demo/images/ecommerce/blue-book.jpg'"
+                                    [alt]="book.title"
+                                    class="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                                    (error)="onImageError($event)" />
+                            </div>
+
+                            <!-- Title and Author -->
+                            <div class="mb-8 mt-4">
+                                <h1 class="text-3xl lg:text-4xl font-bold text-slate-900 dark:text-slate-100 mb-3">{{
+                                    book.title }}</h1>
+                                <p class="text-lg lg:text-xl text-slate-600 dark:text-slate-400 mb-4"
+                                    *ngIf="book.author">
+                                    by <span class="font-semibold">{{ book.author }}</span>
+                                </p>
+
+                                <!-- Rating and Status -->
+                                <div class="flex flex-col sm:flex-row sm:items-center gap-4 mb-8">
+                                    <div class="flex items-center gap-2">
+                                        <!-- Simple star rating display -->
+                                        <div class="flex items-center gap-1">
+                                            <i *ngFor="let star of [1,2,3,4,5]" class="pi text-base"
+                                                [ngClass]="star <= book.rating ? 'pi-star-fill text-yellow-400' : 'pi-star text-gray-300'">
+                                            </i>
+                                        </div>
+                                        <span class="text-sm font-medium" [ngClass]="getRatingColor(book.rating)">
+                                            {{ book.rating }}/5
+                                        </span>
+                                    </div>
+                                    <p-tag *ngIf="book.readingStatus" [value]="getStatusLabel(book.readingStatus)"
+                                        [severity]="getStatusColor(book.readingStatus)">
+                                    </p-tag>
+                                </div>
+                            </div>
+
+                            <!-- Genres -->
+                            <div class="mb-8" *ngIf="book.genres && book.genres.length">
+                                <h3 class="text-lg font-semibold text-slate-900 dark:text-slate-100 mb-4">Genres</h3>
+                                <div class="flex flex-wrap gap-3">
+                                    <p-chip *ngFor="let genre of book.genres" [label]="genre"
+                                        styleClass="bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300">
+                                    </p-chip>
+                                </div>
+                            </div>
+
+                            <!-- Description -->
+                            <div *ngIf="book.description" class="mb-8">
+                                <h3 class="text-lg font-semibold text-slate-900 dark:text-slate-100 mb-4">Description
+                                </h3>
+                                <p class="text-slate-700 dark:text-slate-300 leading-relaxed">{{ book.description }}</p>
+                            </div>
+
+                            <!-- Book Metadata -->
+                            <div class="flex gap-6 pt-4 border-t border-slate-200 dark:border-slate-600">
+                                <div class="flex items-center gap-3" *ngIf="book.publishedYear">
+                                    <i class="pi pi-calendar text-slate-500 dark:text-slate-400"></i>
+                                    <div>
+                                        <span
+                                            class="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wide font-medium">Published</span>
+                                        <p class="font-medium text-slate-700 dark:text-slate-300">{{ book.publishedYear
+                                            }}</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-3" *ngIf="book.pageCount">
+                                    <i class="pi pi-file text-slate-500 dark:text-slate-400"></i>
+                                    <div>
+                                        <span
+                                            class="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wide font-medium">Pages</span>
+                                        <p class="font-medium text-slate-700 dark:text-slate-300">{{ book.pageCount }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quotes Section -->
+                <div class="lg:col-span-2 mt-4">
+
+                    <!-- Quotes Section -->
+                    <div class="custom-background bg-white rounded-2xl border border-slate-200 shadow-lg p-8 ml-6">
+                        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
+                            <h2 class="text-2xl font-bold text-slate-900 dark:text-slate-100">
+                                Quotes from this book
+                            </h2>
+                            <p-tag [value]="book.quotes.length + ' quotes'" severity="info"></p-tag>
+                        </div>
+
+                        <!-- No Quotes State -->
+                        <div *ngIf="book.quotes.length === 0" class="text-center py-12">
+                            <i class="pi pi-quote-left text-6xl text-slate-300 dark:text-slate-600 mb-4"></i>
+                            <h3 class="text-xl font-semibold text-slate-600 dark:text-slate-400 mb-2">No quotes yet</h3>
+                            <p class="text-slate-500 dark:text-slate-500 mb-6 max-w-md mx-auto">
+                                Start collecting your favorite quotes from this book.
+                            </p>
+                            <button pButton pRipple label="Add First Quote" icon="pi pi-plus"
+                                class="bg-gradient-to-r from-indigo-500 to-purple-600 border-0 px-6 py-3 text-white font-semibold rounded-xl shadow-lg"
+                                (click)="addQuote()">
+                            </button>
+                        </div>
+
+                        <!-- Quotes List -->
+                        <div *ngIf="book.quotes.length > 0" class="space-y-6">
+                            <div *ngFor="let quote of book.quotes; trackBy: trackByQuoteId" class="group relative">
+                                <!-- Quote Card -->
+                                <div
+                                    class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition-all duration-300 transform hover:-translate-y-1">
+
+                                    <!-- Quote Text -->
+                                    <div class="quote-content mb-4">
+                                        <p class="text-gray-800 leading-relaxed mb-4">"{{ quote.text }}"</p>
+                                    </div>
+
+
+                                    <!-- Quote Metadata -->
+                                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                                        <div
+                                            class="flex flex-wrap items-center gap-4 text-sm text-slate-500 dark:text-slate-400">
+                                            <span *ngIf="quote.pageNumber" class="flex items-center gap-1">
+                                                <i class="pi pi-bookmark"></i>
+                                                Page {{ quote.pageNumber }}
+                                            </span>
+                                            <span class="flex items-center gap-1">
+                                                <i class="pi pi-calendar"></i>
+                                                {{ formatDate(quote.addedDate) }}
+                                            </span>
+                                        </div>
+
+                                        <!-- Actions -->
+                                        <div class="flex items-center gap-2">
+                                            <button pButton pRipple
+                                                [icon]="quote.isFavorite ? 'pi pi-heart-fill' : 'pi pi-heart'"
+                                                [class]="quote.isFavorite ? 'p-button-text text-red-500' : 'p-button-text text-slate-400'"
+                                                class="p-button-sm hover:scale-110 transition-transform"
+                                                (click)="toggleFavorite(quote)"
+                                                [pTooltip]="quote.isFavorite ? 'Remove from favorites' : 'Add to favorites'">
+                                            </button>
+                                            <button pButton pRipple icon="pi pi-share-alt"
+                                                class="p-button-text p-button-sm text-slate-400 hover:text-indigo-600"
+                                                pTooltip="Share quote">
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Categories -->
+                                    <div *ngIf="quote.categories && quote.categories.length" class="mt-4">
+                                        <div class="flex flex-wrap gap-2">
+                                            <p-chip *ngFor="let category of quote.categories" [label]="category"
+                                                styleClass="text-xs bg-slate-100 dark:bg-slate-600 text-slate-600 dark:text-slate-300">
+                                            </p-chip>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
