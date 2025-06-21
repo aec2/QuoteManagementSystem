@@ -1,29 +1,368 @@
-        .book-card {
-            transition: transform 0.2s ease-in-out;
-        }
-        
-        .book-card:hover {
-            transform: translateY(-4px);
-        }
-        
-        .line-clamp-2 {
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-        
-        .aspect-3-4 {
-            aspect-ratio: 3/4;
-        }
-        
-        .book-cover-small {
-            max-width: 180px;
-            width: 100%;
-        }
-        
-        @media (max-width: 768px) {
-            .book-cover-small {
-                max-width: 140px;
-            }
-        }
+// Enhanced styles that work with the existing HTML structure
+// These styles enhance Tailwind classes and PrimeNG components already used in the template
+
+// Component host styling
+:host {
+  display: block;
+  scroll-behavior: smooth;
+}
+
+// Enhanced hover effects for book cards using the .group class from Tailwind
+.group {
+  &:hover {
+    img {
+      filter: brightness(1.1) contrast(1.05);
+      transition: all 0.3s ease;
+    }
+  }
+}
+
+// Enhance backdrop-blur elements (used in HTML)
+.backdrop-blur-md {
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  &:hover {
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    transform: translateY(-1px);
+  }
+}
+
+// Animate gradient backgrounds (used in HTML)
+.bg-gradient-to-r, .bg-gradient-to-br {
+  background-size: 200% 200%;
+  animation: gradient-shift 4s ease-in-out infinite;
+}
+
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+// Enhanced grid animations (targets the .grid class used in HTML)
+.grid > div {
+  animation: slideInUp 0.6s ease-out forwards;
+  
+  &:nth-child(2n) {
+    animation-delay: 0.1s;
+  }
+  
+  &:nth-child(3n) {
+    animation-delay: 0.15s;
+  }
+  
+  &:nth-child(4n) {
+    animation-delay: 0.2s;
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// PrimeNG component enhancements (using ::ng-deep to override component styles)
+:host ::ng-deep {
+  
+  // Enhanced button hover effects
+  .p-button {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    &:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+    
+    &:active {
+      transform: translateY(-1px);
+      transition-duration: 0.1s;
+    }
+    
+    // Special styling for gradient buttons
+    &:has(.bg-gradient-to-r) {
+      border: none;
+      
+      &:hover {
+        box-shadow: 0 8px 25px rgba(79, 70, 229, 0.3);
+      }
+    }
+  }
+
+  // Dropdown enhancements
+  .p-dropdown {
+    transition: all 0.3s ease;
+    
+    &:hover {
+      transform: scale(1.02);
+    }
+    
+    .p-dropdown-trigger {
+      transition: transform 0.3s ease;
+    }
+    
+    &.p-dropdown-open .p-dropdown-trigger {
+      transform: rotate(180deg);
+    }
+  }
+
+  // Input field enhancements
+  .p-inputtext {
+    transition: all 0.3s ease;
+    
+    &:focus {
+      transform: scale(1.01);
+      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+    }
+  }
+
+  // Enhanced chip styling
+  .p-chip {
+    transition: all 0.25s ease;
+    cursor: pointer;
+    
+    &:hover {
+      transform: translateY(-2px) scale(1.05);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+    
+    &:active {
+      transform: translateY(-1px) scale(1.02);
+    }
+  }
+
+  // Progress bar with shimmer effect
+  .p-progressbar {
+    .p-progressbar-value {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(90deg, #4f46e5, #7c3aed, #ec4899);
+      
+      &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+        animation: shimmer 2s infinite;
+      }
+    }
+  }
+
+  @keyframes shimmer {
+    0% { left: -100%; }
+    100% { left: 100%; }
+  }
+
+  // Enhanced tag styling
+  .p-tag {
+    transition: all 0.2s ease;
+    
+    &:hover {
+      transform: scale(1.1);
+    }
+    
+    // Status-specific gradients
+    &.p-tag-success {
+      background: linear-gradient(135deg, #10b981, #059669);
+    }
+    
+    &.p-tag-info {
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    }
+    
+    &.p-tag-warning {
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+    }
+  }
+
+  // Enhanced skeleton loading
+  .p-skeleton {
+    position: relative;
+    overflow: hidden;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+      animation: skeleton-shimmer 1.5s infinite;
+    }
+  }
+
+  @keyframes skeleton-shimmer {
+    0% { left: -100%; }
+    100% { left: 100%; }
+  }
+
+  // Paginator enhancements
+  .p-paginator {
+    .p-paginator-page {
+      transition: all 0.2s ease;
+      
+      &:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+      
+      &.p-paginator-page-selected {
+        background: linear-gradient(135deg, #4f46e5, #7c3aed);
+        transform: scale(1.1);
+        box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
+      }
+    }
+  }
+
+  // Icon field enhancements
+  .p-iconfield {
+    .p-inputicon {
+      transition: all 0.3s ease;
+    }
+    
+    &:hover .p-inputicon {
+      color: #4f46e5;
+      transform: scale(1.1);
+    }
+  }
+}
+
+// Custom book cover hover effect
+img[alt] {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  &:hover {
+    transform: scale(1.05);
+    filter: brightness(1.1) saturate(1.1);
+  }
+}
+
+// Enhanced focus states for accessibility
+:host ::ng-deep {
+  button:focus-visible,
+  input:focus-visible,
+  .p-dropdown:focus-visible {
+    outline: 2px solid #4f46e5;
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+}
+
+// Text gradient effect for titles
+.text-transparent {
+  &.bg-gradient-to-r {
+    background-size: 200% 100%;
+    animation: text-gradient-shift 3s ease-in-out infinite;
+  }
+}
+
+@keyframes text-gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+// Dark mode specific enhancements
+@media (prefers-color-scheme: dark) {
+  :host ::ng-deep {
+    .backdrop-blur-md {
+      border-color: rgba(148, 163, 184, 0.2);
+    }
+    
+    .p-button:hover {
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    }
+  }
+}
+
+// Mobile responsive enhancements
+@media (max-width: 768px) {
+  .grid {
+    gap: 1rem;
+  }
+  
+  .backdrop-blur-md {
+    margin-left: -0.5rem;
+    margin-right: -0.5rem;
+    border-radius: 1rem;
+  }
+  
+  :host ::ng-deep {
+    .p-button {
+      &:hover {
+        transform: none; // Disable hover transforms on mobile
+      }
+    }
+  }
+}
+
+// Print styles
+@media print {
+  :host ::ng-deep {
+    .p-button,
+    .p-dropdown,
+    .p-paginator {
+      display: none !important;
+    }
+    
+    .backdrop-blur-md {
+      backdrop-filter: none;
+      background: white !important;
+      border: 1px solid #e5e7eb;
+    }
+    
+    .grid > div {
+      break-inside: avoid;
+      margin-bottom: 1rem;
+    }
+  }
+}
+
+// Book title truncation
+.card-container {
+  .card {
+    // Ensure card has proper width constraints
+    width: 100%;
+    max-width: 100%;
+    
+    // Book title container styling
+    .pb-1 {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0; // Important for flex children
+      
+      h3 {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        display: block;
+      }
+    }
+  }
+}
+
+// Reduced motion support
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+

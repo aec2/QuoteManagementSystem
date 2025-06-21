@@ -18,6 +18,10 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { FluidModule } from 'primeng/fluid';
+import {IconFieldModule} from 'primeng/iconfield';
+import {InputIconModule} from 'primeng/inputicon';
+
+
 
 interface Quote {
   id: number;
@@ -50,6 +54,8 @@ interface Book {
   standalone: true,
   imports: [
     CommonModule,
+    IconFieldModule,
+    InputIconModule,
     FormsModule,
     CardModule,
     ButtonModule,

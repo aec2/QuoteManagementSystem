@@ -40,6 +40,12 @@ export class AppMenu {
                         routerLink: ['/books'],
                     },
                     {
+                        label: 'Yeni Alıntı',
+                        icon: 'pi pi-fw pi-plus-circle',
+                        routerLink: ['/quotes/add'],
+                        styleClass: 'menu-create-quote-btn'
+                    },
+                    {
                         label: 'Banking',
                         icon: 'pi pi-fw pi-image',
                         routerLink: ['/dashboard-banking'],

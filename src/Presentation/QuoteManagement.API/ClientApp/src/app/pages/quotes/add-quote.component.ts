@@ -11,6 +11,8 @@ import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { DividerModule } from 'primeng/divider';
 import { TagModule } from 'primeng/tag';
+import { DialogModule } from 'primeng/dialog';
+import { ListboxModule } from 'primeng/listbox';
 
 interface Book {
   id: string;
@@ -29,7 +31,7 @@ interface Category {
 @Component({
   selector: 'app-add-quote',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, CardModule, ButtonModule, InputTextModule, InputNumberModule, MultiSelectModule, ToastModule, DividerModule, TagModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, CardModule, ButtonModule, InputTextModule, InputNumberModule, MultiSelectModule, ToastModule, DividerModule, TagModule, DialogModule, ListboxModule],
   providers: [MessageService],
   templateUrl: './add-quote.component.html',
   styleUrls: ['./add-quote.component.scss']
@@ -37,9 +39,16 @@ interface Category {
 export class AddQuoteComponent implements OnInit {
   quoteForm: FormGroup;
   selectedBook: Book | null = null;
+  showBookSelection = false;
+  books: Book[] = [];
+  filteredBooks: Book[] = [];
+  bookSearch = '';
+  booksLoading = false;
+  bookError = '';
   categories: Category[] = [];
   selectedCategories: Category[] = [];
   saving = false;
+  showBookDialog = false;
 
   constructor(
     private fb: FormBuilder,
@@ -61,13 +70,14 @@ export class AddQuoteComponent implements OnInit {
       if (state?.selectedBook) {
         this.selectedBook = state.selectedBook;
       } else {
-        // No book selected, redirect back to feed
-        this.router.navigate(['/pages/feed']);
-        return;
+        // No book selected, open book selection dialog
+        this.openBookDialog();
+        this.loadBooks();
       }
     }
-   console.log("🚀 ~ AddQuoteComponent ~ ngOnInit ~ selectedBook:", this.selectedBook);
-    this.loadCategories();
+    if (this.selectedBook) {
+      this.loadCategories();
+    }
   }
 
   private loadCategories() {
@@ -90,10 +100,61 @@ export class AddQuoteComponent implements OnInit {
     ];
   }
 
+  loadBooks() {
+    this.booksLoading = true;
+    this.bookError = '';
+    // Simulate API call
+    setTimeout(() => {
+      // Simulate error: uncomment to test error UI
+      // this.bookError = 'Kitaplar yüklenemedi.';
+      this.books = [
+        { id: '1', title: 'The Great Gatsby', quoteCount: 15, isbn: '9780743273565', coverImageUrl: 'https://covers.openlibrary.org/b/isbn/9780743273565-L.jpg', author: 'F. Scott Fitzgerald' },
+        { id: '2', title: 'To Kill a Mockingbird', quoteCount: 23, isbn: '9780061120084', coverImageUrl: 'https://covers.openlibrary.org/b/isbn/9780061120084-L.jpg', author: 'Harper Lee' },
+        { id: '3', title: '1984', quoteCount: 31, isbn: '9780452284234', coverImageUrl: 'https://covers.openlibrary.org/b/isbn/9780452284234-L.jpg', author: 'George Orwell' },
+        { id: '4', title: 'Pride and Prejudice', quoteCount: 18, isbn: '9780141439518', coverImageUrl: 'https://covers.openlibrary.org/b/isbn/9780141439518-L.jpg', author: 'Jane Austen' }
+        // ... add more as needed
+      ];
+      this.filteredBooks = this.books;
+      this.booksLoading = false;
+    }, 1000);
+  }
+
+  filterBooks() {
+    const search = this.bookSearch.toLowerCase();
+    this.filteredBooks = this.books.filter(book =>
+      book.title.toLowerCase().includes(search) ||
+      (book.author && book.author.toLowerCase().includes(search)) ||
+      (book.isbn && book.isbn.includes(search))
+    );
+  }
+
+  openBookDialog() {
+    this.showBookDialog = true;
+    this.showBookSelection = false;
+  }
+
+  closeBookDialog() {
+    this.showBookDialog = false;
+  }
+
+  onBookSelected(book: Book) {
+    this.selectedBook = book;
+    this.showBookDialog = false;
+    this.loadCategories();
+  }
+
+  goBackToBookSelection() {
+    // Open dialog for book selection
+    this.selectedBook = null;
+    this.openBookDialog();
+    this.bookSearch = '';
+    this.filteredBooks = this.books;
+  }
+
   onSubmit() {
     if (this.quoteForm.valid && this.selectedBook) {
       this.saving = true;
-
+      this.bookError = '';
       const quoteData = {
         bookId: this.selectedBook.id,
         bookTitle: this.selectedBook.title,
@@ -102,19 +163,25 @@ export class AddQuoteComponent implements OnInit {
         pageNumber: this.quoteForm.value.pageNumber,
         categories: this.selectedCategories.map((cat) => cat.code)
       };
-
-      // Simulate API call
+      // Simulate API call with error handling
       setTimeout(() => {
+        if (quoteData.quoteText.includes('error')) {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Hata!',
+            detail: 'Alıntı kaydedilemedi.',
+            life: 3000
+          });
+          this.saving = false;
+          return;
+        }
         this.messageService.add({
           severity: 'success',
           summary: 'Başarılı!',
           detail: 'Alıntınız başarıyla eklendi.',
           life: 3000
         });
-
         this.saving = false;
-
-        // Navigate back to feed after successful save
         setTimeout(() => {
           this.router.navigate(['/pages/feed']);
         }, 1500);
@@ -132,10 +199,6 @@ export class AddQuoteComponent implements OnInit {
   }
 
   cancel() {
-    this.router.navigate(['/pages/feed']);
-  }
-
-  goBackToBookSelection() {
     this.router.navigate(['/pages/feed']);
   }
 

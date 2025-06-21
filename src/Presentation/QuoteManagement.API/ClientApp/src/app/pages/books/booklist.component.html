@@ -1,41 +1,175 @@
-        <div class="card">
-            <div class="flex justify-between items-center mb-6">
-                <h2 class="text-2xl font-bold text-surface-900 dark:text-surface-0">Book Collection</h2>
-                <button pButton pRipple label="Add Book" icon="pi pi-plus" class="p-button-primary"></button>
+<!-- Enhanced Book Collection UI -->
+<div
+    class="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 p-6">
+    <div class="max-w-7xl mx-auto">
+
+        <!-- Header Section with Modern Glassmorphism -->
+        <div
+            class="backdrop-blur-md bg-white/70 dark:bg-slate-800/70 rounded-2xl border border-white/20 dark:border-slate-700/20 shadow-xl mb-8 p-6">
+            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+
+                <!-- Title and Stats -->
+                <div class="flex items-center gap-4">
+                    <div class="bg-gradient-to-r from-indigo-500 to-purple-600 p-3 rounded-xl shadow-lg">
+                        <i class="pi pi-book text-white text-2xl"></i>
+                    </div>
+                    <div>
+                        <h1
+                            class="text-3xl font-bold bg-gradient-to-r from-slate-800 to-slate-600 dark:from-white dark:to-slate-200 bg-clip-text text-transparent">
+                            Kitap Koleksiyonu
+                        </h1>
+                        <p class="text-slate-600 dark:text-slate-400 mt-1">
+                            {{ filteredBooks.length }} books • {{ readBooksCount }} read
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex items-center gap-3">
+                    <button pButton pRipple [icon]="viewMode === 'grid' ? 'pi pi-list' : 'pi pi-th-large'"
+                        class="p-button-outlined p-button-secondary" (click)="toggleViewMode()"
+                        pTooltip="Toggle view mode" tooltipPosition="bottom">
+                    </button>
+                    <button pButton pRipple label="Kitap Ekle" icon="pi pi-plus"
+                        class="bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 border-0 px-6 py-3 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5">
+                    </button>
+                </div>
             </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                <div *ngFor="let book of books" class="book-card">
-                    <div class="relative group cursor-pointer">
-                        <div class="aspect-3-4 overflow-hidden rounded-lg shadow-lg book-cover-small mx-auto">
-                            <img 
-                                [src]="book.coverImageUrl || '/demo/images/ecommerce/blue-book.jpg'" 
-                                [alt]="book.title"
-                                class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                                (error)="onImageError($event)"
-                            />
+        </div>
+
+        <!-- Enhanced Search and Filters -->
+        <div
+            class="backdrop-blur-md bg-white/70 dark:bg-slate-800/70 rounded-2xl border border-white/20 dark:border-slate-700/20 shadow-lg mb-8 p-6">
+
+            <!-- Search Bar -->
+            <div class="flex flex-col lg:flex-row gap-4 mb-6">
+                <div class="relative flex-1">
+                    <p-iconfield iconPosition="left">
+                        <input pInputText type="text" placeholder="Search books, authors, or genres..."
+                            class="w-full pl-10 pr-4 py-3 rounded-xl border-0 bg-white/80 dark:bg-slate-700/80 shadow-inner focus:ring-2 focus:ring-indigo-500 focus:bg-white dark:focus:bg-slate-700 transition-all duration-200"
+                            [(ngModel)]="searchTerm" (ngModelChange)="onSearchChange($event)" />
+                        <p-inputicon class="pi pi-search" />
+                    </p-iconfield>
+                </div>
+
+                <!-- Sort Dropdown -->
+                <div class="flex gap-3">
+                    <p-dropdown [options]="sortOptions" [(ngModel)]="selectedSort" optionLabel="label"
+                        optionValue="value" placeholder="Sort by" (onChange)="onSortChange($event)"
+                        styleClass="w-48 rounded-xl border-0 bg-white/80 dark:bg-slate-700/80 shadow-inner">
+                    </p-dropdown>
+
+                    <!-- View Density -->
+                    <p-dropdown [options]="densityOptions" [(ngModel)]="selectedDensity" optionLabel="label"
+                        optionValue="value" placeholder="Density" (onChange)="onDensityChange($event)"
+                        styleClass="w-32 rounded-xl border-0 bg-white/80 dark:bg-slate-700/80 shadow-inner">
+                    </p-dropdown>
+                </div>
+            </div>
+
+            <!-- Filter Tabs -->
+            <div class="flex items-center justify-between">
+                <div class="flex gap-2 flex-wrap">
+                    <p-chip *ngFor="let status of readingStatusFilters"
+                        [label]="status.label + ' (' + status.count + ')'" [removable]="false"
+                        [styleClass]="getStatusChipStyle(status.value)" (click)="onStatusFilterChange(status.value)">
+                    </p-chip>
+                </div>
+
+                <!-- Filter Summary -->
+                <div class="text-sm text-slate-600 dark:text-slate-400">
+                    Showing {{ filteredBooks.length }} of {{ totalBooks }} books
+                </div>
+            </div>
+
+            <!-- Active Filters -->
+            <div *ngIf="hasActiveFilters()" class="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700">
+                <div class="flex items-center gap-2 flex-wrap">
+                    <span class="text-sm text-slate-600 dark:text-slate-400">Active filters:</span>
+                    <p-chip *ngFor="let filter of getActiveFilters()" [label]="filter.label" [removable]="true"
+                        (onRemove)="removeFilter(filter.type, filter.value)"
+                        styleClass="bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300">
+                    </p-chip>
+                    <button pButton pRipple label="Clear All" icon="pi pi-times"
+                        class="p-button-text p-button-sm text-slate-600 dark:text-slate-400"
+                        (click)="clearAllFilters()">
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading State -->
+        <div *ngIf="isLoading" [ngClass]="getGridClasses()">
+            <div *ngFor="let i of [1,2,3,4,5,6,7,8,9,10]"
+                class="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden">
+                <div class="p-4" [ngClass]="getCardContentClasses()">
+                    <div class="flex items-start gap-3"
+                        *ngIf="selectedDensity !== 'comfortable'; else comfortableLoading">
+                        <p-skeleton styleClass="rounded-lg flex-shrink-0" width="64px" height="64px"></p-skeleton>
+                        <div class="flex-1 min-w-0">
+                            <p-skeleton width="100%" height="1rem" styleClass="mb-2"></p-skeleton>
+                            <p-skeleton width="80%" height="0.8rem" styleClass="mb-1"></p-skeleton>
+                            <p-skeleton width="60%" height="0.8rem"></p-skeleton>
                         </div>
-                        <div class="mt-4">
-                            <h3 class="text-lg font-semibold text-surface-900 dark:text-surface-0 mb-2 line-clamp-2">
-                                {{ book.title }}
-                            </h3>
-                            <p class="text-surface-600 dark:text-surface-400 text-sm mb-2" *ngIf="book.isbn">
-                                ISBN: {{ book.isbn }}
-                            </p>
-                            <div class="flex items-center justify-between">
-                                <span class="text-surface-700 dark:text-surface-300 text-sm">
-                                    {{ book.quoteCount }} {{ book.quoteCount === 1 ? 'quote' : 'quotes' }}
-                                </span>
-                                <button 
-                                    pButton 
-                                    pRipple 
-                                    icon="pi pi-eye" 
-                                    class="p-button-text p-button-sm"
-                                    [title]="'View quotes from ' + book.title"
-                                ></button>
-                            </div>
+                    </div>
+                    <ng-template #comfortableLoading>
+                        <div class="text-center">
+                            <p-skeleton width="120px" height="160px" styleClass="rounded-lg mx-auto mb-3"></p-skeleton>
+                            <p-skeleton width="100%" height="1rem" styleClass="mb-2"></p-skeleton>
+                            <p-skeleton width="80%" height="0.8rem"></p-skeleton>
                         </div>
+                    </ng-template>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="!isLoading && filteredBooks.length > 0" [ngClass]="getGridClasses()">
+            <div *ngFor="let book of filteredBooks; trackBy: trackByBookId" class="card-container">
+                <div class="card group cursor-pointer" style="padding: 0px;" (click)="viewBookDetails(book)">
+                    <!-- Book Cover -->
+                    <img class="w-full" style="aspect-ratio: 2/3; object-fit: cover;"
+                        [src]="book.coverImageUrl || '/demo/images/ecommerce/blue-book.jpg'"
+                        alt="Sunset in the mountains">
+
+                    <!-- Book Title -->
+                    <div class="pb-1 p-1 w-full overflow-hidden">
+                        <h3 class="font-medium mt-2 text-sm truncate w-full" [title]="book.title">
+                            {{ book.title }}
+                        </h3>
+                    </div>
+
+
+                    <!-- Rating -->
+                    <div class="flex space-x-1 p-1">
+                        <i class="pi pi-star-fill text-yellow-400"></i>
+                        <span class="text-sm text-slate-600 dark:text-slate-400">
+                            {{ book.rating || '0.0' }}
+                        </span>
                     </div>
                 </div>
             </div>
         </div>
+
+    </div>
+
+    <!-- Pagination -->
+    <div *ngIf="!isLoading && filteredBooks.length > 0" class="mt-8 flex justify-center">
+        <p-paginator [rows]="pageSize" [totalRecords]="totalBooks" [first]="(currentPage - 1) * pageSize"
+            (onPageChange)="onPageChange($event)" [showCurrentPageReport]="true"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} books" [pageLinkSize]="5"
+            styleClass="border-0 bg-transparent">
+        </p-paginator>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="!isLoading && filteredBooks.length === 0"
+        class="text-center py-16 backdrop-blur-md bg-white/70 dark:bg-slate-800/70 rounded-2xl border border-white/20 dark:border-slate-700/20 shadow-lg">
+        <i class="pi pi-search text-6xl text-slate-300 dark:text-slate-600 mb-4"></i>
+        <h3 class="text-xl font-semibold text-slate-600 dark:text-slate-400 mb-2">No books found</h3>
+        <p class="text-slate-500 dark:text-slate-500 mb-6">Try adjusting your search terms or add some books to your
+            collection.</p>
+        <button pButton pRipple label="Add Your First Book" icon="pi pi-plus"
+            class="bg-gradient-to-r from-indigo-500 to-purple-600 border-0 px-6 py-3 text-white font-semibold rounded-xl shadow-lg"></button>
+    </div>
+
+</div>

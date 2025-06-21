@@ -23,23 +23,28 @@
       <!-- Search Bar -->
       <div class="flex justify-center mb-6">
         <div class="relative w-full max-w-md">
-          <i class="pi pi-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-          <input
-            type="text"
-            placeholder="Search quotes, authors, or sources..."
-            class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            [(ngModel)]="searchQuery"
-            (input)="filterQuotes()"
-          />
+          <p-iconfield iconPosition="left">
+            <input type="text" placeholder="Search quotes, authors, or sources..."
+              class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              [(ngModel)]="searchQuery" (input)="filterQuotes()" />
+            <p-inputicon class="pi pi-search" />
+          </p-iconfield>
+
         </div>
       </div>
 
       <!-- Filter Tabs -->
       <div class="flex justify-center">
         <div class="flex bg-gray-100 rounded-lg p-1">
-          <button class="px-6 py-2 text-sm font-medium rounded-md transition-colors" [class]="activeFilter === 'all' ? 'bg-green-500 text-white' : 'text-gray-600 hover:text-gray-900'" (click)="setFilter('all')">All Quotes</button>
-          <button class="px-6 py-2 text-sm font-medium rounded-md transition-colors" [class]="activeFilter === 'sourced' ? 'bg-gray-600 text-white' : 'text-gray-600 hover:text-gray-900'" (click)="setFilter('sourced')">With Sources</button>
-          <button class="px-6 py-2 text-sm font-medium rounded-md transition-colors" [class]="activeFilter === 'personal' ? 'bg-gray-600 text-white' : 'text-gray-600 hover:text-gray-900'" (click)="setFilter('personal')">Personal Thoughts</button>
+          <button class="px-6 py-2 text-sm font-medium rounded-md transition-colors"
+            [class]="activeFilter === 'all' ? 'bg-green-500 text-white' : 'text-gray-600 hover:text-gray-900'"
+            (click)="setFilter('all')">All Quotes</button>
+          <button class="px-6 py-2 text-sm font-medium rounded-md transition-colors"
+            [class]="activeFilter === 'sourced' ? 'bg-gray-600 text-white' : 'text-gray-600 hover:text-gray-900'"
+            (click)="setFilter('sourced')">With Sources</button>
+          <button class="px-6 py-2 text-sm font-medium rounded-md transition-colors"
+            [class]="activeFilter === 'personal' ? 'bg-gray-600 text-white' : 'text-gray-600 hover:text-gray-900'"
+            (click)="setFilter('personal')">Personal Thoughts</button>
         </div>
       </div>
     </div>
@@ -63,26 +68,37 @@
   <!-- Quotes Grid -->
   <div *ngIf="!loading" class="max-w-6xl mx-auto px-6 py-8">
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <div class="quote-card group bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow" *ngFor="let quote of filteredQuotes; let i = index">
+      <div
+        class="quote-card group bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow"
+        *ngFor="let quote of filteredQuotes; let i = index">
         <!-- Header with More Options -->
         <div class="flex justify-between items-start mb-4">
           <div class="flex-1"></div>
           <div class="relative">
-            <button class="more-options-btn text-gray-400 hover:text-gray-600 p-1 rounded transition-colors" (click)="toggleQuoteMenu(quote.id)" [attr.aria-expanded]="isQuoteMenuOpen(quote.id)" [ngClass]="{ 'is-open': isQuoteMenuOpen(quote.id) }" aria-label="More options">
+            <button class="more-options-btn text-gray-400 hover:text-gray-600 p-1 rounded transition-colors"
+              (click)="toggleQuoteMenu(quote.id)" [attr.aria-expanded]="isQuoteMenuOpen(quote.id)"
+              [ngClass]="{ 'is-open': isQuoteMenuOpen(quote.id) }" aria-label="More options">
               <i class="pi pi-ellipsis-v"></i>
             </button>
 
             <!-- Dropdown Menu -->
-            <div class="absolute right-0 top-8 bg-white border border-gray-200 rounded-lg shadow-lg z-10 min-w-[150px]" *ngIf="isQuoteMenuOpen(quote.id)" (click)="$event.stopPropagation()" style="background-color: rgba(255, 255, 255, 0.95);">
-              <button class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2 rounded-t-lg" (click)="editQuote(quote)">
+            <div class="absolute right-0 top-8 bg-white border border-gray-200 rounded-lg shadow-lg z-10 min-w-[150px]"
+              *ngIf="isQuoteMenuOpen(quote.id)" (click)="$event.stopPropagation()"
+              style="background-color: rgba(255, 255, 255, 0.95);">
+              <button
+                class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2 rounded-t-lg"
+                (click)="editQuote(quote)">
                 <i class="pi pi-pencil text-blue-500"></i>
                 Update
               </button>
-              <button class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2" (click)="shareQuoteFromMenu(quote)">
+              <button class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2"
+                (click)="shareQuoteFromMenu(quote)">
                 <i class="pi pi-share-alt text-green-500"></i>
                 Share
               </button>
-              <button class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 flex items-center gap-2 rounded-b-lg" (click)="deleteQuote(quote.id)">
+              <button
+                class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 flex items-center gap-2 rounded-b-lg"
+                (click)="deleteQuote(quote.id)">
                 <i class="pi pi-trash text-red-500"></i>
                 Delete
               </button>
@@ -96,7 +112,8 @@
 
           <!-- Read More/Less Button for Long Quotes -->
           <div class="text-center mb-4" *ngIf="isQuoteLong(quote.quoteText)">
-            <button class="text-green-500 text-sm hover:text-green-600 transition-colors" (click)="toggleQuoteExpansion(quote.id)">
+            <button class="text-green-500 text-sm hover:text-green-600 transition-colors"
+              (click)="toggleQuoteExpansion(quote.id)">
               {{ isQuoteExpanded(quote.id) ? 'Read less' : 'Read more' }}
             </button>
           </div>
@@ -137,20 +154,28 @@
         <!-- Action Buttons -->
         <div class="flex items-center justify-between mt-4 pt-4 border-t">
           <div class="flex gap-2">
-            <button class="flex items-center gap-1 px-2 py-1 text-xs rounded transition-colors" [class]="quote.isLiked ? 'text-red-500 bg-red-50' : 'text-gray-500 hover:text-red-500 hover:bg-red-50'" (click)="toggleLike(i)">
+            <button class="flex items-center gap-1 px-2 py-1 text-xs rounded transition-colors"
+              [class]="quote.isLiked ? 'text-red-500 bg-red-50' : 'text-gray-500 hover:text-red-500 hover:bg-red-50'"
+              (click)="toggleLike(i)">
               <i class="pi pi-heart" [class.pi-heart-fill]="quote.isLiked"></i>
               <span>{{ quote.likes }}</span>
             </button>
-            <button class="flex items-center gap-1 px-2 py-1 text-xs text-gray-500 hover:text-blue-500 hover:bg-blue-50 rounded transition-colors" (click)="copyQuote(quote.quoteText)">
+            <button
+              class="flex items-center gap-1 px-2 py-1 text-xs text-gray-500 hover:text-blue-500 hover:bg-blue-50 rounded transition-colors"
+              (click)="copyQuote(quote.quoteText)">
               <i class="pi pi-copy"></i>
             </button>
           </div>
 
           <div class="flex gap-2">
-            <button class="flex items-center gap-1 px-2 py-1 text-xs rounded transition-colors" [class]="quote.isBookmarked ? 'text-yellow-500 bg-yellow-50' : 'text-gray-500 hover:text-yellow-500 hover:bg-yellow-50'" (click)="toggleBookmark(i)">
+            <button class="flex items-center gap-1 px-2 py-1 text-xs rounded transition-colors"
+              [class]="quote.isBookmarked ? 'text-yellow-500 bg-yellow-50' : 'text-gray-500 hover:text-yellow-500 hover:bg-yellow-50'"
+              (click)="toggleBookmark(i)">
               <i class="pi pi-bookmark" [class.pi-bookmark-fill]="quote.isBookmarked"></i>
             </button>
-            <button class="flex items-center gap-1 px-2 py-1 text-xs text-gray-500 hover:text-blue-500 hover:bg-blue-50 rounded transition-colors" (click)="shareQuote(quote)">
+            <button
+              class="flex items-center gap-1 px-2 py-1 text-xs text-gray-500 hover:text-blue-500 hover:bg-blue-50 rounded transition-colors"
+              (click)="shareQuote(quote)">
               <i class="pi pi-share-alt"></i>
             </button>
           </div>
@@ -164,7 +189,9 @@
     <i class="pi pi-book text-6xl text-gray-300 mb-4"></i>
     <h3 class="text-xl font-semibold mb-2">No quotes found</h3>
     <p class="text-gray-500 mb-6">Try adjusting your search or filter criteria</p>
-    <button class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg transition-colors flex items-center gap-2 mx-auto" (click)="showBookSearchModal = true">
+    <button
+      class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg transition-colors flex items-center gap-2 mx-auto"
+      (click)="showBookSearchModal = true">
       <i class="pi pi-plus"></i>
       Add Your First Quote
     </button>
@@ -173,16 +200,14 @@
   <!-- Floating Add Button -->
   <button
     class="fixed bottom-8 right-8 bg-green-500 hover:bg-green-600 text-white w-14 h-14 rounded-full shadow-lg hover:shadow-xl transition-all flex items-center justify-center z-10"
-    (click)="showBookSearchModal = true"
-    pTooltip="Add new quote"
-    tooltipPosition="left"
-  >
+    (click)="showBookSearchModal = true" pTooltip="Add new quote" tooltipPosition="left">
     <i class="pi pi-plus text-xl"></i>
   </button>
 </div>
 
 <!-- Book Search Modal -->
-<p-dialog header="Alıntı Paylaş" [(visible)]="showBookSearchModal" [modal]="true" [closable]="true" [dismissableMask]="true" [style]="{ width: '600px', minHeight: '400px' }" styleClass="book-search-modal">
+<p-dialog header="Alıntı Paylaş" [(visible)]="showBookSearchModal" [modal]="true" [closable]="true"
+  [dismissableMask]="true" [style]="{ width: '600px', minHeight: '400px' }" styleClass="book-search-modal">
   <div class="p-6">
     <p-fluid>
       <div class="grid grid-cols-2 gap-4">
@@ -192,14 +217,16 @@
             <p-inputgroup-addon>
               <i class="pi pi-search"></i>
             </p-inputgroup-addon>
-            <input pInputText id="bookSearch" [(ngModel)]="bookSearchQuery" (input)="searchBooks()" placeholder="Kitaplarda Ara" class="w-full" autocomplete="off" />
+            <input pInputText id="bookSearch" [(ngModel)]="bookSearchQuery" (input)="searchBooks()"
+              placeholder="Kitaplarda Ara" class="w-full" autocomplete="off" />
           </p-inputgroup>
         </div>
 
         <!-- Content Area -->
         <div class="search-content-area" style="min-height: 250px">
           <!-- Initial State -->
-          <div *ngIf="!bookSearchQuery && !searchingBooks" class="flex flex-column align-items-center justify-content-center h-full py-6">
+          <div *ngIf="!bookSearchQuery && !searchingBooks"
+            class="flex flex-column align-items-center justify-content-center h-full py-6">
             <i class="pi pi-book text-4xl text-300 mb-3 mr-2"></i>
             <div class="flex flex-wrap gap-2 align-items-center justify-content-center">
               <div class="text-400 text-sm">Kitap adı veya yazar adı ile arama yapabilirsiniz</div>
@@ -213,7 +240,8 @@
           </div>
 
           <!-- Empty State -->
-          <div *ngIf="!searchingBooks && bookSearchQuery && searchResults.length === 0" class="flex flex-column align-items-center justify-content-center h-full py-6">
+          <div *ngIf="!searchingBooks && bookSearchQuery && searchResults.length === 0"
+            class="flex flex-column align-items-center justify-content-center h-full py-6">
             <i class="pi pi-search text-4xl text-300 mb-3"></i>
             <div class="text-600 font-medium mb-2">Arama sonucu bulunamadı</div>
             <div class="text-400 text-sm">Farklı anahtar kelimeler deneyin</div>
@@ -223,23 +251,22 @@
           <div *ngIf="!searchingBooks && searchResults.length > 0" class="search-results">
             <div class="text-sm text-500 mb-3">{{ searchResults.length }} sonuç bulundu</div>
             <div class="border-1 border-surface-200 border-round overflow-hidden max-h-20rem overflow-y-auto">
-              <div
-                *ngFor="let book of searchResults; let i = index"
+              <div *ngFor="let book of searchResults; let i = index"
                 class="book-result-item p-3 cursor-pointer hover:bg-surface-50 transition-colors transition-duration-150"
                 [class.border-bottom-1]="i < searchResults.length - 1"
                 [class.border-surface-200]="i < searchResults.length - 1"
-                [class.bg-primary-50]="selectedBook?.id === book.id"
-                (click)="selectBookAndProceed(book)"
-              >
+                [class.bg-primary-50]="selectedBook?.id === book.id" (click)="selectBookAndProceed(book)">
                 <div class="flex align-items-start gap-3">
                   <!-- Book Cover -->
                   <div class="book-cover-mini flex-shrink-0" style="width: 48px; height: 72px">
-                    <img [src]="book.coverImageUrl || '/demo/images/ecommerce/blue-book.jpg'" [alt]="book.title" class="w-full h-full object-cover border-round shadow-1" (error)="onBookCoverError($event)" />
+                    <img [src]="book.coverImageUrl || '/demo/images/ecommerce/blue-book.jpg'" [alt]="book.title"
+                      class="w-full h-full object-cover border-round shadow-1" (error)="onBookCoverError($event)" />
                   </div>
 
                   <!-- Book Info -->
                   <div class="flex-1 min-w-0">
-                    <div class="font-semibold text-900 line-height-3 mb-1 text-overflow-ellipsis overflow-hidden white-space-nowrap">
+                    <div
+                      class="font-semibold text-900 line-height-3 mb-1 text-overflow-ellipsis overflow-hidden white-space-nowrap">
                       {{ book.title }}
                     </div>
                     <div class="text-600 text-sm mb-1" *ngIf="book.author">

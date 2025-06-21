@@ -1,0 +1,14 @@
+.menu-create-quote-btn {
+    background-color: #007ad9;
+    color: #fff !important;
+    border-radius: 4px;
+    padding: 6px 16px;
+    margin: 4px 0;
+    display: inline-block;
+    font-weight: bold;
+    transition: background 0.2s;
+}
+.menu-create-quote-btn:hover {
+    background-color: #005fa3;
+    color: #fff !important;
+} 
